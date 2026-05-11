@@ -1,6 +1,8 @@
 # Flux Reticle Fork Handover
 
-## Agent Context
+Read `.agent/BRIEF.md` first for current active state. This file keeps stable project facts and command references.
+
+## Stable Context
 
 This repo is a working Starsector mod fork, not just source notes. Keep runtime files and source aligned:
 
