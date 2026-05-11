@@ -1,0 +1,18 @@
+{
+	"plugins":{
+		"informativeReticleCombatPlugin":"flux_reticle.CombatPlugin",
+	},
+	
+	"graphics":{
+		"sun_fr":{
+			"frontKeyTurn":"sun_fr/graphics/frontKeyTurn.png",
+			"frontMouseTurn":"sun_fr/graphics/frontMouseTurn.png",
+			"glowKeyTurn":"sun_fr/graphics/glowKeyTurn.png",
+			"glowMouseTurn":"sun_fr/graphics/glowMouseTurn.png",
+			"back":"sun_fr/graphics/back.png",
+			"half":"sun_fr/graphics/half.png",
+			"quarter":"sun_fr/graphics/quarter.png",
+			"hardBar":"sun_fr/graphics/hardBar.png",
+		},
+	},
+}

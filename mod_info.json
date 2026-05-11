@@ -1,0 +1,11 @@
+{
+	"id":"sun_flux_reticle",
+	"name":"Flux Reticle",
+    "utility": "true",
+	"author":"Sundog",
+	"version":"1.4.0",
+	"description":"Replaces the default cursor during combat with a reticle that displays flux level.",
+    "gameVersion":"0.98a-RC7",
+	"jars":["jars/FluxReticle.jar"],
+    "modPlugin":"flux_reticle.ModPlugin",
+}

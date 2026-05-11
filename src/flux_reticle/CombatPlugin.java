@@ -43,10 +43,12 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             if(type == Double.class) return type.cast(LunaSettings.getDouble(ID, id));
             if(type == String.class) return type.cast(LunaSettings.getString(ID, id));
             if(type == Color.class) {
-                Color clr = (Color)type.cast(LunaSettings.getColor(ID, id));
-                int opacity = (int)LunaSettings.getInt(ID, id + "Opacity");
+                int red = getColorComponentFromLuna(id + "Red");
+                int green = getColorComponentFromLuna(id + "Green");
+                int blue = getColorComponentFromLuna(id + "Blue");
+                int alpha = getColorComponentFromLuna(id + "Alpha");
 
-                return (T)new Color(clr.getRed(), clr.getGreen(), clr.getBlue(), Math.max(0, Math.min(255, opacity)));
+                return (T)new Color(red, green, blue, alpha);
             }
         } else {
             if(settingsCfg == null) settingsCfg = Global.getSettings().getMergedJSONForMod(SETTINGS_PATH, ID);
@@ -67,6 +69,9 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     static boolean getBoolean(String id) throws Exception { return get(id, Boolean.class); }
     static String getString(String id) throws Exception { return get(id, String.class); }
     static Color getColor(String id) throws Exception { return get(id, Color.class); }
+    static int getColorComponentFromLuna(String id) {
+        return Math.max(0, Math.min(255, (int)LunaSettings.getInt(ID, id)));
+    }
     boolean readSettings() throws Exception {
         boolean overrideColors = getBoolean("overrideDefaultUiColors");
 
@@ -75,6 +80,15 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         glowOpacity = getInt("glowOpacity");
 
         scale = (float) getDouble("sizeMult");
+        barWidth = (float) Math.max(0.5, getDouble("fluxBarWidth"));
+        minLength = (float) Math.max(1, getDouble("minReticleLength"));
+        maxLength = (float) Math.max(minLength, getDouble("maxReticleLength"));
+        minDistance = (float) Math.max(0, getDouble("minReticleDistance"));
+        maxDistance = (float) Math.max(minDistance + 0.001, getDouble("maxReticleDistance"));
+        flashStartThreshold = (float) Math.max(0, Math.min(1, getDouble("flashStartThreshold")));
+        flashMaxThreshold = (float) Math.max(flashStartThreshold + 0.001, Math.min(1, getDouble("flashMaxThreshold")));
+        flashStartFrequency = (float) Math.max(0, getDouble("flashStartFrequency"));
+        flashMaxFrequency = (float) Math.max(0, getDouble("flashMaxFrequency"));
         toggleStrafeAndTurnToCursorKey = getInt("toggleStrafeAndTurnToCursorKey");
         warnColor = getColor("warningColor");
         gaugeBackgroundColor = getColor("gaugeBackgroundColor");
@@ -82,30 +96,42 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         if(overrideColors) {
             reticleColor = getColor("reticleColor");
             gaugeColor = getColor("softFluxGaugeColor");
-            barColor = getColor("hardFluxBarColor");
+            hardFluxColor = getColor("hardFluxGaugeColor");
+            dividerColor = getColor("hardFluxDividerColor");
         } else {
             reticleColor = getColor(Global.getSettings().getColor("textFriendColor"), 1);
             gaugeColor = getColor(reticleColor, 0.5f);
-            barColor = Misc.interpolateColor(reticleColor, Color.WHITE, 0.5f);
+            hardFluxColor = Misc.interpolateColor(reticleColor, Color.WHITE, 0.5f);
+            dividerColor = hardFluxColor;
         }
 
         return true;
     }
 
     static final float
-            MAX_LENGTH = 80,
-            MIN_LENGTH = 20,
             MAX_OPACITY = 2,
             MIN_OPACITY = 0,
-            DISTANCE_FULL = 1.0f,
-            DISTANCE_HIDE = 0.1f,
-            BAR_WIDTH = 7f;
+            DEFAULT_MAX_LENGTH = 80,
+            DEFAULT_MIN_LENGTH = 20,
+            DEFAULT_DISTANCE_FULL = 1.0f,
+            DEFAULT_DISTANCE_HIDE = 0.1f,
+            DEFAULT_BAR_WIDTH = 7f,
+            TWO_PI = (float)(Math.PI * 2);
     static final int
             ESCAPE_KEY_VALUE = 1;
     static org.lwjgl.input.Cursor hiddenCursor, originalCursor;
     static boolean cursorNeedsReset = false, wasAutoTurnModePriorToActivation = false, errorDisplayed = false;
 
-    float scale = 1f, damageFlash = 0, fluxLastFrame = 0;
+    float scale = 1f, damageFlash = 0, fluxLastFrame = 0,
+            barWidth = DEFAULT_BAR_WIDTH,
+            minLength = DEFAULT_MIN_LENGTH,
+            maxLength = DEFAULT_MAX_LENGTH,
+            minDistance = DEFAULT_DISTANCE_HIDE,
+            maxDistance = DEFAULT_DISTANCE_FULL,
+            flashStartThreshold = 0.8f,
+            flashMaxThreshold = 1f,
+            flashStartFrequency = 1.9f,
+            flashMaxFrequency = 1.9f;
     int toggleStrafeAndTurnToCursorKey = 37, glowOpacity = 64;
     SpriteAPI frontKeyTurn, frontMouseTurn, back, half, quarter, hardBar, glowKeyTurn, glowMouseTurn;
     CombatEngineAPI engine;
@@ -113,7 +139,8 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     Vector2f mouse = new Vector2f(), at = new Vector2f(), normal = new Vector2f();
     Color reticleColor = Misc.getPositiveHighlightColor(),
             gaugeColor = Misc.getHighlightColor(),
-            barColor = Misc.getNegativeHighlightColor(),
+            hardFluxColor = Misc.getNegativeHighlightColor(),
+            dividerColor = Misc.getNegativeHighlightColor(),
             warnColor = Color.WHITE,
             gaugeBackgroundColor = Color.BLACK;
     ViewportAPI viewport;
@@ -186,16 +213,22 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     public String getFlagshipHullId() {
         return engine.getPlayerShip().getHullSpec().getBaseHullId();
     }
-    void drawGauge(float length, float level, Color c, float opacity, float colorLerp) {
-        Vector2f m = new Vector2f(mouse.x, mouse.y);
+    void drawGaugeSegment(float length, float minLevel, float maxLevel, Color c, float opacity, float colorLerp) {
+        minLevel = Math.max(0, Math.min(1, minLevel));
+        maxLevel = Math.max(0, Math.min(1, maxLevel));
+        if(maxLevel <= minLevel || opacity <= 0) return;
 
-        normal.normalise(normal);
-        Vector2f perp = new Vector2f(normal.y, -normal.x);
-
+        Vector2f direction = new Vector2f(normal);
+        direction.normalise(direction);
+        Vector2f perp = new Vector2f(direction.y, -direction.x);
+        float width = barWidth * scale;
+        float startDistance = length * (1f - maxLevel);
+        float endDistance = length * (1f - minLevel);
+        Vector2f nearCenter = new Vector2f(mouse.x + direction.x * startDistance, mouse.y + direction.y * startDistance);
+        Vector2f farCenter = new Vector2f(mouse.x + direction.x * endDistance, mouse.y + direction.y * endDistance);
+        Vector2f nearEdge = new Vector2f(nearCenter.x + perp.x * width * 0.5f, nearCenter.y + perp.y * width * 0.5f);
+        Vector2f farEdge = new Vector2f(farCenter.x + perp.x * width * 0.5f, farCenter.y + perp.y * width * 0.5f);
         c = Misc.interpolateColor(c, warnColor, colorLerp);
-
-        Vector2f.add(m, (Vector2f) normal.scale(length), m);
-        m.translate(perp.x * BAR_WIDTH * 0.5f * scale, perp.y * BAR_WIDTH * 0.5f * scale);
 
         glPushAttrib(GL_ALL_ATTRIB_BITS);
         glDisable(GL_TEXTURE_2D);
@@ -212,19 +245,24 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         {
             glColor4f(c.getRed()/255f, c.getGreen()/255f, c.getBlue()/255f, c.getAlpha()/255f * opacity);
 
-            glVertex2f(m.x, m.y);
-            Vector2f.sub(m, (Vector2f) perp.scale(BAR_WIDTH * scale), m);
-            glVertex2f(m.x, m.y);
-            Vector2f.sub(m, (Vector2f) normal.normalise().scale(length * level), m);
-            glVertex2f(m.x, m.y);
-            Vector2f.add(m, perp, m);
-            glVertex2f(m.x, m.y);
+            glVertex2f(farEdge.x, farEdge.y);
+            glVertex2f(farEdge.x - perp.x * width, farEdge.y - perp.y * width);
+            glVertex2f(nearEdge.x - perp.x * width, nearEdge.y - perp.y * width);
+            glVertex2f(nearEdge.x, nearEdge.y);
         }
         glEnd();
         glDisable(GL_BLEND);
         glPopAttrib();
 
         glColor4f(1, 1, 1, 1);
+    }
+    float getFlashAmount(float fluxLevel) {
+        float flashProgress = (fluxLevel - flashStartThreshold) / (flashMaxThreshold - flashStartThreshold);
+        flashProgress = Math.max(0, Math.min(1, flashProgress));
+        float frequency = flashStartFrequency + flashProgress * (flashMaxFrequency - flashStartFrequency);
+        float pulse = 0.5f * (1 + (float)Math.sin(engine.getTotalElapsedTime(true) * TWO_PI * frequency));
+
+        return pulse * flashProgress;
     }
     boolean isAutoTurnModeForCurrentFlagshipClass()  throws IOException, JSONException{
         if(engine != null && engine.getPlayerShip() != null && !engine.getCombatUI().isStrafeToggledOn()) {
@@ -363,22 +401,22 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                 Vector2f.sub(at, mouse, normal);
 
                 float f = Misc.getDistance(mouse, at) / viewport.getVisibleHeight() * 2;
-                f -= DISTANCE_HIDE;
-                f = Math.max(0, Math.min(1, f / (DISTANCE_FULL - DISTANCE_HIDE) * viewport.getViewMult()));
+                f -= minDistance;
+                f = Math.max(0, Math.min(1, f / (maxDistance - minDistance) * viewport.getViewMult()));
 
-                float soft = engine.getPlayerShip().getFluxLevel();
+                float flux = engine.getPlayerShip().getFluxLevel();
                 float opacity = Math.max(MIN_OPACITY, Math.min(1, f * MAX_OPACITY));
                 float hard = engine.getPlayerShip().getHardFluxLevel();
-                float length = (MIN_LENGTH + f * (MAX_LENGTH - MIN_LENGTH)) * scale;
+                float softOnly = Math.max(0, flux - hard);
+                float length = (minLength + f * (maxLength - minLength)) * scale;
                 float aimAngle = Misc.getAngleInDegrees(at, mouse);
-                float warnness = (0.5f * (1 + (float)Math.sin(engine.getTotalElapsedTime(true) * 12)))
-                        * Math.max(0, soft - 0.8f) * 3f;
+                float warnness = getFlashAmount(flux);
                 Color clr = new Color(reticleColor.getRGB());
                 Color glowClr = new Color(clr.getRed(), clr.getGreen(), clr.getBlue(), glowOpacity);
                 SpriteAPI front, glow;
 
-                damageFlash = Math.max(0, Math.min(1, damageFlash - amount * 1 + (soft - fluxLastFrame) * 5));
-                fluxLastFrame = soft;
+                damageFlash = Math.max(0, Math.min(1, damageFlash - amount * 1 + (flux - fluxLastFrame) * 5));
+                fluxLastFrame = flux;
                 warnness = Math.max(0, Math.min(1, warnness + damageFlash));
 
                 clr = Misc.interpolateColor(clr, warnColor, warnness);
@@ -411,7 +449,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
 
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-                if(opacity > 0) drawGauge(length, 1, gaugeBackgroundColor, opacity, 0);
+                if(opacity > 0) drawGaugeSegment(length, 0, 1, gaugeBackgroundColor, opacity, 0);
 
                 front.setColor(clr);
                 front.setAngle(aimAngle);
@@ -442,8 +480,8 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                     back.setAngle(aimAngle);
                     back.renderAtCenter(normal.x + mouse.x, normal.y + mouse.y);
 
-                    clr = new Color(barColor.getRed(), barColor.getGreen(), barColor.getBlue(),
-                            (int) Math.max(0, Math.min(255, barColor.getAlpha() * opacity * Math.min(1f, hard * 10f))));
+                    clr = new Color(dividerColor.getRed(), dividerColor.getGreen(), dividerColor.getBlue(),
+                            (int) Math.max(0, Math.min(255, dividerColor.getAlpha() * opacity * Math.min(1f, hard * 10f))));
                     clr = Misc.interpolateColor(clr, warnColor, warnness);
 
                     normal.normalise().scale(length * (1f - hard));
@@ -451,7 +489,8 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                     hardBar.setAngle(aimAngle);
                     hardBar.renderAtCenter(normal.x + mouse.x, normal.y + mouse.y);
 
-                    drawGauge(length, soft, gaugeColor, opacity, warnness);
+                    drawGaugeSegment(length, hard, hard + softOnly, gaugeColor, opacity, warnness);
+                    drawGaugeSegment(length, 0, hard, hardFluxColor, opacity, warnness);
                 }
 
                 glPopMatrix();

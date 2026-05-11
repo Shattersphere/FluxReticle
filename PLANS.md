@@ -1,0 +1,59 @@
+# Flux Reticle Fork Plans
+
+## Active goals
+
+- Make the flux bar width configurable.
+- Make reticle bar minimum length, maximum length, minimum-distance point, and maximum-distance point configurable.
+- Keep the flux bar background color configurable.
+- Use LunaLib integer RGBA controls instead of hex color controls for all relevant colors.
+- Make high-flux flashing configurable by start threshold, maximum threshold, start frequency, and maximum frequency.
+- Render and customize soft flux fill, hard flux fill, and the hard/soft divider separately.
+
+## Completed in this fork
+
+- Restored the installable mod surface around the upstream source tree:
+  - `mod_info.json`
+  - `FLUX_RETICLE_OPTIONS.ini`
+  - `data/config`
+  - `sun_fr/graphics`
+  - `jars/FluxReticle.jar`
+- Added configurable geometry settings:
+  - `fluxBarWidth`
+  - `minReticleLength`
+  - `maxReticleLength`
+  - `minReticleDistance`
+  - `maxReticleDistance`
+- Added configurable high-flux flash settings:
+  - `flashStartThreshold`
+  - `flashMaxThreshold`
+  - `flashStartFrequency`
+  - `flashMaxFrequency`
+- Replaced LunaLib hex color rows with explicit integer RGBA rows.
+- Removed the old blank LunaLib spacer row pattern.
+- Split flux-bar rendering into separate soft flux, hard flux, and divider color paths.
+- Added `scripts/build_mod.ps1` as the contributor-facing local build task.
+
+## Remaining work
+
+- Deploy this fork to the live Starsector `mods` folder through an explicit sync script.
+- Verify the affected combat flow in game:
+  - reticle appears and hides the native cursor correctly
+  - cursor resets after escape menu, command UI, combat end, and campaign return
+  - soft flux, hard flux, divider, and background colors render distinctly
+  - LunaLib RGBA settings load without parser errors
+  - size and distance settings behave intuitively at different zoom levels
+  - flash thresholds and frequencies respond visibly
+- Decide whether this is a private source fork or a renamed distributable fork.
+- If it becomes distributable, audit and update release metadata:
+  - `mod_info.json`
+  - `sun_fr.version`
+  - `jars/src.url`
+  - download/source/changelog URLs
+  - mod name, author, version, and possibly mod id
+
+## Validation cadence
+
+- For source changes, run:
+  - `powershell -ExecutionPolicy Bypass -File scripts/build_mod.ps1 -StarsectorDirectory <path>`
+- For Luna/settings changes, import `data/config/LunaSettings.csv` and confirm every row has a non-empty `fieldID`.
+- For user-facing rendering changes, compile success is not enough; open combat in game and test the exact reticle behavior.
