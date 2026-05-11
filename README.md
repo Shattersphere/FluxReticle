@@ -1,0 +1,71 @@
+# Flux Reticle Fork
+
+Fork of Flux Reticle with a separate Starsector identity and LunaLib-facing customization for reticle geometry, flux-bar colors, high-flux flashing, and point-blank bar visibility.
+
+## Runtime Identity
+
+- Mod id: `shattersphere_flux_reticle_fork`
+- Display name: `Flux Reticle Fork`
+- Runtime prefix: `shat_fr`
+- Main plugin: `flux_reticle.ModPlugin`
+- Combat renderer/input plugin: `flux_reticle.CombatPlugin`
+- Live test target: `C:\Games\Starsector\mods\Flux Reticle Fork`
+
+## Key Files
+
+- `src/flux_reticle/CombatPlugin.java`: combat input, cursor hiding/reset, reticle rendering, settings reads, soft/hard/divider gauge drawing, and minimum-distance bar visibility handling.
+- `FLUX_RETICLE_OPTIONS.ini`: fallback settings when LunaLib is not enabled.
+- `data/config/LunaSettings.csv`: LunaLib settings surface.
+- `shat_fr/graphics/`: reticle sprite assets.
+- `jars/FluxReticle.jar`: rebuilt runtime jar tracked for Starsector loading.
+- `scripts/build_mod.ps1`: compiles Java sources against Starsector and LunaLib.
+- `scripts/deploy_mod.ps1`: builds, stages, deploys to the live mod folder, and verifies live file hashes.
+
+## Current Features
+
+- Configurable flux bar width and min/max bar length.
+- Configurable min/max cursor distance for bar scaling.
+- `keepBarVisibleAtMinimumDistance`: keeps the bar visible at minimum length at point blank range instead of fading out.
+- Separate RGBA settings for reticle, soft flux, hard flux, hard/soft divider, warning flash, and background.
+- Configurable high-flux flash thresholds and frequency.
+- Cursor reset handling for combat end, command UI, escape menu, and campaign return.
+
+## Build
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\build_mod.ps1 -StarsectorDirectory 'C:\Games\Starsector'
+```
+
+The build script resolves:
+
+- Starsector core jars from `starsector-core`
+- LunaLib from the installed `lunalib` mod
+- Output jar at `jars\FluxReticle.jar`
+
+Expected compiler warnings are Java 8 bootstrap/deprecation/unchecked warnings from the Starsector modding toolchain.
+
+## Deploy
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\deploy_mod.ps1 -RepoRoot 'D:\Sean Mods\Flux Reticle Fork' -DeployTarget 'C:\Games\Starsector\mods\Flux Reticle Fork'
+```
+
+The deploy script rebuilds by default, validates `LunaSettings.csv`, stages the runtime files, copies them to the live mod folder, removes retired upstream shortcut files, and checks source/live hash parity. If Starsector is running, it queues a background worker rather than killing or overwriting the running game.
+
+## Runtime Checks
+
+After rendering changes, compile success is not enough. Test an in-game combat and verify:
+
+- The reticle appears and hides the native cursor correctly.
+- The cursor resets after escape menu, command UI, combat end, and campaign return.
+- Soft flux, hard flux, divider, and background colors render distinctly.
+- LunaLib settings load without parser errors.
+- Size and distance settings behave sensibly at different zoom levels.
+- `keepBarVisibleAtMinimumDistance` keeps the bar visible at minimum length near the ship.
+- Flash thresholds and frequencies respond visibly.
+
+## Notes
+
+- Distance settings are normalized to half the visible screen height, matching the original Flux Reticle distance formula.
+- LunaLib color settings use separate integer RGBA controls, not the old hex-color fields.
+- The old upstream UI-color override gate is intentionally gone; configured RGBA values apply directly.

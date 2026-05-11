@@ -92,7 +92,6 @@ $PostDeployValidationCommand = {
 # Each item supports Source, Destination, and Optional.
 # Destination is relative to deploy target unless absolute.
 $DeployItems = @(
-    @{ Source = "Change Log.url"; Destination = "Change Log.url"; Optional = $false },
     @{ Source = "FLUX_RETICLE_OPTIONS.ini"; Destination = "FLUX_RETICLE_OPTIONS.ini"; Optional = $false },
     @{ Source = "data"; Destination = "data"; Optional = $false },
     @{ Source = "jars"; Destination = "jars"; Optional = $false },
@@ -102,6 +101,8 @@ $DeployItems = @(
 )
 
 $RetiredDeployPaths = @(
+    "Change Log.url",
+    "jars\src.url",
     "sun_fr",
     "sun_fr.version"
 )
