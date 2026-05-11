@@ -25,7 +25,6 @@ shattersphere_flux_reticle_fork,shat_fr_warningColorRed,Warning Red,Int,255,,0,2
 shattersphere_flux_reticle_fork,shat_fr_warningColorGreen,Warning Green,Int,255,,0,255,Color Override
 shattersphere_flux_reticle_fork,shat_fr_warningColorBlue,Warning Blue,Int,255,,0,255,Color Override
 shattersphere_flux_reticle_fork,shat_fr_warningColorAlpha,Warning Alpha,Int,255,,0,255,Color Override
-shattersphere_flux_reticle_fork,shat_fr_overrideDefaultUiColors,Override Default UI Colors,Boolean,FALSE,"Controls whether or not the colors below will be used. If false, colors will be chosen automatically based on the UI settings.",,,Color Override
 shattersphere_flux_reticle_fork,shat_fr_reticleHeader,,Header,Reticle RGBA,,,,Color Override
 shattersphere_flux_reticle_fork,shat_fr_reticleColorRed,Reticle Red,Int,19,,0,255,Color Override
 shattersphere_flux_reticle_fork,shat_fr_reticleColorGreen,Reticle Green,Int,240,,0,255,Color Override

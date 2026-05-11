@@ -18,7 +18,7 @@ The main implementation work for the requested customization goals is present in
 - `FLUX_RETICLE_OPTIONS.ini`: fallback settings used when LunaLib is not enabled.
 - `data/config/LunaSettings.csv`: LunaLib settings surface. Colors are exposed as separate integer RGBA rows.
 - `scripts/build_mod.ps1`: local build task. It resolves Starsector from `-StarsectorDirectory`, `STARSECTOR_DIRECTORY`, or untracked `local.properties`.
-- `scripts/deploy_mod.ps1`: rebuilds by default, clean-syncs repo-managed runtime files to the live mod folder, and checks source/live hash parity for important files.
+- `scripts/deploy_mod.ps1`: Lessons-template deploy script. It rebuilds by default, stages runtime files, queues a background deploy worker if Starsector is running, and checks source/live hash parity for important files.
 - `jars/FluxReticle.jar`: rebuilt runtime jar.
 
 ## Build notes
@@ -48,6 +48,7 @@ The expected live target is `C:\Games\Starsector\mods\Flux Reticle Fork`.
 
 - Combat rendering has not yet been verified in game after the gauge split or fork identity rename.
 - LunaLib settings have been structurally changed from old `Color` plus opacity fields to integer RGBA fields; existing user LunaLib saved settings may need to fall back to defaults for renamed fields.
+- The old upstream `overrideDefaultUiColors` gate has been removed from active code because it made custom colors look broken when left off. RGBA settings now apply directly.
 - Distance settings are normalized to half the visible screen height because that matches the original reticle distance formula. The Luna descriptions say this, but in-game feel still needs testing.
 - The hard flux divider still uses the existing `hardBar` sprite. Only its color path is newly separated.
 

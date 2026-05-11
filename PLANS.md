@@ -29,11 +29,12 @@
   - `flashStartFrequency`
   - `flashMaxFrequency`
 - Replaced LunaLib hex color rows with explicit integer RGBA rows.
+- Removed the old upstream UI-color override gate so configured RGBA values are always used.
 - Removed the old blank LunaLib spacer row pattern.
 - Split flux-bar rendering into separate soft flux, hard flux, and divider color paths.
 - Added `scripts/build_mod.ps1` as the contributor-facing local build task.
 - Renamed the fork's Starsector identity to `Flux Reticle Fork` with mod id `shattersphere_flux_reticle_fork` so TriOS treats it separately from upstream Flux Reticle.
-- Added `scripts/deploy_mod.ps1` for explicit clean-sync deployment to the live Starsector mods folder.
+- Replaced the ad hoc deploy script with the Lessons deploy-template pattern so blocked deploys queue in the background and newer deploys supersede older pending ones.
 
 ## Remaining work
 

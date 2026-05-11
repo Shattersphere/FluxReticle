@@ -73,8 +73,6 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         return Math.max(0, Math.min(255, (int)LunaSettings.getInt(ID, id)));
     }
     boolean readSettings() throws Exception {
-        boolean overrideColors = getBoolean("overrideDefaultUiColors");
-
         showReticle = getBoolean("showReticle");
         showReticleWhenInterfaceIsHidden = getBoolean("showReticleWhenInterfaceIsHidden");
         glowOpacity = getInt("glowOpacity");
@@ -92,18 +90,10 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         toggleStrafeAndTurnToCursorKey = getInt("toggleStrafeAndTurnToCursorKey");
         warnColor = getColor("warningColor");
         gaugeBackgroundColor = getColor("gaugeBackgroundColor");
-
-        if(overrideColors) {
-            reticleColor = getColor("reticleColor");
-            gaugeColor = getColor("softFluxGaugeColor");
-            hardFluxColor = getColor("hardFluxGaugeColor");
-            dividerColor = getColor("hardFluxDividerColor");
-        } else {
-            reticleColor = getColor(Global.getSettings().getColor("textFriendColor"), 1);
-            gaugeColor = getColor(reticleColor, 0.5f);
-            hardFluxColor = Misc.interpolateColor(reticleColor, Color.WHITE, 0.5f);
-            dividerColor = hardFluxColor;
-        }
+        reticleColor = getColor("reticleColor");
+        gaugeColor = getColor("softFluxGaugeColor");
+        hardFluxColor = getColor("hardFluxGaugeColor");
+        dividerColor = getColor("hardFluxDividerColor");
 
         return true;
     }
