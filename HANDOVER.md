@@ -1,0 +1,46 @@
+# Flux Reticle Fork Handover
+
+## Agent Context
+
+This repo is a working Starsector mod fork, not just source notes. Keep runtime files and source aligned:
+
+- Source root: `D:\Sean Mods\Flux Reticle Fork`
+- Live target: `C:\Games\Starsector\mods\Flux Reticle Fork`
+- Mod id: `shattersphere_flux_reticle_fork`
+- Runtime prefix: `shat_fr`
+- Built jar: `jars\FluxReticle.jar`
+
+## Ownership Map
+
+- `src/flux_reticle/CombatPlugin.java`: reticle rendering, cursor hiding/reset, input handling, Luna/INI setting reads, soft/hard/divider drawing, and minimum-distance visibility behavior.
+- `FLUX_RETICLE_OPTIONS.ini`: non-Luna fallback settings. Add new runtime settings here whenever Luna gets a matching field.
+- `data/config/LunaSettings.csv`: LunaLib settings. Field IDs must use `shat_fr_`.
+- `scripts/build_mod.ps1`: compiles Java against Starsector and LunaLib.
+- `scripts/deploy_mod.ps1`: rebuilds, stages, deploys, removes retired upstream files, and checks live hash parity.
+- `README.md`: user-facing overview. Keep agent workflow details here in `HANDOVER.md` or `PLANS.md`.
+
+## Current Behavior Notes
+
+- The fork uses separate integer RGBA Luna settings; the old upstream color override gate is intentionally gone.
+- Distance settings are normalized to half the visible screen height.
+- `keepBarVisibleAtMinimumDistance` defaults on and prevents the flux bar from fading out at point blank range.
+- The hard/soft divider still uses the `hardBar` sprite, but its color is controlled separately.
+- Combat rendering still needs in-game confirmation after UI-facing changes; build success is not enough.
+
+## Validation
+
+For code changes:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\build_mod.ps1 -StarsectorDirectory 'C:\Games\Starsector'
+```
+
+For deploy:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\deploy_mod.ps1 -RepoRoot 'D:\Sean Mods\Flux Reticle Fork' -DeployTarget 'C:\Games\Starsector\mods\Flux Reticle Fork'
+```
+
+For Luna/settings changes, import `data/config/LunaSettings.csv` and check for empty or duplicate `fieldID` values.
+
+If Starsector is running, deploy queues a worker instead of forcing file replacement. Verify queued deploys before assuming the live folder is current.
