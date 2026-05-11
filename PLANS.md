@@ -4,6 +4,7 @@
 
 - Make the flux bar width configurable.
 - Make reticle bar minimum length, maximum length, minimum-distance point, and maximum-distance point configurable.
+- Make point-blank flux-bar visibility configurable so the bar can stop at minimum length instead of fading out.
 - Keep the flux bar background color configurable.
 - Use LunaLib integer RGBA controls instead of hex color controls for all relevant colors.
 - Make high-flux flashing configurable by start threshold, maximum threshold, start frequency, and maximum frequency.
@@ -23,6 +24,7 @@
   - `maxReticleLength`
   - `minReticleDistance`
   - `maxReticleDistance`
+  - `keepBarVisibleAtMinimumDistance`
 - Added configurable high-flux flash settings:
   - `flashStartThreshold`
   - `flashMaxThreshold`

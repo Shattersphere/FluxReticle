@@ -14,7 +14,7 @@ The main implementation work for the requested customization goals is present in
 
 ## Important files
 
-- `src/flux_reticle/CombatPlugin.java`: combat input, cursor hiding/reset, reticle rendering, settings reads, soft/hard/divider gauge drawing.
+- `src/flux_reticle/CombatPlugin.java`: combat input, cursor hiding/reset, reticle rendering, settings reads, soft/hard/divider gauge drawing, and minimum-distance bar visibility handling.
 - `FLUX_RETICLE_OPTIONS.ini`: fallback settings used when LunaLib is not enabled.
 - `data/config/LunaSettings.csv`: LunaLib settings surface. Colors are exposed as separate integer RGBA rows.
 - `scripts/build_mod.ps1`: local build task. It resolves Starsector from `-StarsectorDirectory`, `STARSECTOR_DIRECTORY`, or untracked `local.properties`.
@@ -50,7 +50,7 @@ The expected live target is `C:\Games\Starsector\mods\Flux Reticle Fork`.
 - LunaLib settings have been structurally changed from old `Color` plus opacity fields to integer RGBA fields; existing user LunaLib saved settings may need to fall back to defaults for renamed fields.
 - The old upstream `overrideDefaultUiColors` gate has been removed from active code because it made custom colors look broken when left off. RGBA settings now apply directly.
 - Combat init now clears the static error latch, common-data loading recreates a missing/corrupt file, and gauge drawing isolates its OpenGL matrix translation.
-- Distance settings are normalized to half the visible screen height because that matches the original reticle distance formula. The Luna descriptions say this, but in-game feel still needs testing.
+- Distance settings are normalized to half the visible screen height because that matches the original reticle distance formula. The Luna descriptions say this, but in-game feel still needs testing. `keepBarVisibleAtMinimumDistance` now defaults on so the flux bar remains visible at minimum length even when the cursor is at point blank range.
 - The hard flux divider still uses the existing `hardBar` sprite. Only its color path is newly separated.
 
 ## Next best task

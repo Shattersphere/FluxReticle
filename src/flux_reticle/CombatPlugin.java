@@ -83,6 +83,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         maxLength = (float) Math.max(minLength, getDouble("maxReticleLength"));
         minDistance = (float) Math.max(0, getDouble("minReticleDistance"));
         maxDistance = (float) Math.max(minDistance + 0.001, getDouble("maxReticleDistance"));
+        keepBarVisibleAtMinimumDistance = getBoolean("keepBarVisibleAtMinimumDistance");
         flashStartThreshold = (float) Math.max(0, Math.min(1, getDouble("flashStartThreshold")));
         flashMaxThreshold = (float) Math.max(flashStartThreshold + 0.001, Math.min(1, getDouble("flashMaxThreshold")));
         flashStartFrequency = (float) Math.max(0, getDouble("flashStartFrequency"));
@@ -125,7 +126,8 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     int toggleStrafeAndTurnToCursorKey = 37, glowOpacity = 64;
     SpriteAPI frontKeyTurn, frontMouseTurn, back, half, quarter, hardBar, glowKeyTurn, glowMouseTurn;
     CombatEngineAPI engine;
-    boolean escapeMenuIsOpen = false, needToLoadSettings = true, showReticle, showReticleWhenInterfaceIsHidden;
+    boolean escapeMenuIsOpen = false, needToLoadSettings = true, showReticle, showReticleWhenInterfaceIsHidden,
+            keepBarVisibleAtMinimumDistance;
     Vector2f mouse = new Vector2f(), at = new Vector2f(), normal = new Vector2f();
     Color reticleColor = Misc.getPositiveHighlightColor(),
             gaugeColor = Misc.getHighlightColor(),
@@ -398,11 +400,17 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                 f = Math.max(0, Math.min(1, f / (maxDistance - minDistance) * viewport.getViewMult()));
 
                 float flux = engine.getPlayerShip().getFluxLevel();
-                float opacity = Math.max(MIN_OPACITY, Math.min(1, f * MAX_OPACITY));
+                float opacity = keepBarVisibleAtMinimumDistance
+                        ? 1f
+                        : Math.max(MIN_OPACITY, Math.min(1, f * MAX_OPACITY));
                 float hard = engine.getPlayerShip().getHardFluxLevel();
                 float softOnly = Math.max(0, flux - hard);
                 float length = (minLength + f * (maxLength - minLength)) * scale;
                 float aimAngle = Misc.getAngleInDegrees(at, mouse);
+                if (normal.lengthSquared() <= 0.0001f) {
+                    double radians = Math.toRadians(aimAngle + 180f);
+                    normal.set((float) Math.cos(radians), (float) Math.sin(radians));
+                }
                 float warnness = getFlashAmount(flux);
                 Color clr = new Color(reticleColor.getRGB());
                 Color glowClr = new Color(clr.getRed(), clr.getGreen(), clr.getBlue(), glowOpacity);

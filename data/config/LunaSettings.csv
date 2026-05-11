@@ -10,6 +10,7 @@ shattersphere_flux_reticle_fork,shat_fr_minReticleLength,Minimum Bar Length,Doub
 shattersphere_flux_reticle_fork,shat_fr_maxReticleLength,Maximum Bar Length,Double,80,Controls the maximum drawn length of the flux bar.,1,500,General
 shattersphere_flux_reticle_fork,shat_fr_minReticleDistance,Minimum Size Distance,Double,0.1,Ship-to-cursor distance where the bar is at minimum length. Distance is normalized to half the visible screen height.,0,5,General
 shattersphere_flux_reticle_fork,shat_fr_maxReticleDistance,Maximum Size Distance,Double,1,Ship-to-cursor distance where the bar reaches maximum length. Distance is normalized to half the visible screen height.,0.001,5,General
+shattersphere_flux_reticle_fork,shat_fr_keepBarVisibleAtMinimumDistance,Keep Minimum Bar Visible,Boolean,TRUE,Keeps the flux bar fully visible when the cursor is at or inside the minimum-size distance instead of fading it out at point blank range.,,,General
 shattersphere_flux_reticle_fork,shat_fr_flashHeader,,Header,High Flux Flashing,,,,General
 shattersphere_flux_reticle_fork,shat_fr_flashStartThreshold,Flash Start Flux,Double,0.8,Flux level where warning flashing begins.,0,1,General
 shattersphere_flux_reticle_fork,shat_fr_flashMaxThreshold,Flash Maximum Flux,Double,1,Flux level where warning flashing reaches full intensity.,0,1,General
