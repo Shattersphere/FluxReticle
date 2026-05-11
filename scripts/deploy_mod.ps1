@@ -101,6 +101,11 @@ $DeployItems = @(
     @{ Source = "shat_fr"; Destination = "shat_fr"; Optional = $false }
 )
 
+$RetiredDeployPaths = @(
+    "sun_fr",
+    "sun_fr.version"
+)
+
 # Processes that make it unsafe to copy/deploy. The script waits for these to
 # exit. It never kills these processes.
 $BlockedProcesses = @(
@@ -586,6 +591,16 @@ try {
     foreach ($item in $DeployItems) {
         Assert-CurrentRun -StateFile $stateFile -RunId $runId
         Publish-DeployItem -StagingRoot $stagingRoot -DeployTarget $DeployTarget -Item $item -DryRun:$DryRun
+    }
+
+    foreach ($relativePath in $RetiredDeployPaths) {
+        $retiredPath = Resolve-ConfigPath -Base $DeployTarget -Path $relativePath
+        if (Test-Path -LiteralPath $retiredPath) {
+            Write-Host "Remove retired deploy path: $retiredPath"
+            if (-not $DryRun) {
+                Remove-Item -LiteralPath $retiredPath -Recurse -Force
+            }
+        }
     }
 
     Set-DeployPhase -StateFile $stateFile -RunId $runId -Phase "post-validation"

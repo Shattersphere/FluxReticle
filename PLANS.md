@@ -35,6 +35,7 @@
 - Added `scripts/build_mod.ps1` as the contributor-facing local build task.
 - Renamed the fork's Starsector identity to `Flux Reticle Fork` with mod id `shattersphere_flux_reticle_fork` so TriOS treats it separately from upstream Flux Reticle.
 - Replaced the ad hoc deploy script with the Lessons deploy-template pattern so blocked deploys queue in the background and newer deploys supersede older pending ones.
+- Fixed sweep findings in combat/plugin lifecycle handling: null script removal, missing/corrupt common-data recovery, per-combat error latch reset, and matrix isolation for gauge drawing.
 
 ## Remaining work
 

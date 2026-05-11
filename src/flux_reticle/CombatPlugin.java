@@ -230,6 +230,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
 
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glPushMatrix();
         glTranslatef(0.01f, 0.01f, 0);
         glBegin(GL_QUADS);
         {
@@ -241,6 +242,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             glVertex2f(nearEdge.x, nearEdge.y);
         }
         glEnd();
+        glPopMatrix();
         glDisable(GL_BLEND);
         glPopAttrib();
 
@@ -281,6 +283,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     public void init(CombatEngineAPI engine) {
         try {
             this.engine = engine;
+            errorDisplayed = false;
 
             resetCursor();
 
@@ -296,7 +299,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
 
             try {
                 commonData = new JSONObject(Global.getSettings().readTextFileFromCommon(COMMON_DATA_PATH));
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 Global.getSettings().writeTextFileToCommon(COMMON_DATA_PATH, "{}");
                 commonData = new JSONObject(Global.getSettings().readTextFileFromCommon(COMMON_DATA_PATH));
             }

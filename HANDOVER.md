@@ -49,6 +49,7 @@ The expected live target is `C:\Games\Starsector\mods\Flux Reticle Fork`.
 - Combat rendering has not yet been verified in game after the gauge split or fork identity rename.
 - LunaLib settings have been structurally changed from old `Color` plus opacity fields to integer RGBA fields; existing user LunaLib saved settings may need to fall back to defaults for renamed fields.
 - The old upstream `overrideDefaultUiColors` gate has been removed from active code because it made custom colors look broken when left off. RGBA settings now apply directly.
+- Combat init now clears the static error latch, common-data loading recreates a missing/corrupt file, and gauge drawing isolates its OpenGL matrix translation.
 - Distance settings are normalized to half the visible screen height because that matches the original reticle distance formula. The Luna descriptions say this, but in-game feel still needs testing.
 - The hard flux divider still uses the existing `hardBar` sprite. Only its color path is newly separated.
 

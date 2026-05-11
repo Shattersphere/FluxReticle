@@ -8,13 +8,17 @@ public class ModPlugin extends BaseModPlugin {
 
     @Override
     public void onGameLoad(boolean newGame) {
-        Global.getSector().removeScript(script);
+        if(script != null) {
+            Global.getSector().removeScript(script);
+        }
         Global.getSector().addTransientScript(script = new CampaignPlugin());
     }
 
     @Override
     public void beforeGameSave() {
-        Global.getSector().removeScript(script);
+        if(script != null) {
+            Global.getSector().removeScript(script);
+        }
     }
 
     @Override
