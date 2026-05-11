@@ -1,0 +1,12 @@
+{
+    "masterVersionFile":"https://raw.githubusercontent.com/Shattersphere/FluxReticle/master/shat_fr.version",
+    "directDownloadURL":"https://github.com/Shattersphere/FluxReticle/releases/latest/download/Flux.Reticle.Fork.zip",
+    "modName":"Flux Reticle Fork",
+    "modThreadId":0,
+    "modVersion":
+    {
+        "major":1,
+        "minor":4,
+        "patch":"0-fork.1",
+    },
+}

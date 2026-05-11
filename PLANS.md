@@ -15,7 +15,7 @@
   - `mod_info.json`
   - `FLUX_RETICLE_OPTIONS.ini`
   - `data/config`
-  - `sun_fr/graphics`
+  - `shat_fr/graphics`
   - `jars/FluxReticle.jar`
 - Added configurable geometry settings:
   - `fluxBarWidth`
@@ -32,10 +32,11 @@
 - Removed the old blank LunaLib spacer row pattern.
 - Split flux-bar rendering into separate soft flux, hard flux, and divider color paths.
 - Added `scripts/build_mod.ps1` as the contributor-facing local build task.
+- Renamed the fork's Starsector identity to `Flux Reticle Fork` with mod id `shattersphere_flux_reticle_fork` so TriOS treats it separately from upstream Flux Reticle.
+- Added `scripts/deploy_mod.ps1` for explicit clean-sync deployment to the live Starsector mods folder.
 
 ## Remaining work
 
-- Deploy this fork to the live Starsector `mods` folder through an explicit sync script.
 - Verify the affected combat flow in game:
   - reticle appears and hides the native cursor correctly
   - cursor resets after escape menu, command UI, combat end, and campaign return
@@ -46,7 +47,7 @@
 - Decide whether this is a private source fork or a renamed distributable fork.
 - If it becomes distributable, audit and update release metadata:
   - `mod_info.json`
-  - `sun_fr.version`
+  - `shat_fr.version`
   - `jars/src.url`
   - download/source/changelog URLs
   - mod name, author, version, and possibly mod id
@@ -55,5 +56,7 @@
 
 - For source changes, run:
   - `powershell -ExecutionPolicy Bypass -File scripts/build_mod.ps1 -StarsectorDirectory <path>`
+- After any runtime change, deploy to the live mod folder:
+  - `powershell -ExecutionPolicy Bypass -File scripts/deploy_mod.ps1 -StarsectorDirectory <path>`
 - For Luna/settings changes, import `data/config/LunaSettings.csv` and confirm every row has a non-empty `fieldID`.
 - For user-facing rendering changes, compile success is not enough; open combat in game and test the exact reticle behavior.

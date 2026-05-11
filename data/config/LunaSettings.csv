@@ -1,48 +1,48 @@
 modID,fieldID,fieldName,fieldType,defaultValue,fieldDescription,minValue,maxValue,tab
-sun_flux_reticle,sun_fr_showReticle,Show Flux Reticle Instead of Default Cursor,Boolean,TRUE,"Controls whether or not the default cursor is overridden. If false, only the vanilla cursor will be shown, but you will still be able to toggle ""strafe and turn to cursor"" behavior.",,,General
-sun_flux_reticle,sun_fr_showReticleWhenInterfaceIsHidden,Show Reticle While Interface is Hidden,Boolean,FALSE,"Controls whether or not the flux reticle is displayed instead of the cursor while the interface is hidden. The default cursor does not show up in screenshots, but the flux reticle does.",,,General
-sun_flux_reticle,sun_fr_sizeMult,Reticle Sprite Size Multiplier,Double,1,Scales the sprite parts of the flux reticle.,0.2,5,General
-sun_flux_reticle,sun_fr_toggleStrafeAndTurnToCursorKey,Strafe Toggle Keybind,Keycode,37,"Changes the keybind for toggling ""strafe and turn to cursor"" behavior.",,,General
-sun_flux_reticle,sun_fr_glowOpacity,Reticle Glow Alpha,Int,64,Controls how visible the glow of the reticle is.,0,255,General
-sun_flux_reticle,sun_fr_geometryHeader,,Header,Reticle Geometry,,,,General
-sun_flux_reticle,sun_fr_fluxBarWidth,Flux Bar Width,Double,7,Controls the width of the flux bar drawn behind the reticle.,0.5,40,General
-sun_flux_reticle,sun_fr_minReticleLength,Minimum Bar Length,Double,20,Controls the minimum drawn length of the flux bar.,1,300,General
-sun_flux_reticle,sun_fr_maxReticleLength,Maximum Bar Length,Double,80,Controls the maximum drawn length of the flux bar.,1,500,General
-sun_flux_reticle,sun_fr_minReticleDistance,Minimum Size Distance,Double,0.1,Ship-to-cursor distance where the bar is at minimum length. Distance is normalized to half the visible screen height.,0,5,General
-sun_flux_reticle,sun_fr_maxReticleDistance,Maximum Size Distance,Double,1,Ship-to-cursor distance where the bar reaches maximum length. Distance is normalized to half the visible screen height.,0.001,5,General
-sun_flux_reticle,sun_fr_flashHeader,,Header,High Flux Flashing,,,,General
-sun_flux_reticle,sun_fr_flashStartThreshold,Flash Start Flux,Double,0.8,Flux level where warning flashing begins.,0,1,General
-sun_flux_reticle,sun_fr_flashMaxThreshold,Flash Maximum Flux,Double,1,Flux level where warning flashing reaches full intensity.,0,1,General
-sun_flux_reticle,sun_fr_flashStartFrequency,Flash Start Frequency,Double,1.9,Flash frequency in cycles per second when warning flashing begins.,0,20,General
-sun_flux_reticle,sun_fr_flashMaxFrequency,Flash Maximum Frequency,Double,1.9,Flash frequency in cycles per second at full warning intensity.,0,20,General
-sun_flux_reticle,sun_fr_gaugeBackgroundHeader,,Header,Flux Bar Background RGBA,,,,Color Override
-sun_flux_reticle,sun_fr_gaugeBackgroundColorRed,Background Red,Int,0,,0,255,Color Override
-sun_flux_reticle,sun_fr_gaugeBackgroundColorGreen,Background Green,Int,0,,0,255,Color Override
-sun_flux_reticle,sun_fr_gaugeBackgroundColorBlue,Background Blue,Int,0,,0,255,Color Override
-sun_flux_reticle,sun_fr_gaugeBackgroundColorAlpha,Background Alpha,Int,192,,0,255,Color Override
-sun_flux_reticle,sun_fr_warningHeader,,Header,Warning Flash RGBA,,,,Color Override
-sun_flux_reticle,sun_fr_warningColorRed,Warning Red,Int,255,,0,255,Color Override
-sun_flux_reticle,sun_fr_warningColorGreen,Warning Green,Int,255,,0,255,Color Override
-sun_flux_reticle,sun_fr_warningColorBlue,Warning Blue,Int,255,,0,255,Color Override
-sun_flux_reticle,sun_fr_warningColorAlpha,Warning Alpha,Int,255,,0,255,Color Override
-sun_flux_reticle,sun_fr_overrideDefaultUiColors,Override Default UI Colors,Boolean,FALSE,"Controls whether or not the colors below will be used. If false, colors will be chosen automatically based on the UI settings.",,,Color Override
-sun_flux_reticle,sun_fr_reticleHeader,,Header,Reticle RGBA,,,,Color Override
-sun_flux_reticle,sun_fr_reticleColorRed,Reticle Red,Int,19,,0,255,Color Override
-sun_flux_reticle,sun_fr_reticleColorGreen,Reticle Green,Int,240,,0,255,Color Override
-sun_flux_reticle,sun_fr_reticleColorBlue,Reticle Blue,Int,255,,0,255,Color Override
-sun_flux_reticle,sun_fr_reticleColorAlpha,Reticle Alpha,Int,255,,0,255,Color Override
-sun_flux_reticle,sun_fr_softFluxGaugeHeader,,Header,Soft Flux RGBA,,,,Color Override
-sun_flux_reticle,sun_fr_softFluxGaugeColorRed,Soft Flux Red,Int,19,,0,255,Color Override
-sun_flux_reticle,sun_fr_softFluxGaugeColorGreen,Soft Flux Green,Int,240,,0,255,Color Override
-sun_flux_reticle,sun_fr_softFluxGaugeColorBlue,Soft Flux Blue,Int,255,,0,255,Color Override
-sun_flux_reticle,sun_fr_softFluxGaugeColorAlpha,Soft Flux Alpha,Int,192,,0,255,Color Override
-sun_flux_reticle,sun_fr_hardFluxGaugeHeader,,Header,Hard Flux RGBA,,,,Color Override
-sun_flux_reticle,sun_fr_hardFluxGaugeColorRed,Hard Flux Red,Int,188,,0,255,Color Override
-sun_flux_reticle,sun_fr_hardFluxGaugeColorGreen,Hard Flux Green,Int,251,,0,255,Color Override
-sun_flux_reticle,sun_fr_hardFluxGaugeColorBlue,Hard Flux Blue,Int,255,,0,255,Color Override
-sun_flux_reticle,sun_fr_hardFluxGaugeColorAlpha,Hard Flux Alpha,Int,192,,0,255,Color Override
-sun_flux_reticle,sun_fr_hardFluxDividerHeader,,Header,Hard Flux Divider RGBA,,,,Color Override
-sun_flux_reticle,sun_fr_hardFluxDividerColorRed,Divider Red,Int,188,,0,255,Color Override
-sun_flux_reticle,sun_fr_hardFluxDividerColorGreen,Divider Green,Int,251,,0,255,Color Override
-sun_flux_reticle,sun_fr_hardFluxDividerColorBlue,Divider Blue,Int,255,,0,255,Color Override
-sun_flux_reticle,sun_fr_hardFluxDividerColorAlpha,Divider Alpha,Int,255,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_showReticle,Show Flux Reticle Instead of Default Cursor,Boolean,TRUE,"Controls whether or not the default cursor is overridden. If false, only the vanilla cursor will be shown, but you will still be able to toggle ""strafe and turn to cursor"" behavior.",,,General
+shattersphere_flux_reticle_fork,shat_fr_showReticleWhenInterfaceIsHidden,Show Reticle While Interface is Hidden,Boolean,FALSE,"Controls whether or not the flux reticle is displayed instead of the cursor while the interface is hidden. The default cursor does not show up in screenshots, but the flux reticle does.",,,General
+shattersphere_flux_reticle_fork,shat_fr_sizeMult,Reticle Sprite Size Multiplier,Double,1,Scales the sprite parts of the flux reticle.,0.2,5,General
+shattersphere_flux_reticle_fork,shat_fr_toggleStrafeAndTurnToCursorKey,Strafe Toggle Keybind,Keycode,37,"Changes the keybind for toggling ""strafe and turn to cursor"" behavior.",,,General
+shattersphere_flux_reticle_fork,shat_fr_glowOpacity,Reticle Glow Alpha,Int,64,Controls how visible the glow of the reticle is.,0,255,General
+shattersphere_flux_reticle_fork,shat_fr_geometryHeader,,Header,Reticle Geometry,,,,General
+shattersphere_flux_reticle_fork,shat_fr_fluxBarWidth,Flux Bar Width,Double,7,Controls the width of the flux bar drawn behind the reticle.,0.5,40,General
+shattersphere_flux_reticle_fork,shat_fr_minReticleLength,Minimum Bar Length,Double,20,Controls the minimum drawn length of the flux bar.,1,300,General
+shattersphere_flux_reticle_fork,shat_fr_maxReticleLength,Maximum Bar Length,Double,80,Controls the maximum drawn length of the flux bar.,1,500,General
+shattersphere_flux_reticle_fork,shat_fr_minReticleDistance,Minimum Size Distance,Double,0.1,Ship-to-cursor distance where the bar is at minimum length. Distance is normalized to half the visible screen height.,0,5,General
+shattersphere_flux_reticle_fork,shat_fr_maxReticleDistance,Maximum Size Distance,Double,1,Ship-to-cursor distance where the bar reaches maximum length. Distance is normalized to half the visible screen height.,0.001,5,General
+shattersphere_flux_reticle_fork,shat_fr_flashHeader,,Header,High Flux Flashing,,,,General
+shattersphere_flux_reticle_fork,shat_fr_flashStartThreshold,Flash Start Flux,Double,0.8,Flux level where warning flashing begins.,0,1,General
+shattersphere_flux_reticle_fork,shat_fr_flashMaxThreshold,Flash Maximum Flux,Double,1,Flux level where warning flashing reaches full intensity.,0,1,General
+shattersphere_flux_reticle_fork,shat_fr_flashStartFrequency,Flash Start Frequency,Double,1.9,Flash frequency in cycles per second when warning flashing begins.,0,20,General
+shattersphere_flux_reticle_fork,shat_fr_flashMaxFrequency,Flash Maximum Frequency,Double,1.9,Flash frequency in cycles per second at full warning intensity.,0,20,General
+shattersphere_flux_reticle_fork,shat_fr_gaugeBackgroundHeader,,Header,Flux Bar Background RGBA,,,,Color Override
+shattersphere_flux_reticle_fork,shat_fr_gaugeBackgroundColorRed,Background Red,Int,0,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_gaugeBackgroundColorGreen,Background Green,Int,0,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_gaugeBackgroundColorBlue,Background Blue,Int,0,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_gaugeBackgroundColorAlpha,Background Alpha,Int,192,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_warningHeader,,Header,Warning Flash RGBA,,,,Color Override
+shattersphere_flux_reticle_fork,shat_fr_warningColorRed,Warning Red,Int,255,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_warningColorGreen,Warning Green,Int,255,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_warningColorBlue,Warning Blue,Int,255,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_warningColorAlpha,Warning Alpha,Int,255,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_overrideDefaultUiColors,Override Default UI Colors,Boolean,FALSE,"Controls whether or not the colors below will be used. If false, colors will be chosen automatically based on the UI settings.",,,Color Override
+shattersphere_flux_reticle_fork,shat_fr_reticleHeader,,Header,Reticle RGBA,,,,Color Override
+shattersphere_flux_reticle_fork,shat_fr_reticleColorRed,Reticle Red,Int,19,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_reticleColorGreen,Reticle Green,Int,240,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_reticleColorBlue,Reticle Blue,Int,255,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_reticleColorAlpha,Reticle Alpha,Int,255,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_softFluxGaugeHeader,,Header,Soft Flux RGBA,,,,Color Override
+shattersphere_flux_reticle_fork,shat_fr_softFluxGaugeColorRed,Soft Flux Red,Int,19,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_softFluxGaugeColorGreen,Soft Flux Green,Int,240,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_softFluxGaugeColorBlue,Soft Flux Blue,Int,255,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_softFluxGaugeColorAlpha,Soft Flux Alpha,Int,192,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_hardFluxGaugeHeader,,Header,Hard Flux RGBA,,,,Color Override
+shattersphere_flux_reticle_fork,shat_fr_hardFluxGaugeColorRed,Hard Flux Red,Int,188,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_hardFluxGaugeColorGreen,Hard Flux Green,Int,251,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_hardFluxGaugeColorBlue,Hard Flux Blue,Int,255,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_hardFluxGaugeColorAlpha,Hard Flux Alpha,Int,192,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_hardFluxDividerHeader,,Header,Hard Flux Divider RGBA,,,,Color Override
+shattersphere_flux_reticle_fork,shat_fr_hardFluxDividerColorRed,Divider Red,Int,188,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_hardFluxDividerColorGreen,Divider Green,Int,251,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_hardFluxDividerColorBlue,Divider Blue,Int,255,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_hardFluxDividerColorAlpha,Divider Alpha,Int,255,,0,255,Color Override

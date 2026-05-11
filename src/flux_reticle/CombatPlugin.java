@@ -26,10 +26,10 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.glPopAttrib;
 
 public class CombatPlugin implements EveryFrameCombatPlugin {
-    public final static String PREFIX = "sun_fr_";
-    public static final String ID = "sun_flux_reticle",
+    public final static String PREFIX = "shat_fr_";
+    public static final String ID = "shattersphere_flux_reticle_fork",
             SETTINGS_PATH = "FLUX_RETICLE_OPTIONS.ini",
-            COMMON_DATA_PATH = "sun_fr/auto_turn_choices.json";
+            COMMON_DATA_PATH = "shat_fr/auto_turn_choices.json";
 
     static final String LUNALIB_ID = "lunalib";
     static JSONObject settingsCfg = null;
@@ -294,14 +294,14 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
 
             resetCursor();
 
-            frontKeyTurn = Global.getSettings().getSprite("sun_fr", "frontKeyTurn");
-            frontMouseTurn = Global.getSettings().getSprite("sun_fr", "frontMouseTurn");
-            glowKeyTurn = Global.getSettings().getSprite("sun_fr", "glowKeyTurn");
-            glowMouseTurn = Global.getSettings().getSprite("sun_fr", "glowMouseTurn");
-            back = Global.getSettings().getSprite("sun_fr", "back");
-            half = Global.getSettings().getSprite("sun_fr", "half");
-            quarter = Global.getSettings().getSprite("sun_fr", "quarter");
-            hardBar = Global.getSettings().getSprite("sun_fr", "hardBar");
+            frontKeyTurn = Global.getSettings().getSprite("shat_fr", "frontKeyTurn");
+            frontMouseTurn = Global.getSettings().getSprite("shat_fr", "frontMouseTurn");
+            glowKeyTurn = Global.getSettings().getSprite("shat_fr", "glowKeyTurn");
+            glowMouseTurn = Global.getSettings().getSprite("shat_fr", "glowMouseTurn");
+            back = Global.getSettings().getSprite("shat_fr", "back");
+            half = Global.getSettings().getSprite("shat_fr", "half");
+            quarter = Global.getSettings().getSprite("shat_fr", "quarter");
+            hardBar = Global.getSettings().getSprite("shat_fr", "hardBar");
 
 
             try {
@@ -333,8 +333,8 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                     Global.getSettings().setAutoTurnMode(isAutoTurnMode);
                     setAutoTurnModeForCurrentFlagshipClass(isAutoTurnMode);
                     Global.getSoundPlayer().playUISound(Global.getSettings().isAutoTurnMode()
-                            ? "sun_fr_turn_to_cursor_on"
-                            : "sun_fr_turn_to_cursor_off", 1, 1);
+                            ? "shat_fr_turn_to_cursor_on"
+                            : "shat_fr_turn_to_cursor_off", 1, 1);
                 }
             }
         } catch (Exception e) { reportCrash(e); }
