@@ -212,6 +212,88 @@ function ConvertTo-ProcessArgument {
     return '"' + $escaped + '"'
 }
 
+function Start-MinimizedNoActivateProcess {
+    param([string]$FilePath, [object]$ArgumentList)
+
+    if (-not ("QueuedDeploy.NativeMethods" -as [type])) {
+        Add-Type -TypeDefinition @'
+using System;
+using System.Runtime.InteropServices;
+
+namespace QueuedDeploy {
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+    public struct STARTUPINFO {
+        public UInt32 cb;
+        public string lpReserved;
+        public string lpDesktop;
+        public string lpTitle;
+        public UInt32 dwX;
+        public UInt32 dwY;
+        public UInt32 dwXSize;
+        public UInt32 dwYSize;
+        public UInt32 dwXCountChars;
+        public UInt32 dwYCountChars;
+        public UInt32 dwFillAttribute;
+        public UInt32 dwFlags;
+        public UInt16 wShowWindow;
+        public UInt16 cbReserved2;
+        public IntPtr lpReserved2;
+        public IntPtr hStdInput;
+        public IntPtr hStdOutput;
+        public IntPtr hStdError;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct PROCESS_INFORMATION {
+        public IntPtr hProcess;
+        public IntPtr hThread;
+        public UInt32 dwProcessId;
+        public UInt32 dwThreadId;
+    }
+
+    public static class NativeMethods {
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern bool CreateProcess(
+            string lpApplicationName,
+            string lpCommandLine,
+            IntPtr lpProcessAttributes,
+            IntPtr lpThreadAttributes,
+            bool bInheritHandles,
+            UInt32 dwCreationFlags,
+            IntPtr lpEnvironment,
+            string lpCurrentDirectory,
+            ref STARTUPINFO lpStartupInfo,
+            out PROCESS_INFORMATION lpProcessInformation);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool CloseHandle(IntPtr hObject);
+    }
+}
+'@
+    }
+
+    $argumentText = if ($ArgumentList -is [array]) { $ArgumentList -join " " } else { [string]$ArgumentList }
+    $commandLine = '"' + $FilePath + '"'
+    if (-not [string]::IsNullOrWhiteSpace($argumentText)) {
+        $commandLine += " $argumentText"
+    }
+
+    $startupInfo = New-Object QueuedDeploy.STARTUPINFO
+    $startupInfo.cb = [Runtime.InteropServices.Marshal]::SizeOf([type][QueuedDeploy.STARTUPINFO])
+    $startupInfo.dwFlags = 0x00000001
+    $startupInfo.wShowWindow = 7
+    $processInfo = New-Object QueuedDeploy.PROCESS_INFORMATION
+    $created = [QueuedDeploy.NativeMethods]::CreateProcess($null, $commandLine, [IntPtr]::Zero, [IntPtr]::Zero, $false, 0x00000010, [IntPtr]::Zero, $null, [ref]$startupInfo, [ref]$processInfo)
+    if (-not $created) {
+        $errorCode = [Runtime.InteropServices.Marshal]::GetLastWin32Error()
+        throw "Failed to start queued deploy worker without activating focus. Win32 error: $errorCode"
+    }
+
+    [void][QueuedDeploy.NativeMethods]::CloseHandle($processInfo.hThread)
+    [void][QueuedDeploy.NativeMethods]::CloseHandle($processInfo.hProcess)
+    return [pscustomobject]@{ Id = [int]$processInfo.dwProcessId }
+}
+
 function Get-PowerShellExecutablePath {
     try {
         $current = Get-Process -Id $PID -ErrorAction Stop
@@ -332,7 +414,7 @@ function Start-QueuedDeployWorker {
         $arguments += "-SkipValidation"
     }
 
-    $worker = Start-Process -FilePath $powerShellExe -ArgumentList $arguments -WindowStyle Minimized -PassThru
+    $worker = Start-MinimizedNoActivateProcess -FilePath $powerShellExe -ArgumentList $arguments
     $state = Read-JsonFile -Path $StateFile
     if ($null -ne $state -and $state.RunId -eq $RunId) {
         $state.Pid = $worker.Id
