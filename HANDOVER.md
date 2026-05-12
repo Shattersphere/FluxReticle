@@ -12,6 +12,8 @@ This repo is a working Starsector mod fork, not just source notes. Keep runtime 
 - Mod id: `shattersphere_flux_reticle_fork`
 - Runtime prefix: `shat_fr`
 - Built jar: `jars\FluxReticle.jar`
+- Eventual public organization: `https://github.com/Shattersphere-Mods`
+- Public release checklist: `.agent/PUBLIC_RELEASE.md`
 
 ## Ownership Map
 
@@ -22,6 +24,8 @@ This repo is a working Starsector mod fork, not just source notes. Keep runtime 
 - `scripts/deploy_mod.ps1`: rebuilds, stages, deploys, removes retired upstream files, and checks live hash parity.
 - `.agent/archive/deep-dives/deploy-queue.md`: deploy queue behavior and parity details.
 - `README.md`: user-facing overview. Keep agent workflow details here in `HANDOVER.md` or `PLANS.md`.
+- `CHANGELOG.md`: public-facing release history. Do not add private workflow details, local paths, or agent-only notes.
+- `.agent/PUBLIC_RELEASE.md`: private include/exclude checklist and public export guidance.
 
 ## Current Behavior Notes
 
@@ -31,6 +35,13 @@ This repo is a working Starsector mod fork, not just source notes. Keep runtime 
 - `keepBarVisibleAtMinimumDistance` defaults on and prevents the flux bar from fading out at point blank range.
 - The hard/soft divider still uses the `hardBar` sprite, but its color is controlled separately.
 - Combat rendering still needs in-game confirmation after UI-facing changes; build success is not enough.
+
+## Public Release Notes
+
+- Public repos/packages should be curated outputs, not automatic mirrors of this private repo.
+- Do not publish or update public version/download URLs without an explicit release-prep or publication request.
+- `.agent/`, `AGENTS.md`, `HANDOVER.md`, `PLANS.md`, `.agent-deploy/`, local paths, and private notes must be excluded from public outputs.
+- `mod_info.json`, `shat_fr.version`, `README.md`, and `CHANGELOG.md` are the main public version/metadata surfaces.
 
 ## Validation
 

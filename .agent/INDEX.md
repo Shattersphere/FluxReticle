@@ -37,6 +37,20 @@
   - Read when: explaining the repo or updating user-facing usage notes.
   - Tags: overview, features, build, deploy
 
+- `CHANGELOG.md`
+  - Category: public release history
+  - Purpose: concise user-facing release history without private workflow details.
+  - Status: active
+  - Read when: changing public-facing runtime behavior, compatibility, version surfaces, or release notes.
+  - Tags: changelog, version, release, public
+
+- `.agent/PUBLIC_RELEASE.md`
+  - Category: private release checklist
+  - Purpose: curated public repo/package checklist, include/exclude lists, metadata surfaces, validation, and leak-scan terms.
+  - Status: active-private
+  - Read when: preparing public export, release packages, version URL changes, or work targeting `Shattersphere-Mods`.
+  - Tags: public-release, package, export, Shattersphere-Mods, leak-scan
+
 ## Archives
 
 - `.agent/archive/INDEX.md`
@@ -54,3 +68,4 @@
 4. `.agent/BRIEF.md` when current state matters
 5. Targeted sections of `HANDOVER.md`
 6. `PLANS.md` for large, ambiguous, risky, or planned work
+7. `.agent/PUBLIC_RELEASE.md` only for release/export/version-publication work

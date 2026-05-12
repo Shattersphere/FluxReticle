@@ -4,7 +4,7 @@ Read `.agent/BRIEF.md` first. This file is for active work and blocked items, no
 
 ## Current Goal
 
-Validate the customized reticle in game and keep repo/runtime deployment evidence accurate.
+Validate the customized reticle in game and keep repo/runtime deployment evidence accurate while preparing the private repo for eventual curated public release under `Shattersphere-Mods`.
 
 ## Acceptance Criteria
 
@@ -12,6 +12,8 @@ Validate the customized reticle in game and keep repo/runtime deployment evidenc
 - Luna settings load under mod id `shattersphere_flux_reticle_fork`.
 - In combat, custom reticle, soft flux, hard flux, divider, background, size/distance, and flash settings are visibly honored.
 - Cursor hiding/reset behavior remains correct after combat UI transitions.
+- Public-facing changelog and private public-release checklist exist and stay aligned with version/release work.
+- Public export excludes private docs, local paths, deploy state, and agent-only files.
 
 ## Active Work
 
@@ -23,15 +25,24 @@ Validate the customized reticle in game and keep repo/runtime deployment evidenc
   - size/distance settings behave sensibly at different zoom levels
   - `keepBarVisibleAtMinimumDistance` keeps the bar visible at point blank range
   - flash thresholds and frequencies respond visibly
+- Before public release prep:
+  - choose the public repo name under `Shattersphere-Mods`
+  - update public release URLs only when that public repo exists
+  - verify license/redistribution status
+  - run the `.agent/PUBLIC_RELEASE.md` leak scan
 
 ## Decisions Needed
 
-- Decide whether this stays a private source fork or becomes a distributable renamed fork.
-- If distributable, audit `mod_info.json`, `shat_fr.version`, download/source/changelog URLs, author/version text, and release packaging.
+- Decide the final public repo name under `Shattersphere-Mods`.
+- Decide whether the public source repo should track `jars/FluxReticle.jar` or publish jars only in release packages.
+- Confirm license and upstream attribution before public release.
+- Audit `mod_info.json`, `shat_fr.version`, download/source/changelog URLs, author/version text, and release packaging before publication.
 
 ## Maintenance Rules
 
 - Keep `README.md` user-facing and concise.
+- Keep `CHANGELOG.md` public-facing and free of private workflow details, local paths, and agent-only notes.
+- Keep `.agent/PUBLIC_RELEASE.md` private and update it when public export rules or release metadata surfaces change.
 - Keep `.agent/BRIEF.md` compact and current for normal handoff.
 - Keep `HANDOVER.md` for stable project facts and validation commands.
 - Keep `PLANS.md` for active work and blocked items only.

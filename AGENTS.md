@@ -20,6 +20,7 @@
 - Runtime prefix: `shat_fr`
 - Main plugin: `flux_reticle.ModPlugin`
 - Combat plugin: `flux_reticle.CombatPlugin`
+- Eventual public organization: `https://github.com/Shattersphere-Mods`
 
 ## Project Knowledge Map
 
@@ -27,6 +28,8 @@
   Read before changing `scripts\deploy_mod.ps1`, runtime artifact parity checks, blocked deploy behavior, or `.agent-deploy` handling.
 - Initial fork setup history: `.agent/archive/history/2026-05-12-initial-fork-setup.md`.
   Read only when reconstructing why the fork has tracked runtime files, renamed ids, restored release assets, or inherited Luna/build validation caveats.
+- Public release checklist: `.agent/PUBLIC_RELEASE.md`.
+  Read before public export, release packaging, version/url metadata updates, or work targeting `Shattersphere-Mods`.
 
 ## Commands
 
@@ -50,6 +53,14 @@ powershell -ExecutionPolicy Bypass -File scripts\deploy_mod.ps1 -RepoRoot 'D:\Se
 - Docs-only changes do not require deployment because docs are not mirrored to the live mod folder.
 - If Starsector is running, the deploy script should stage artifacts, queue a worker, and supersede only older queued deploys for the same repo root, deploy target, and deploy name. Do not kill Starsector.
 - After deploy, verify whether the script completed or queued; queued deploys mean the live folder is not current until Starsector exits and the worker publishes.
+
+## Public Release Policy
+
+- Keep `CHANGELOG.md` public-facing: no agent/private-doc references, local machine paths, or internal handoff notes.
+- Keep `.agent/PUBLIC_RELEASE.md` private and use it for curated public exports/packages.
+- Do not publish, tag, push to `Shattersphere-Mods`, or update public download/version URLs unless the user explicitly asks for release preparation or publication.
+- No version bump is needed for private docs-only changes.
+- When versioning runtime/public changes, keep `mod_info.json`, `shat_fr.version`, `README.md` if versioned, and `CHANGELOG.md` aligned.
 
 ## Verification Policy
 

@@ -9,14 +9,10 @@ Fork of Flux Reticle with a separate Starsector identity and LunaLib-facing cust
 - Runtime prefix: `shat_fr`
 - Main plugin: `flux_reticle.ModPlugin`
 - Combat renderer/input plugin: `flux_reticle.CombatPlugin`
-- Live test target: `C:\Games\Starsector\mods\Flux Reticle Fork`
 
 ## Key Files
 
-- `AGENTS.md`: repo-local instructions for agents.
-- `.agent/INDEX.md`: map of durable docs and when to read them.
-- `.agent/BRIEF.md`: compact current state and next-step handoff.
-- `.agent/archive/INDEX.md`: searchable archive and deep-dive map.
+- `CHANGELOG.md`: public-facing release history.
 - `src/flux_reticle/CombatPlugin.java`: combat input, cursor hiding/reset, reticle rendering, settings reads, soft/hard/divider gauge drawing, and minimum-distance bar visibility handling.
 - `FLUX_RETICLE_OPTIONS.ini`: fallback settings when LunaLib is not enabled.
 - `data/config/LunaSettings.csv`: LunaLib settings surface.
@@ -37,7 +33,7 @@ Fork of Flux Reticle with a separate Starsector identity and LunaLib-facing cust
 ## Build
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts\build_mod.ps1 -StarsectorDirectory 'C:\Games\Starsector'
+powershell -ExecutionPolicy Bypass -File scripts\build_mod.ps1 -StarsectorDirectory '<Starsector install path>'
 ```
 
 The build script resolves:
@@ -51,7 +47,7 @@ Expected compiler warnings are Java 8 bootstrap/deprecation/unchecked warnings f
 ## Deploy
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts\deploy_mod.ps1 -RepoRoot 'D:\Sean Mods\Flux Reticle Fork' -DeployTarget 'C:\Games\Starsector\mods\Flux Reticle Fork'
+powershell -ExecutionPolicy Bypass -File scripts\deploy_mod.ps1 -RepoRoot '<repo path>' -DeployTarget '<Starsector mods path>\Flux Reticle Fork'
 ```
 
 The deploy script rebuilds by default, validates `LunaSettings.csv`, stages the runtime files, copies them to the live mod folder, removes retired upstream shortcut files, and checks source/live hash parity. If Starsector is running, it queues a background worker rather than killing or overwriting the running game.
