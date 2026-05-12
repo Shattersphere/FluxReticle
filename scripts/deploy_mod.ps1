@@ -397,6 +397,7 @@ function Wait-ForBlockers {
         return
     }
 
+    $lastSummary = ""
     while ($true) {
         Assert-CurrentRun -StateFile $StateFile -RunId $RunId
         $blocked = @(Find-BlockedProcesses -Rules $Rules)
@@ -404,7 +405,10 @@ function Wait-ForBlockers {
             return
         }
         $summary = ($blocked | ForEach-Object { "$($_.Name)(pid=$($_.Id))" }) -join ", "
-        Write-Host "Deploy waiting for blocked process(es) to exit: $summary"
+        if ($summary -ne $lastSummary) {
+            Write-Host "Deploy waiting for blocked process(es) to exit: $summary"
+            $lastSummary = $summary
+        }
         Start-Sleep -Seconds ([Math]::Max(1, $PollSeconds))
     }
 }
@@ -482,13 +486,30 @@ function Publish-DeployItem {
     }
 
     $stagedItem = Get-Item -LiteralPath $stagedSource
-    if ($stagedItem.PSIsContainer) {
-        if (Test-Path -LiteralPath $liveDestination) {
-            Remove-Item -LiteralPath $liveDestination -Recurse -Force
+    $leaf = Split-Path -Leaf $liveDestination
+    $tempDestination = Join-Path $destinationParent (".$leaf.deploy-new-$([Guid]::NewGuid().ToString('N'))")
+    $backupDestination = Join-Path $destinationParent (".$leaf.deploy-old-$([Guid]::NewGuid().ToString('N'))")
+    try {
+        if ($stagedItem.PSIsContainer) {
+            Copy-Item -LiteralPath $stagedSource -Destination $tempDestination -Recurse -Force
+        } else {
+            Copy-Item -LiteralPath $stagedSource -Destination $tempDestination -Force
         }
-        Copy-Item -LiteralPath $stagedSource -Destination $liveDestination -Recurse -Force
-    } else {
-        Copy-Item -LiteralPath $stagedSource -Destination $liveDestination -Force
+        if (Test-Path -LiteralPath $liveDestination) {
+            Move-Item -LiteralPath $liveDestination -Destination $backupDestination -Force
+        }
+        Move-Item -LiteralPath $tempDestination -Destination $liveDestination -Force
+        if (Test-Path -LiteralPath $backupDestination) {
+            Remove-Item -LiteralPath $backupDestination -Recurse -Force -ErrorAction SilentlyContinue
+        }
+    } catch {
+        if ((-not (Test-Path -LiteralPath $liveDestination)) -and (Test-Path -LiteralPath $backupDestination)) {
+            Move-Item -LiteralPath $backupDestination -Destination $liveDestination -Force
+        }
+        if (Test-Path -LiteralPath $tempDestination) {
+            Remove-Item -LiteralPath $tempDestination -Recurse -Force -ErrorAction SilentlyContinue
+        }
+        throw
     }
 }
 
