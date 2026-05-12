@@ -21,7 +21,9 @@ param(
     [int]$PollSeconds = 5,
     [switch]$QueuedWorker,
     [string]$ResumeRunId = "",
-    [string]$ResumeStagingRoot = ""
+    [string]$ResumeStagingRoot = "",
+    [string]$SourceProject = "",
+    [string]$DeployAttemptedAt = ""
 )
 
 $ErrorActionPreference = "Stop"
@@ -307,6 +309,7 @@ function Start-QueuedDeployWorker {
         [string]$StagingRoot,
         [string]$RepoRoot,
         [string]$DeployTarget,
+        [string]$DeployAttemptedAt,
         [switch]$SkipValidation,
         [int]$PollSeconds
     )
@@ -321,7 +324,9 @@ function Start-QueuedDeployWorker {
         "-PollSeconds", ([string]$PollSeconds),
         "-QueuedWorker",
         "-ResumeRunId", (ConvertTo-ProcessArgument -Value $RunId),
-        "-ResumeStagingRoot", (ConvertTo-ProcessArgument -Value $StagingRoot)
+        "-ResumeStagingRoot", (ConvertTo-ProcessArgument -Value $StagingRoot),
+        "-SourceProject", (ConvertTo-ProcessArgument -Value $RepoRoot),
+        "-DeployAttemptedAt", (ConvertTo-ProcessArgument -Value $DeployAttemptedAt)
     )
     if ($SkipValidation) {
         $arguments += "-SkipValidation"
@@ -530,11 +535,15 @@ $stateRoot = Join-Path $RepoRoot $StateDirectoryName
 $repoHash = Get-RepoHash -Path $RepoRoot
 $stateFile = Join-Path $stateRoot "$DeployName-$repoHash.latest.json"
 $runId = if ([string]::IsNullOrWhiteSpace($ResumeRunId)) { [Guid]::NewGuid().ToString() } else { $ResumeRunId }
+$deployAttemptedAtValue = if ([string]::IsNullOrWhiteSpace($DeployAttemptedAt)) { (Get-Date).ToString("o") } else { $DeployAttemptedAt }
+$sourceProjectValue = if ([string]::IsNullOrWhiteSpace($SourceProject)) { $RepoRoot } else { $SourceProject }
 
 if ($QueuedWorker) {
     if ([string]::IsNullOrWhiteSpace($ResumeStagingRoot)) {
         throw "Queued worker requires -ResumeStagingRoot."
     }
+    Write-Host "Source project: $sourceProjectValue"
+    Write-Host "Time of attempted deploy: $deployAttemptedAtValue"
     Claim-QueuedDeployRun -StateFile $stateFile -RunId $runId -RepoRoot $RepoRoot -DeployTarget $DeployTarget
 } else {
     Stop-OlderDeployRun -StateFile $stateFile -RunId $runId
@@ -546,8 +555,8 @@ if ($QueuedWorker) {
         DeployTarget = $DeployTarget
         ScriptPath = $PSCommandPath
         Phase = "starting"
-        StartedAt = (Get-Date).ToString("o")
-        UpdatedAt = (Get-Date).ToString("o")
+        StartedAt = $deployAttemptedAtValue
+        UpdatedAt = $deployAttemptedAtValue
         FinishedAt = $null
     })
 }
@@ -580,7 +589,7 @@ try {
         $blocked = @(Find-BlockedProcesses -Rules $BlockedProcesses)
         if ($blocked.Count -gt 0 -and -not $ForegroundWait -and -not $QueuedWorker -and -not $DryRun) {
             Set-DeployPhase -StateFile $stateFile -RunId $runId -Phase "queued"
-            Start-QueuedDeployWorker -StateFile $stateFile -RunId $runId -StagingRoot $stagingRoot -RepoRoot $RepoRoot -DeployTarget $DeployTarget -SkipValidation:$SkipValidation -PollSeconds $PollSeconds
+            Start-QueuedDeployWorker -StateFile $stateFile -RunId $runId -StagingRoot $stagingRoot -RepoRoot $RepoRoot -DeployTarget $DeployTarget -DeployAttemptedAt $deployAttemptedAtValue -SkipValidation:$SkipValidation -PollSeconds $PollSeconds
             return
         }
 
