@@ -14,6 +14,6 @@ Search this index before opening archive files. Do not load the whole archive fo
 
 - `.agent/archive/history/2026-05-12-initial-fork-setup.md`
   - Status: historical
-  - Scope: initial fork/source/runtime setup
-  - Read when: reconstructing why runtime files are tracked, why ids/assets were renamed, or how the fork diverged from upstream.
-  - Tags: setup, fork, runtime-surface, Luna, metadata
+  - Scope: initial fork/source/runtime setup, early validation, and compatibility notes
+  - Read when: reconstructing why runtime files are tracked, why ids/assets were renamed, how the fork diverged from upstream, or what early Luna/build/runtime caveats were recovered from retired root docs.
+  - Tags: setup, fork, runtime-surface, Luna, metadata, validation, compatibility

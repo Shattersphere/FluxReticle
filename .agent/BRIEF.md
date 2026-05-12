@@ -45,6 +45,7 @@ powershell -ExecutionPolicy Bypass -File scripts\deploy_mod.ps1 -RepoRoot 'D:\Se
 
 - Starsector combat rendering and cursor reset behavior require runtime validation.
 - Luna field IDs must keep the `shat_fr_` prefix and mod id `shattersphere_flux_reticle_fork`.
+- Existing saved Luna values from upstream or earlier fork field names may not affect the renamed `shat_fr_` settings.
 - `jars\FluxReticle.jar` is a tracked runtime artifact and must stay in sync with source changes.
 
 ## Next Best Step

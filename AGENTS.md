@@ -26,7 +26,7 @@
 - Deploy queue behavior: `.agent/archive/deep-dives/deploy-queue.md`.
   Read before changing `scripts\deploy_mod.ps1`, runtime artifact parity checks, blocked deploy behavior, or `.agent-deploy` handling.
 - Initial fork setup history: `.agent/archive/history/2026-05-12-initial-fork-setup.md`.
-  Read only when reconstructing why the fork has tracked runtime files, renamed ids, or restored release assets.
+  Read only when reconstructing why the fork has tracked runtime files, renamed ids, restored release assets, or inherited Luna/build validation caveats.
 
 ## Commands
 
