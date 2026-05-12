@@ -16,6 +16,7 @@ Fork of Flux Reticle with a separate Starsector identity and LunaLib-facing cust
 - `AGENTS.md`: repo-local instructions for agents.
 - `.agent/INDEX.md`: map of durable docs and when to read them.
 - `.agent/BRIEF.md`: compact current state and next-step handoff.
+- `.agent/archive/INDEX.md`: searchable archive and deep-dive map.
 - `src/flux_reticle/CombatPlugin.java`: combat input, cursor hiding/reset, reticle rendering, settings reads, soft/hard/divider gauge drawing, and minimum-distance bar visibility handling.
 - `FLUX_RETICLE_OPTIONS.ini`: fallback settings when LunaLib is not enabled.
 - `data/config/LunaSettings.csv`: LunaLib settings surface.

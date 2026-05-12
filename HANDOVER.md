@@ -8,6 +8,7 @@ This repo is a working Starsector mod fork, not just source notes. Keep runtime 
 
 - Source root: `D:\Sean Mods\Flux Reticle Fork`
 - Live target: `C:\Games\Starsector\mods\Flux Reticle Fork`
+- Deploy staging/state: `.agent-deploy\`
 - Mod id: `shattersphere_flux_reticle_fork`
 - Runtime prefix: `shat_fr`
 - Built jar: `jars\FluxReticle.jar`
@@ -19,6 +20,7 @@ This repo is a working Starsector mod fork, not just source notes. Keep runtime 
 - `data/config/LunaSettings.csv`: LunaLib settings. Field IDs must use `shat_fr_`.
 - `scripts/build_mod.ps1`: compiles Java against Starsector and LunaLib.
 - `scripts/deploy_mod.ps1`: rebuilds, stages, deploys, removes retired upstream files, and checks live hash parity.
+- `.agent/archive/deep-dives/deploy-queue.md`: deploy queue behavior and parity details.
 - `README.md`: user-facing overview. Keep agent workflow details here in `HANDOVER.md` or `PLANS.md`.
 
 ## Current Behavior Notes

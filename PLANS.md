@@ -2,6 +2,17 @@
 
 Read `.agent/BRIEF.md` first. This file is for active work and blocked items, not completed history.
 
+## Current Goal
+
+Validate the customized reticle in game and keep repo/runtime deployment evidence accurate.
+
+## Acceptance Criteria
+
+- Latest runtime files are either deployed with parity checks or explicitly queued by `scripts\deploy_mod.ps1`.
+- Luna settings load under mod id `shattersphere_flux_reticle_fork`.
+- In combat, custom reticle, soft flux, hard flux, divider, background, size/distance, and flash settings are visibly honored.
+- Cursor hiding/reset behavior remains correct after combat UI transitions.
+
 ## Active Work
 
 - Run an in-game combat check after the latest rendering/settings changes:
