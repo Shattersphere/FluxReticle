@@ -327,7 +327,7 @@ function Start-QueuedDeployWorker {
         $arguments += "-SkipValidation"
     }
 
-    $worker = Start-Process -FilePath $powerShellExe -ArgumentList $arguments -WindowStyle Hidden -PassThru
+    $worker = Start-Process -FilePath $powerShellExe -ArgumentList $arguments -WindowStyle Minimized -PassThru
     $state = Read-JsonFile -Path $StateFile
     if ($null -ne $state -and $state.RunId -eq $RunId) {
         $state.Pid = $worker.Id
@@ -337,7 +337,7 @@ function Start-QueuedDeployWorker {
         $state.UpdatedAt = $workerStartedAt
         Write-JsonFile -Path $StateFile -Value $state
     }
-    Write-Host "Deploy queued in background worker pid=$($worker.Id). This shell does not need to wait."
+    Write-Host "Deploy queued in minimized worker window pid=$($worker.Id). This shell does not need to wait."
 }
 
 function Get-ProcessPathSafe {
