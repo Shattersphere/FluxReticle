@@ -80,6 +80,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         showSoftFluxTopDivider = getBoolean("showSoftFluxTopDivider");
         glowOpacity = getInt("glowOpacity");
         spriteSet = getString("spriteSet");
+        frontSpriteVariant = getString("frontSpriteVariant");
         loadSpritesForSet(spriteSet);
 
         scale = (float) getDouble("sizeMult");
@@ -150,7 +151,14 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             SPRITE_SET_4X_NEAREST = "4xNearest",
             SPRITE_SET_8X_LANCZOS_EDGE_CLEANED = "8xLanczosEdgeCleaned",
             SPRITE_SET_8X_NEAREST_EDGE_CLEANED = "8xNearestEdgeCleaned",
-            SPRITE_SET_AI_GENERATED_FULL_8X = "AIGeneratedFullSet8x";
+            SPRITE_SET_AI_GENERATED_FULL_8X = "AIGeneratedFullSet8x",
+            DEFAULT_FRONT_SPRITE_VARIANT = "CurrentSpriteSet",
+            FRONT_VARIANT_WINGS_05 = "wings_05pct_further_apart",
+            FRONT_VARIANT_WINGS_10 = "wings_10pct_further_apart",
+            FRONT_VARIANT_WINGS_15 = "wings_15pct_further_apart",
+            FRONT_VARIANT_WINGS_20 = "wings_20pct_further_apart",
+            FRONT_VARIANT_WINGS_25 = "wings_25pct_further_apart",
+            FRONT_VARIANT_ROOT = "shat_fr/graphics/front_variants/upscaled_8x_lanczos_edge_cleaned/";
     static org.lwjgl.input.Cursor hiddenCursor, originalCursor;
     static boolean cursorNeedsReset = false, wasAutoTurnModePriorToActivation = false, errorDisplayed = false;
 
@@ -187,7 +195,8 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     ViewportAPI viewport;
     JSONObject commonData;
     String prevHullId = "";
-    String spriteSet = DEFAULT_SPRITE_SET;
+    String spriteSet = DEFAULT_SPRITE_SET,
+            frontSpriteVariant = DEFAULT_FRONT_SPRITE_VARIANT;
 
     static void resetCursor() {
         try {
@@ -401,9 +410,29 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         return Global.getSettings().getSprite(path);
     }
 
+    SpriteAPI loadFrontVariantSprite(String variantFolder, String fileName) throws IOException {
+        String path = FRONT_VARIANT_ROOT + variantFolder + "/" + fileName;
+        Global.getSettings().loadTexture(path);
+        return Global.getSettings().getSprite(path);
+    }
+
+    String getFrontVariantFolder(String configuredVariant) {
+        if (FRONT_VARIANT_WINGS_05.equals(configuredVariant)) return FRONT_VARIANT_WINGS_05;
+        if (FRONT_VARIANT_WINGS_10.equals(configuredVariant)) return FRONT_VARIANT_WINGS_10;
+        if (FRONT_VARIANT_WINGS_15.equals(configuredVariant)) return FRONT_VARIANT_WINGS_15;
+        if (FRONT_VARIANT_WINGS_20.equals(configuredVariant)) return FRONT_VARIANT_WINGS_20;
+        if (FRONT_VARIANT_WINGS_25.equals(configuredVariant)) return FRONT_VARIANT_WINGS_25;
+        return "";
+    }
+
     void loadSpritesForSet(String configuredSpriteSet) throws IOException {
         frontKeyTurn = loadSpriteFromSet(configuredSpriteSet, "frontKeyTurn.png");
         frontMouseTurn = loadSpriteFromSet(configuredSpriteSet, "frontMouseTurn.png");
+        String frontVariantFolder = getFrontVariantFolder(frontSpriteVariant);
+        if (!frontVariantFolder.isEmpty()) {
+            frontKeyTurn = loadFrontVariantSprite(frontVariantFolder, "frontKeyTurn.png");
+            frontMouseTurn = loadFrontVariantSprite(frontVariantFolder, "frontMouseTurn.png");
+        }
         glowKeyTurn = loadSpriteFromSet(configuredSpriteSet, "glowKeyTurn.png");
         glowMouseTurn = loadSpriteFromSet(configuredSpriteSet, "glowMouseTurn.png");
         back = loadSpriteFromSet(configuredSpriteSet, "back.png");

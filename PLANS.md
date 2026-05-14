@@ -18,6 +18,7 @@ Validate the customized reticle in game and keep repo/runtime deployment evidenc
 - The 25%, 50%, and 75% bar marker sprites can be disabled while keeping the end cap visible.
 - Reticle top/front offset visibly moves only the front cursor graphic and glow without changing the bar anchor or actual mouse aim point.
 - Reticle top/front lateral offset visibly moves only the front cursor graphic and glow left/right relative to the bar.
+- Front sprite variant selection can switch only `frontKeyTurn` and `frontMouseTurn` while leaving the rest of the selected sprite set intact.
 - Reticle body lateral offset visibly moves the flux bar body and lower sprites left/right separately from the top/front graphic.
 - Reticle top/front scale visibly resizes only the front cursor graphic and glow as a multiplier of the regular sprite size.
 - Half-marker mode visibly uses the half sprite at the 25%, 50%, and 75% bar marks.

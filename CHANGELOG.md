@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.16.0-fork.1 - 2026-05-15
+
+- Added a LunaLib front sprite variant selector for bundled wing-gap `frontKeyTurn` and `frontMouseTurn` folders.
+
 ## 1.15.1-fork.1 - 2026-05-15
 
 - Fixed a LunaLib settings crash caused by percent signs in the bar marker setting description.
