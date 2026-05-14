@@ -24,7 +24,7 @@ Fork of Flux Reticle with a separate Starsector identity and LunaLib-facing cust
 ## Current Features
 
 - Configurable flux bar width and min/max bar length.
-- Configurable top/front reticle offset along the ship-to-cursor line.
+- Configurable front cursor graphic offset along the ship-to-cursor line.
 - Configurable min/max cursor distance for bar scaling.
 - `keepBarVisibleAtMinimumDistance`: keeps the bar visible at minimum length at point blank range instead of fading out.
 - Separate RGBA settings for reticle, soft flux, hard flux, hard/soft divider, warning flash, and background.

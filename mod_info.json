@@ -3,7 +3,7 @@
 	"name":"Flux Reticle Fork",
     "utility": "true",
 	"author":"Sundog, Shattersphere",
-	"version":"1.6.0-fork.1",
+	"version":"1.6.1-fork.1",
 	"description":"Fork of Flux Reticle with expanded LunaLib customization for reticle geometry, flux colours, and high-flux flashing.",
     "gameVersion":"0.98a-RC8",
 	"jars":["jars/FluxReticle.jar"],

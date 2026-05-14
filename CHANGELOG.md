@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.6.1-fork.1 - 2026-05-15
+
+- Fixed high-resolution reticle sprites rendering larger than the original logical sprite sizes.
+- Changed the reticle top offset to move only the front cursor graphic and glow, leaving the flux bar anchored.
+
 ## 1.6.0-fork.1 - 2026-05-15
 
 - Added an option to disable the extra warning flash pulse caused by rapid flux changes.

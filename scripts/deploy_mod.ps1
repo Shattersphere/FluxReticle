@@ -68,7 +68,16 @@ $PostDeployValidationCommand = {
         'data\config\version\version_files.csv',
         'jars\FluxReticle.jar',
         'mod_info.json',
-        'shat_fr.version'
+        'shat_fr.version',
+        'shat_fr\graphics\back.png',
+        'shat_fr\graphics\frontKeyTurn.png',
+        'shat_fr\graphics\frontMouseTurn.png',
+        'shat_fr\graphics\glowKeyTurn.png',
+        'shat_fr\graphics\glowMouseTurn.png',
+        'shat_fr\graphics\half.png',
+        'shat_fr\graphics\hardBar.png',
+        'shat_fr\graphics\icon.png',
+        'shat_fr\graphics\quarter.png'
     )
     foreach ($relativePath in $checks) {
         $source = Join-Path $RepoRoot $relativePath
@@ -99,14 +108,28 @@ $DeployItems = @(
     @{ Source = "jars"; Destination = "jars"; Optional = $false },
     @{ Source = "mod_info.json"; Destination = "mod_info.json"; Optional = $false },
     @{ Source = "shat_fr.version"; Destination = "shat_fr.version"; Optional = $false },
-    @{ Source = "shat_fr"; Destination = "shat_fr"; Optional = $false }
+    @{ Source = "shat_fr\graphics\back.png"; Destination = "shat_fr\graphics\back.png"; Optional = $false },
+    @{ Source = "shat_fr\graphics\frontKeyTurn.png"; Destination = "shat_fr\graphics\frontKeyTurn.png"; Optional = $false },
+    @{ Source = "shat_fr\graphics\frontMouseTurn.png"; Destination = "shat_fr\graphics\frontMouseTurn.png"; Optional = $false },
+    @{ Source = "shat_fr\graphics\glowKeyTurn.png"; Destination = "shat_fr\graphics\glowKeyTurn.png"; Optional = $false },
+    @{ Source = "shat_fr\graphics\glowMouseTurn.png"; Destination = "shat_fr\graphics\glowMouseTurn.png"; Optional = $false },
+    @{ Source = "shat_fr\graphics\half.png"; Destination = "shat_fr\graphics\half.png"; Optional = $false },
+    @{ Source = "shat_fr\graphics\hardBar.png"; Destination = "shat_fr\graphics\hardBar.png"; Optional = $false },
+    @{ Source = "shat_fr\graphics\icon.png"; Destination = "shat_fr\graphics\icon.png"; Optional = $false },
+    @{ Source = "shat_fr\graphics\quarter.png"; Destination = "shat_fr\graphics\quarter.png"; Optional = $false }
 )
 
 $RetiredDeployPaths = @(
     "Change Log.url",
     "jars\src.url",
     "sun_fr",
-    "sun_fr.version"
+    "sun_fr.version",
+    "shat_fr\graphics\backup",
+    "shat_fr\graphics\backup-before-lanczos-replace-20260513-010529",
+    "shat_fr\graphics\lanczos",
+    "shat_fr\graphics\nearest",
+    "shat_fr\sounds",
+    "shat_fr\upscaled graphics"
 )
 
 # Processes that make it unsafe to copy/deploy. The script waits for these to
