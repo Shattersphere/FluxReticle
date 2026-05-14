@@ -451,8 +451,8 @@ function Start-QueuedDeployWorker {
     try {
         $worker = Start-MinimizedNoActivateProcess -FilePath $powerShellExe -ArgumentList $arguments
     } catch {
-        Write-Warning "$($_.Exception.Message) Falling back to Start-Process -WindowStyle Hidden."
-        $worker = Start-Process -FilePath $powerShellExe -ArgumentList $arguments -WindowStyle Hidden -PassThru
+        Write-Warning "$($_.Exception.Message) Falling back to Start-Process -WindowStyle Minimized."
+        $worker = Start-Process -FilePath $powerShellExe -ArgumentList $arguments -WindowStyle Minimized -PassThru
     }
     $state = Read-JsonFile -Path $StateFile
     if ($null -ne $state -and $state.RunId -eq $RunId) {
@@ -463,7 +463,7 @@ function Start-QueuedDeployWorker {
         $state.UpdatedAt = $workerStartedAt
         Write-JsonFile -Path $StateFile -Value $state
     }
-    Write-Host "Deploy queued in minimized worker window pid=$($worker.Id). This shell does not need to wait."
+    Write-Host "Deploy queued in minimized visible worker window pid=$($worker.Id). This shell does not need to wait."
 }
 
 function Get-ProcessPathSafe {

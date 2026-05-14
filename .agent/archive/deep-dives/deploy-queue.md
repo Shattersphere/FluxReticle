@@ -16,7 +16,7 @@ Search tags: deploy, queue, staging, Starsector, locked jar, parity, `.agent-dep
 - Deploy state and staged artifacts live under `.agent-deploy/`, which is intentionally gitignored.
 - The deploy name is `flux-reticle-fork-deploy`; superseding should only affect older queued deploys for the same repo root, deploy target, and deploy name.
 - If Starsector is running, the deploy script stages already-built artifacts and starts a background waiter instead of overwriting a potentially locked jar.
-- If the native minimized/no-activate worker launch fails, the script falls back to `Start-Process -WindowStyle Hidden` so the deploy can still queue without trapping the agent session.
+- If the native minimized/no-activate worker launch fails, the script falls back to `Start-Process -WindowStyle Minimized` so the deploy still has a visible waiting worker without trapping the agent session.
 - Queued means not live yet. Report deploy status as queued/pending until the worker publishes and post-deploy validation passes.
 - Post-deploy validation checks source/live hashes for runtime files and ensures retired upstream paths are absent.
 
@@ -54,8 +54,8 @@ The script removes retired upstream paths from the live target during publish:
 Blocked processes are Starsector-related `java` and `Starsector` processes. When found, the script should:
 
 - stage the current artifacts;
-- start a hidden background worker;
-- fall back to a normal hidden `Start-Process` worker if the native no-activate launch fails;
+- start a minimized visible background worker;
+- fall back to a normal minimized `Start-Process` worker if the native no-activate launch fails;
 - return control to the agent;
 - wait in the worker until blockers exit;
 - publish the staged artifacts afterward;
