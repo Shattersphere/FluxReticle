@@ -18,7 +18,7 @@ The fork adds Luna/INI customization for reticle geometry, front cursor graphic 
 ## Known-Good Baseline
 
 - Latest runtime code baseline: front cursor graphic offset, fixed logical sprite sizing for 4x assets, and flux-change flash toggle.
-- Latest deploy state observed in this pass: `waiting` queued worker for target `C:\Games\Starsector\mods\Flux Reticle Fork`; live update is pending Starsector exit.
+- Latest deploy state observed in this pass: `complete` for target `C:\Games\Starsector\mods\Flux Reticle Fork`.
 - Last known-good build command: `powershell -ExecutionPolicy Bypass -File scripts\build_mod.ps1 -StarsectorDirectory 'C:\Games\Starsector'`.
 - Runtime behavior remains not in-game verified after recent rendering/settings changes.
 
