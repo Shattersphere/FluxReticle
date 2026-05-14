@@ -1,3 +1,6 @@
 build/
 local.properties
 .agent-deploy/
+shat_fr/graphics/backup-before-lanczos-replace-*/
+shat_fr/graphics/lanczos/
+shat_fr/graphics/nearest/

@@ -13,11 +13,11 @@ Flux Reticle Fork is a buildable and deployable Starsector mod fork with a separ
 - Deploy name: `flux-reticle-fork-deploy`
 - Eventual public organization: `https://github.com/Shattersphere-Mods`
 
-The fork adds Luna/INI customization for reticle geometry, front cursor graphic offset, point-blank bar visibility, RGBA colors, high-flux flashing, and the separate flux-change flash pulse. The old upstream UI-color override gate is removed, so configured RGBA values apply directly.
+The fork adds Luna/INI customization for reticle geometry, sprite-set selection, front cursor graphic offset, point-blank bar visibility, RGBA colors, high-flux flashing, and the separate flux-change flash pulse. The old upstream UI-color override gate is removed, so configured RGBA values apply directly.
 
 ## Known-Good Baseline
 
-- Latest runtime code baseline: front cursor graphic offset, fixed logical sprite sizing for 4x assets, and flux-change flash toggle.
+- Latest runtime code baseline: sprite-set selector, front cursor graphic offset, fixed logical sprite sizing for high-res assets, and flux-change flash toggle.
 - Latest deploy state observed in this pass: `complete` for target `C:\Games\Starsector\mods\Flux Reticle Fork`.
 - Last known-good build command: `powershell -ExecutionPolicy Bypass -File scripts\build_mod.ps1 -StarsectorDirectory 'C:\Games\Starsector'`.
 - Runtime behavior remains not in-game verified after recent rendering/settings changes.

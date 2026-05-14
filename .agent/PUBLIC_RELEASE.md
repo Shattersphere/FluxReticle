@@ -22,6 +22,7 @@ This file is private release/export guidance. Do not include it in public repos 
 - `src/`
 - `data/`
 - `shat_fr/`
+- bundled selectable sprite-set folders under `shat_fr/graphics`
 - `jars/FluxReticle.jar`
 - `mod_info.json`
 - `shat_fr.version`

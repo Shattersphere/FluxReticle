@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.7.0-fork.1 - 2026-05-15
+
+- Added a LunaLib sprite-set selector for bundled vanilla, 4x, and 8x reticle art.
+- Defaulted the reticle art to the 8x nearest edge-cleaned set.
+
 ## 1.6.1-fork.1 - 2026-05-15
 
 - Fixed high-resolution reticle sprites rendering larger than the original logical sprite sizes.

@@ -17,7 +17,7 @@ This repo is a working Starsector mod fork, not just source notes. Keep runtime 
 
 ## Ownership Map
 
-- `src/flux_reticle/CombatPlugin.java`: reticle rendering, cursor hiding/reset, input handling, Luna/INI setting reads, front cursor graphic offset, soft/hard/divider drawing, and minimum-distance visibility behavior.
+- `src/flux_reticle/CombatPlugin.java`: reticle rendering, cursor hiding/reset, input handling, Luna/INI setting reads, sprite-set selection, front cursor graphic offset, soft/hard/divider drawing, and minimum-distance visibility behavior.
 - `FLUX_RETICLE_OPTIONS.ini`: non-Luna fallback settings. Add new runtime settings here whenever Luna gets a matching field.
 - `data/config/LunaSettings.csv`: LunaLib settings. Field IDs must use `shat_fr_`.
 - `scripts/build_mod.ps1`: compiles Java against Starsector and LunaLib.
@@ -33,6 +33,7 @@ This repo is a working Starsector mod fork, not just source notes. Keep runtime 
 - Saved Luna settings from upstream or earlier fork fields may not migrate to the renamed `shat_fr_` fields; verify resolved settings in game when colors or sizes appear unchanged.
 - `reticleTopOffset` shifts only `frontKeyTurn` / `frontMouseTurn` and their glow sprites along the ship-to-cursor line. The bar and aim point stay anchored.
 - Reticle sprite assets are rendered at legacy logical dimensions, so 4x PNG replacements improve pixel density without making the reticle larger.
+- `spriteSet` is a Luna/INI selector for bundled sprite folders. Default is `8xNearestEdgeCleaned`.
 - Distance settings are normalized to half the visible screen height.
 - `enableFluxChangeFlash` controls only the extra flux-change pulse; threshold-based flashing still follows the flash threshold/frequency settings.
 - `keepBarVisibleAtMinimumDistance` defaults on and prevents the flux bar from fading out at point blank range.

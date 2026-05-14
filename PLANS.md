@@ -12,6 +12,7 @@ Validate the customized reticle in game and keep repo/runtime deployment evidenc
 - Luna settings load under mod id `shattersphere_flux_reticle_fork`.
 - In combat, custom reticle, soft flux, hard flux, divider, background, size/distance, and flash settings are visibly honored.
 - Reticle top/front offset visibly moves only the front cursor graphic and glow without changing the bar anchor or actual mouse aim point.
+- Sprite-set selection can switch between bundled vanilla, 4x, and 8x sprite folders while keeping logical in-game size stable.
 - Disabling flux-change flashing suppresses the extra warning pulse when soft flux changes rapidly while leaving threshold flashing available.
 - Cursor hiding/reset behavior remains correct after combat UI transitions.
 - Public-facing changelog and private public-release checklist exist and stay aligned with version/release work.
@@ -25,6 +26,7 @@ Validate the customized reticle in game and keep repo/runtime deployment evidenc
   - soft flux, hard flux, divider, and background colors render distinctly
   - LunaLib settings load without parser errors
   - reticle top/front offset moves only the front cursor graphic and glow along the ship-to-cursor line
+  - sprite-set selector swaps between bundled art sets and keeps the same in-game logical size
   - size/distance settings behave sensibly at different zoom levels
   - `keepBarVisibleAtMinimumDistance` keeps the bar visible at point blank range
   - flash thresholds and frequencies respond visibly

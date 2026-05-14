@@ -76,6 +76,8 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         showReticle = getBoolean("showReticle");
         showReticleWhenInterfaceIsHidden = getBoolean("showReticleWhenInterfaceIsHidden");
         glowOpacity = getInt("glowOpacity");
+        spriteSet = getString("spriteSet");
+        loadSpritesForSet(spriteSet);
 
         scale = (float) getDouble("sizeMult");
         barWidth = (float) Math.max(0.5, getDouble("fluxBarWidth"));
@@ -125,6 +127,14 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             TWO_PI = (float)(Math.PI * 2);
     static final int
             ESCAPE_KEY_VALUE = 1;
+    static final String
+            DEFAULT_SPRITE_SET = "8xNearestEdgeCleaned",
+            SPRITE_SET_ROOT = "Root4xLanczos",
+            SPRITE_SET_VANILLA = "Vanilla1x",
+            SPRITE_SET_4X_LANCZOS = "4xLanczos",
+            SPRITE_SET_4X_NEAREST = "4xNearest",
+            SPRITE_SET_8X_LANCZOS_EDGE_CLEANED = "8xLanczosEdgeCleaned",
+            SPRITE_SET_8X_NEAREST_EDGE_CLEANED = "8xNearestEdgeCleaned";
     static org.lwjgl.input.Cursor hiddenCursor, originalCursor;
     static boolean cursorNeedsReset = false, wasAutoTurnModePriorToActivation = false, errorDisplayed = false;
 
@@ -154,6 +164,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     ViewportAPI viewport;
     JSONObject commonData;
     String prevHullId = "";
+    String spriteSet = DEFAULT_SPRITE_SET;
 
     static void resetCursor() {
         try {
@@ -297,6 +308,36 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         }
     }
 
+    String getSpriteSetFolder(String configuredSpriteSet) {
+        if (SPRITE_SET_ROOT.equals(configuredSpriteSet)) return "";
+        if (SPRITE_SET_VANILLA.equals(configuredSpriteSet)) return "backup";
+        if (SPRITE_SET_4X_LANCZOS.equals(configuredSpriteSet)) return "upscaled_4x_lanczos";
+        if (SPRITE_SET_4X_NEAREST.equals(configuredSpriteSet)) return "upscaled_4x_nearest";
+        if (SPRITE_SET_8X_LANCZOS_EDGE_CLEANED.equals(configuredSpriteSet)) return "upscaled_8x_lanczos_edge_cleaned";
+        return "upscaled_8x_nearest_edge_cleaned";
+    }
+
+    SpriteAPI loadSpriteFromSet(String configuredSpriteSet, String fileName) throws IOException {
+        String folder = getSpriteSetFolder(configuredSpriteSet);
+        String path = folder.isEmpty()
+                ? "shat_fr/graphics/" + fileName
+                : "shat_fr/graphics/" + folder + "/" + fileName;
+
+        Global.getSettings().loadTexture(path);
+        return Global.getSettings().getSprite(path);
+    }
+
+    void loadSpritesForSet(String configuredSpriteSet) throws IOException {
+        frontKeyTurn = loadSpriteFromSet(configuredSpriteSet, "frontKeyTurn.png");
+        frontMouseTurn = loadSpriteFromSet(configuredSpriteSet, "frontMouseTurn.png");
+        glowKeyTurn = loadSpriteFromSet(configuredSpriteSet, "glowKeyTurn.png");
+        glowMouseTurn = loadSpriteFromSet(configuredSpriteSet, "glowMouseTurn.png");
+        back = loadSpriteFromSet(configuredSpriteSet, "back.png");
+        half = loadSpriteFromSet(configuredSpriteSet, "half.png");
+        quarter = loadSpriteFromSet(configuredSpriteSet, "quarter.png");
+        hardBar = loadSpriteFromSet(configuredSpriteSet, "hardBar.png");
+    }
+
     @Override
     public void init(CombatEngineAPI engine) {
         try {
@@ -305,14 +346,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
 
             resetCursor();
 
-            frontKeyTurn = Global.getSettings().getSprite("shat_fr", "frontKeyTurn");
-            frontMouseTurn = Global.getSettings().getSprite("shat_fr", "frontMouseTurn");
-            glowKeyTurn = Global.getSettings().getSprite("shat_fr", "glowKeyTurn");
-            glowMouseTurn = Global.getSettings().getSprite("shat_fr", "glowMouseTurn");
-            back = Global.getSettings().getSprite("shat_fr", "back");
-            half = Global.getSettings().getSprite("shat_fr", "half");
-            quarter = Global.getSettings().getSprite("shat_fr", "quarter");
-            hardBar = Global.getSettings().getSprite("shat_fr", "hardBar");
+            loadSpritesForSet(DEFAULT_SPRITE_SET);
 
 
             try {

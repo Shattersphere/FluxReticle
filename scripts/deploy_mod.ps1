@@ -77,7 +77,12 @@ $PostDeployValidationCommand = {
         'shat_fr\graphics\half.png',
         'shat_fr\graphics\hardBar.png',
         'shat_fr\graphics\icon.png',
-        'shat_fr\graphics\quarter.png'
+        'shat_fr\graphics\quarter.png',
+        'shat_fr\graphics\backup\frontKeyTurn.png',
+        'shat_fr\graphics\upscaled_4x_lanczos\frontKeyTurn.png',
+        'shat_fr\graphics\upscaled_4x_nearest\frontKeyTurn.png',
+        'shat_fr\graphics\upscaled_8x_lanczos_edge_cleaned\frontKeyTurn.png',
+        'shat_fr\graphics\upscaled_8x_nearest_edge_cleaned\frontKeyTurn.png'
     )
     foreach ($relativePath in $checks) {
         $source = Join-Path $RepoRoot $relativePath
@@ -116,7 +121,12 @@ $DeployItems = @(
     @{ Source = "shat_fr\graphics\half.png"; Destination = "shat_fr\graphics\half.png"; Optional = $false },
     @{ Source = "shat_fr\graphics\hardBar.png"; Destination = "shat_fr\graphics\hardBar.png"; Optional = $false },
     @{ Source = "shat_fr\graphics\icon.png"; Destination = "shat_fr\graphics\icon.png"; Optional = $false },
-    @{ Source = "shat_fr\graphics\quarter.png"; Destination = "shat_fr\graphics\quarter.png"; Optional = $false }
+    @{ Source = "shat_fr\graphics\quarter.png"; Destination = "shat_fr\graphics\quarter.png"; Optional = $false },
+    @{ Source = "shat_fr\graphics\backup"; Destination = "shat_fr\graphics\backup"; Optional = $false },
+    @{ Source = "shat_fr\graphics\upscaled_4x_lanczos"; Destination = "shat_fr\graphics\upscaled_4x_lanczos"; Optional = $false },
+    @{ Source = "shat_fr\graphics\upscaled_4x_nearest"; Destination = "shat_fr\graphics\upscaled_4x_nearest"; Optional = $false },
+    @{ Source = "shat_fr\graphics\upscaled_8x_lanczos_edge_cleaned"; Destination = "shat_fr\graphics\upscaled_8x_lanczos_edge_cleaned"; Optional = $false },
+    @{ Source = "shat_fr\graphics\upscaled_8x_nearest_edge_cleaned"; Destination = "shat_fr\graphics\upscaled_8x_nearest_edge_cleaned"; Optional = $false }
 )
 
 $RetiredDeployPaths = @(
@@ -124,7 +134,6 @@ $RetiredDeployPaths = @(
     "jars\src.url",
     "sun_fr",
     "sun_fr.version",
-    "shat_fr\graphics\backup",
     "shat_fr\graphics\backup-before-lanczos-replace-20260513-010529",
     "shat_fr\graphics\lanczos",
     "shat_fr\graphics\nearest",

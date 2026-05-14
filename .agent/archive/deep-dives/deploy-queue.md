@@ -38,7 +38,8 @@ The deploy script stages and publishes these repo paths:
 - `jars`
 - `mod_info.json`
 - `shat_fr.version`
-- individual runtime files under `shat_fr\graphics`
+- individual root runtime files under `shat_fr\graphics`
+- bundled selectable sprite-set folders under `shat_fr\graphics`
 
 The script removes retired upstream paths from the live target during publish:
 
@@ -46,7 +47,7 @@ The script removes retired upstream paths from the live target during publish:
 - `jars\src.url`
 - `sun_fr`
 - `sun_fr.version`
-- temporary local asset folders under `shat_fr\graphics`, such as `backup`, `lanczos`, and `nearest`
+- temporary local asset folders under `shat_fr\graphics`, such as `backup-before-*`, `lanczos`, and `nearest`
 
 ### Blocked Deploy Behavior
 
