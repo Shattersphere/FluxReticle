@@ -8,8 +8,6 @@ shattersphere_flux_reticle_fork,shat_fr_frontSpriteVariant,Front Sprite Variant,
 shattersphere_flux_reticle_fork,shat_fr_showBarMarkerSprites,Show Bar Marker Sprites,Boolean,TRUE,,Draws the internal quarter middle and three-quarter divider marker sprites on the flux bar. The end cap sprite remains visible.,,,General
 shattersphere_flux_reticle_fork,shat_fr_swapQuarterHalfSprites,Use Half Sprite For All Bar Markers,Boolean,FALSE,,Draws the half sprite at the one-quarter / middle / three-quarter marker positions. When disabled the quarter and three-quarter positions use the quarter sprite and the middle position uses the half sprite.,,,General
 shattersphere_flux_reticle_fork,shat_fr_showSoftFluxTopDivider,Show Soft Flux Top Divider,Boolean,TRUE,,Draws a second divider at the top of the soft flux fill using the same sprite color and size as the hard flux divider.,,,General
-shattersphere_flux_reticle_fork,shat_fr_enableSystemIndicator,Enable System Indicator,Boolean,FALSE,,Draws the small system state marker near the reticle. Disabled by default.,,,General
-shattersphere_flux_reticle_fork,shat_fr_enableShieldIndicator,Enable Shield Indicator,Boolean,FALSE,,Draws the small shield state marker near the reticle. Disabled by default.,,,General
 shattersphere_flux_reticle_fork,shat_fr_toggleStrafeAndTurnToCursorKey,Strafe Toggle Keybind,Keycode,37,,"Changes the keybind for toggling ""strafe and turn to cursor"" behavior.",,,General
 shattersphere_flux_reticle_fork,shat_fr_glowOpacity,Reticle Glow Alpha,Int,64,,Controls how visible the glow of the reticle is.,0,255,General
 shattersphere_flux_reticle_fork,shat_fr_geometryHeader,,Header,Reticle Geometry,,,,,General
@@ -20,10 +18,6 @@ shattersphere_flux_reticle_fork,shat_fr_hardFluxDividerHeightMult,Hard/Soft Divi
 shattersphere_flux_reticle_fork,shat_fr_reticleTopOffset,Reticle Top Offset,Double,0,,Moves only the front cursor graphic and glow along the ship-to-cursor line while the bar stays anchored. Positive values move it away from the ship; negative values move it toward the ship.,-300,300,General
 shattersphere_flux_reticle_fork,shat_fr_reticleTopLateralOffset,Reticle Top Left/Right Offset,Double,0,,Moves only the front cursor graphic and glow left or right relative to the bar. Positive values move right when looking from the ship toward the cursor; negative values move left.,-300,300,General
 shattersphere_flux_reticle_fork,shat_fr_reticleBodyLateralOffset,Reticle Body Left/Right Offset,Double,0,,"Moves the flux bar background, border, gauge fills, divider, and lower bar sprites left or right. Positive values move right when looking from the ship toward the cursor; negative values move left.",-300,300,General
-shattersphere_flux_reticle_fork,shat_fr_systemIndicatorOffsetX,System Indicator X Offset,Double,-18,,Moves the system state marker left or right from the cursor in screen pixels. Positive values move right; negative values move left.,-300,300,General
-shattersphere_flux_reticle_fork,shat_fr_systemIndicatorOffsetY,System Indicator Y Offset,Double,-18,,Moves the system state marker up or down from the cursor in screen pixels. Positive values move up; negative values move down.,-300,300,General
-shattersphere_flux_reticle_fork,shat_fr_shieldIndicatorOffsetX,Shield Indicator X Offset,Double,18,,Moves the shield state marker left or right from the cursor in screen pixels. Positive values move right; negative values move left.,-300,300,General
-shattersphere_flux_reticle_fork,shat_fr_shieldIndicatorOffsetY,Shield Indicator Y Offset,Double,-18,,Moves the shield state marker up or down from the cursor in screen pixels. Positive values move up; negative values move down.,-300,300,General
 shattersphere_flux_reticle_fork,shat_fr_minReticleLength,Minimum Bar Length,Double,20,,Controls the minimum drawn length of the flux bar.,1,300,General
 shattersphere_flux_reticle_fork,shat_fr_maxReticleLength,Maximum Bar Length,Double,80,,Controls the maximum drawn length of the flux bar.,1,500,General
 shattersphere_flux_reticle_fork,shat_fr_minReticleDistance,Minimum Size Distance,Double,0.1,,Ship-to-cursor distance where the bar is at minimum length. Distance is normalized to half the visible screen height.,0,5,General
@@ -65,13 +59,3 @@ shattersphere_flux_reticle_fork,shat_fr_hardFluxDividerColorRed,Divider Red,Int,
 shattersphere_flux_reticle_fork,shat_fr_hardFluxDividerColorGreen,Divider Green,Int,251,,,0,255,Color Override
 shattersphere_flux_reticle_fork,shat_fr_hardFluxDividerColorBlue,Divider Blue,Int,255,,,0,255,Color Override
 shattersphere_flux_reticle_fork,shat_fr_hardFluxDividerColorAlpha,Divider Alpha,Int,255,,,0,255,Color Override
-shattersphere_flux_reticle_fork,shat_fr_systemIndicatorHeader,,Header,System Indicator RGBA,,,,,Color Override
-shattersphere_flux_reticle_fork,shat_fr_systemIndicatorColorRed,System Indicator Red,Int,19,,,0,255,Color Override
-shattersphere_flux_reticle_fork,shat_fr_systemIndicatorColorGreen,System Indicator Green,Int,240,,,0,255,Color Override
-shattersphere_flux_reticle_fork,shat_fr_systemIndicatorColorBlue,System Indicator Blue,Int,255,,,0,255,Color Override
-shattersphere_flux_reticle_fork,shat_fr_systemIndicatorColorAlpha,System Indicator Alpha,Int,255,,,0,255,Color Override
-shattersphere_flux_reticle_fork,shat_fr_shieldIndicatorHeader,,Header,Shield Indicator RGBA,,,,,Color Override
-shattersphere_flux_reticle_fork,shat_fr_shieldIndicatorColorRed,Shield Indicator Red,Int,188,,,0,255,Color Override
-shattersphere_flux_reticle_fork,shat_fr_shieldIndicatorColorGreen,Shield Indicator Green,Int,251,,,0,255,Color Override
-shattersphere_flux_reticle_fork,shat_fr_shieldIndicatorColorBlue,Shield Indicator Blue,Int,255,,,0,255,Color Override
-shattersphere_flux_reticle_fork,shat_fr_shieldIndicatorColorAlpha,Shield Indicator Alpha,Int,255,,,0,255,Color Override

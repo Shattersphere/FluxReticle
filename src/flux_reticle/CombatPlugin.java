@@ -78,8 +78,6 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         showBarMarkerSprites = getBoolean("showBarMarkerSprites");
         swapQuarterHalfSprites = getBoolean("swapQuarterHalfSprites");
         showSoftFluxTopDivider = getBoolean("showSoftFluxTopDivider");
-        enableSystemIndicator = getBoolean("enableSystemIndicator");
-        enableShieldIndicator = getBoolean("enableShieldIndicator");
         glowOpacity = getInt("glowOpacity");
         spriteSet = getString("spriteSet");
         frontSpriteVariant = getString("frontSpriteVariant");
@@ -94,10 +92,6 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         reticleTopOffset = (float) getDouble("reticleTopOffset");
         reticleTopLateralOffset = (float) getDouble("reticleTopLateralOffset");
         reticleBodyLateralOffset = (float) getDouble("reticleBodyLateralOffset");
-        systemIndicatorOffsetX = (float) getDouble("systemIndicatorOffsetX");
-        systemIndicatorOffsetY = (float) getDouble("systemIndicatorOffsetY");
-        shieldIndicatorOffsetX = (float) getDouble("shieldIndicatorOffsetX");
-        shieldIndicatorOffsetY = (float) getDouble("shieldIndicatorOffsetY");
         minLength = (float) Math.max(1, getDouble("minReticleLength"));
         maxLength = (float) Math.max(minLength, getDouble("maxReticleLength"));
         minDistance = (float) Math.max(0, getDouble("minReticleDistance"));
@@ -115,8 +109,6 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         gaugeColor = getColor("softFluxGaugeColor");
         hardFluxColor = getColor("hardFluxGaugeColor");
         dividerColor = getColor("hardFluxDividerColor");
-        systemIndicatorColor = getColor("systemIndicatorColor");
-        shieldIndicatorColor = getColor("shieldIndicatorColor");
 
         return true;
     }
@@ -148,11 +140,6 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             DEFAULT_RETICLE_TOP_OFFSET = 0f,
             DEFAULT_RETICLE_TOP_LATERAL_OFFSET = 0f,
             DEFAULT_RETICLE_BODY_LATERAL_OFFSET = 0f,
-            DEFAULT_SYSTEM_INDICATOR_OFFSET_X = -18f,
-            DEFAULT_SYSTEM_INDICATOR_OFFSET_Y = -18f,
-            DEFAULT_SHIELD_INDICATOR_OFFSET_X = 18f,
-            DEFAULT_SHIELD_INDICATOR_OFFSET_Y = -18f,
-            INDICATOR_SIZE = 4f,
             TWO_PI = (float)(Math.PI * 2);
     static final int
             ESCAPE_KEY_VALUE = 1;
@@ -201,10 +188,6 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             reticleTopOffset = DEFAULT_RETICLE_TOP_OFFSET,
             reticleTopLateralOffset = DEFAULT_RETICLE_TOP_LATERAL_OFFSET,
             reticleBodyLateralOffset = DEFAULT_RETICLE_BODY_LATERAL_OFFSET,
-            systemIndicatorOffsetX = DEFAULT_SYSTEM_INDICATOR_OFFSET_X,
-            systemIndicatorOffsetY = DEFAULT_SYSTEM_INDICATOR_OFFSET_Y,
-            shieldIndicatorOffsetX = DEFAULT_SHIELD_INDICATOR_OFFSET_X,
-            shieldIndicatorOffsetY = DEFAULT_SHIELD_INDICATOR_OFFSET_Y,
             minLength = DEFAULT_MIN_LENGTH,
             maxLength = DEFAULT_MAX_LENGTH,
             minDistance = DEFAULT_DISTANCE_HIDE,
@@ -218,15 +201,12 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     CombatEngineAPI engine;
     boolean escapeMenuIsOpen = false, needToLoadSettings = true, showReticle, showReticleWhenInterfaceIsHidden,
             keepBarVisibleAtMinimumDistance, enableFluxChangeFlash = true, swapQuarterHalfSprites = false,
-            showBarMarkerSprites = true, showSoftFluxTopDivider = true,
-            enableSystemIndicator = false, enableShieldIndicator = false;
+            showBarMarkerSprites = true, showSoftFluxTopDivider = true;
     Vector2f mouse = new Vector2f(), frontCenter = new Vector2f(), bodyCenter = new Vector2f(), at = new Vector2f(), normal = new Vector2f();
     Color reticleColor = Misc.getPositiveHighlightColor(),
             gaugeColor = Misc.getHighlightColor(),
             hardFluxColor = Misc.getNegativeHighlightColor(),
             dividerColor = Misc.getNegativeHighlightColor(),
-            systemIndicatorColor = Misc.getPositiveHighlightColor(),
-            shieldIndicatorColor = Misc.getHighlightColor(),
             warnColor = Color.WHITE,
             gaugeBackgroundColor = Color.BLACK;
     ViewportAPI viewport;
@@ -395,45 +375,6 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         hardBar.setColor(c);
         hardBar.setAngle(angle);
         hardBar.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
-    }
-    void drawReticleIndicator(float x, float y, Color color, float opacity, float stateAlpha) {
-        float alpha = color.getAlpha() / 255f * opacity * Math.max(0f, Math.min(1f, stateAlpha));
-        if(alpha <= 0) return;
-
-        float size = Math.max(1f, INDICATOR_SIZE * scale);
-
-        glPushAttrib(GL_ALL_ATTRIB_BITS);
-        glDisable(GL_TEXTURE_2D);
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glBegin(GL_TRIANGLE_FAN);
-        {
-            glColor4f(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f, alpha);
-            glVertex2f(x, y);
-            glVertex2f(x, y + size);
-            glVertex2f(x + size, y);
-            glVertex2f(x, y - size);
-            glVertex2f(x - size, y);
-            glVertex2f(x, y + size);
-        }
-        glEnd();
-        glDisable(GL_BLEND);
-        glPopAttrib();
-
-        glColor4f(1, 1, 1, 1);
-    }
-    float getSystemIndicatorAlpha(ShipSystemAPI system) {
-        if(system == null) return 0f;
-        if(system.isActive() || system.isOn() || system.isStateActive()
-                || system.isChargeup() || system.isChargedown() || system.getEffectLevel() > 0f) return 1f;
-        if(system.canBeActivated()) return 0.65f;
-        if(system.isOutOfAmmo()) return 0.15f;
-        if(system.isCoolingDown() || system.getCooldownRemaining() > 0f) return 0.25f;
-        return 0.35f;
-    }
-    float getShieldIndicatorAlpha(ShieldAPI shield) {
-        if(shield == null) return 0f;
-        return shield.isOn() ? 1f : 0.25f;
     }
     float getFlashAmount(float fluxLevel) {
         float flashProgress = (fluxLevel - flashStartThreshold) / (flashMaxThreshold - flashStartThreshold);
@@ -701,24 +642,6 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                 front.setColor(clr);
                 front.setAngle(aimAngle);
                 front.renderAtCenter(frontCenter.x, frontCenter.y);
-
-                ShipAPI playerShip = engine.getPlayerShip();
-                if(enableSystemIndicator) {
-                    drawReticleIndicator(
-                            mouse.x + systemIndicatorOffsetX,
-                            mouse.y + systemIndicatorOffsetY,
-                            systemIndicatorColor,
-                            opacity,
-                            getSystemIndicatorAlpha(playerShip.getSystem()));
-                }
-                if(enableShieldIndicator) {
-                    drawReticleIndicator(
-                            mouse.x + shieldIndicatorOffsetX,
-                            mouse.y + shieldIndicatorOffsetY,
-                            shieldIndicatorColor,
-                            opacity,
-                            getShieldIndicatorAlpha(playerShip.getShield()));
-                }
 
                 Mouse.setNativeCursor(hiddenCursor);
 

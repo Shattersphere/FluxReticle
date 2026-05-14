@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.19.2-fork.1 - 2026-05-15
+
+- Removed the system and shield indicator overlay code and settings.
+
 ## 1.19.1-fork.1 - 2026-05-15
 
 - Fixed the new system and shield indicators so they are opt-in instead of appearing by default.
