@@ -84,6 +84,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         reticleTopScale = (float) Math.max(0.1, getDouble("reticleTopScaleMult"));
         barWidth = (float) Math.max(0.5, getDouble("fluxBarWidth"));
         fluxBarBorderWidth = (float) Math.max(0, getDouble("fluxBarBorderWidth"));
+        fluxFillInsetPixels = (float) Math.max(0, getDouble("fluxFillInsetPixels"));
         reticleTopOffset = (float) getDouble("reticleTopOffset");
         reticleTopLateralOffset = (float) getDouble("reticleTopLateralOffset");
         reticleBodyLateralOffset = (float) getDouble("reticleBodyLateralOffset");
@@ -129,6 +130,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             DEFAULT_DISTANCE_HIDE = 0.1f,
             DEFAULT_BAR_WIDTH = 7f,
             DEFAULT_BAR_BORDER_WIDTH = 1f,
+            DEFAULT_FLUX_FILL_INSET_PIXELS = 1f,
             DEFAULT_RETICLE_TOP_SCALE = 1f,
             DEFAULT_RETICLE_TOP_OFFSET = 0f,
             DEFAULT_RETICLE_TOP_LATERAL_OFFSET = 0f,
@@ -151,6 +153,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     float scale = 1f, damageFlash = 0, fluxLastFrame = 0,
             barWidth = DEFAULT_BAR_WIDTH,
             fluxBarBorderWidth = DEFAULT_BAR_BORDER_WIDTH,
+            fluxFillInsetPixels = DEFAULT_FLUX_FILL_INSET_PIXELS,
             reticleTopScale = DEFAULT_RETICLE_TOP_SCALE,
             reticleTopOffset = DEFAULT_RETICLE_TOP_OFFSET,
             reticleTopLateralOffset = DEFAULT_RETICLE_TOP_LATERAL_OFFSET,
@@ -246,7 +249,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     public String getFlagshipHullId() {
         return engine.getPlayerShip().getHullSpec().getBaseHullId();
     }
-    void drawGaugeSegment(float length, float minLevel, float maxLevel, Color c, float opacity, float colorLerp) {
+    void drawGaugeSegment(float length, float minLevel, float maxLevel, Color c, float opacity, float colorLerp, float edgeInsetPixels) {
         minLevel = Math.max(0, Math.min(1, minLevel));
         maxLevel = Math.max(0, Math.min(1, maxLevel));
         if(maxLevel <= minLevel || opacity <= 0) return;
@@ -254,7 +257,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         Vector2f direction = new Vector2f(normal);
         direction.normalise(direction);
         Vector2f perp = new Vector2f(direction.y, -direction.x);
-        float width = barWidth * scale;
+        float width = Math.max(0.5f, barWidth * scale - Math.max(0, edgeInsetPixels) * 2f);
         float startDistance = length * (1f - maxLevel);
         float endDistance = length * (1f - minLevel);
         Vector2f nearCenter = new Vector2f(bodyCenter.x + direction.x * startDistance, bodyCenter.y + direction.y * startDistance);
@@ -568,7 +571,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
                 if(opacity > 0) {
-                    drawGaugeSegment(length, 0, 1, gaugeBackgroundColor, opacity, 0);
+                    drawGaugeSegment(length, 0, 1, gaugeBackgroundColor, opacity, 0, 0);
                     drawGaugeBorder(length, reticleColor, opacity, warnness);
                 }
 
@@ -583,8 +586,8 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                     SpriteAPI quarterSprite = swapQuarterHalfSprites ? half : quarter;
                     SpriteAPI halfSprite = swapQuarterHalfSprites ? quarter : half;
 
-                    drawGaugeSegment(length, hard, hard + softOnly, gaugeColor, opacity, warnness);
-                    drawGaugeSegment(length, 0, hard, hardFluxColor, opacity, warnness);
+                    drawGaugeSegment(length, hard, hard + softOnly, gaugeColor, opacity, warnness, fluxFillInsetPixels);
+                    drawGaugeSegment(length, 0, hard, hardFluxColor, opacity, warnness, fluxFillInsetPixels);
 
                     normal.normalise().scale(length * 0.25f);
                     quarterSprite.setColor(clr);

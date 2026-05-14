@@ -32,6 +32,7 @@ This repo is a working Starsector mod fork, not just source notes. Keep runtime 
 - The fork uses separate integer RGBA Luna settings; the old upstream color override gate is intentionally gone.
 - Saved Luna settings from upstream or earlier fork fields may not migrate to the renamed `shat_fr_` fields; verify resolved settings in game when colors or sizes appear unchanged.
 - `fluxBarBorderWidth` controls a reticle-colored outline around the background bar; `0` disables it.
+- `fluxFillInsetPixels` shrinks only the soft/hard fill quads inward in screen pixels; background and border geometry stay fixed.
 - `reticleTopScaleMult` scales only `frontKeyTurn` / `frontMouseTurn` and their glow sprites as a multiplier of `sizeMult`.
 - `reticleTopOffset` shifts only `frontKeyTurn` / `frontMouseTurn` and their glow sprites along the ship-to-cursor line. The bar and aim point stay anchored.
 - `reticleTopLateralOffset` shifts only `frontKeyTurn` / `frontMouseTurn` and their glow sprites left/right relative to the bar. Positive moves right when looking from the ship toward the cursor.

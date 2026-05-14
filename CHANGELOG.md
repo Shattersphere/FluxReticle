@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.12.0-fork.1 - 2026-05-15
+
+- Added a LunaLib setting for insetting soft and hard flux fills so the flux bar border stays visible.
+
 ## 1.11.1-fork.1 - 2026-05-15
 
 - Fixed soft and hard flux fills rendering above or tinting the quarter and half reticle bar sprites.

@@ -12,6 +12,7 @@ Validate the customized reticle in game and keep repo/runtime deployment evidenc
 - Luna settings load under mod id `shattersphere_flux_reticle_fork`.
 - In combat, custom reticle, soft flux, hard flux, divider, background, size/distance, and flash settings are visibly honored.
 - The flux bar background border follows the reticle color and can be disabled with border width `0`.
+- Soft/hard flux fill inset leaves the border visible without changing the background or border position.
 - Reticle top/front offset visibly moves only the front cursor graphic and glow without changing the bar anchor or actual mouse aim point.
 - Reticle top/front lateral offset visibly moves only the front cursor graphic and glow left/right relative to the bar.
 - Reticle body lateral offset visibly moves the flux bar body and lower sprites left/right separately from the top/front graphic.
