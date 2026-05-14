@@ -75,6 +75,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     boolean readSettings() throws Exception {
         showReticle = getBoolean("showReticle");
         showReticleWhenInterfaceIsHidden = getBoolean("showReticleWhenInterfaceIsHidden");
+        showBarMarkerSprites = getBoolean("showBarMarkerSprites");
         swapQuarterHalfSprites = getBoolean("swapQuarterHalfSprites");
         showSoftFluxTopDivider = getBoolean("showSoftFluxTopDivider");
         glowOpacity = getInt("glowOpacity");
@@ -175,7 +176,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     CombatEngineAPI engine;
     boolean escapeMenuIsOpen = false, needToLoadSettings = true, showReticle, showReticleWhenInterfaceIsHidden,
             keepBarVisibleAtMinimumDistance, enableFluxChangeFlash = true, swapQuarterHalfSprites = false,
-            showSoftFluxTopDivider = true;
+            showBarMarkerSprites = true, showSoftFluxTopDivider = true;
     Vector2f mouse = new Vector2f(), frontCenter = new Vector2f(), bodyCenter = new Vector2f(), at = new Vector2f(), normal = new Vector2f();
     Color reticleColor = Misc.getPositiveHighlightColor(),
             gaugeColor = Misc.getHighlightColor(),
@@ -484,7 +485,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                 back.setSize(BACK_WIDTH * scale, BACK_HEIGHT * scale);
                 half.setSize(HALF_WIDTH * scale, HALF_HEIGHT * scale);
                 quarter.setSize(QUARTER_WIDTH * scale, QUARTER_HEIGHT * scale);
-                hardBar.setSize(HARD_BAR_WIDTH * scale, HARD_BAR_HEIGHT * scale * hardFluxDividerHeightMult);
+                hardBar.setSize(HARD_BAR_WIDTH * scale * hardFluxDividerHeightMult, HARD_BAR_HEIGHT * scale);
 
                 needToLoadSettings = false;
             }
@@ -607,20 +608,22 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                     drawGaugeSegment(length, hard, hard + softOnly, gaugeColor, opacity, warnness, fluxFillInsetPixels);
                     drawGaugeSegment(length, 0, hard, hardFluxColor, opacity, warnness, fluxFillInsetPixels);
 
-                    normal.normalise().scale(length * 0.25f);
-                    quarterPositionSprite.setColor(clr);
-                    quarterPositionSprite.setAngle(aimAngle);
-                    quarterPositionSprite.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
+                    if(showBarMarkerSprites) {
+                        normal.normalise().scale(length * 0.25f);
+                        quarterPositionSprite.setColor(clr);
+                        quarterPositionSprite.setAngle(aimAngle);
+                        quarterPositionSprite.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
 
-                    normal.normalise().scale(length * 0.5f);
-                    half.setColor(clr);
-                    half.setAngle(aimAngle);
-                    half.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
+                        normal.normalise().scale(length * 0.5f);
+                        half.setColor(clr);
+                        half.setAngle(aimAngle);
+                        half.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
 
-                    normal.normalise().scale(length * 0.75f);
-                    quarterPositionSprite.setColor(clr);
-                    quarterPositionSprite.setAngle(aimAngle);
-                    quarterPositionSprite.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
+                        normal.normalise().scale(length * 0.75f);
+                        quarterPositionSprite.setColor(clr);
+                        quarterPositionSprite.setAngle(aimAngle);
+                        quarterPositionSprite.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
+                    }
 
                     normal.normalise().scale(length);
                     back.setColor(clr);

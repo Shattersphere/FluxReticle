@@ -33,11 +33,12 @@ This repo is a working Starsector mod fork, not just source notes. Keep runtime 
 - Saved Luna settings from upstream or earlier fork fields may not migrate to the renamed `shat_fr_` fields; verify resolved settings in game when colors or sizes appear unchanged.
 - `fluxBarBorderWidth` controls a reticle-colored outline around the background bar; `0` disables it.
 - `fluxFillInsetPixels` shrinks only the soft/hard fill quads inward in screen pixels; background and border geometry stay fixed.
-- `hardFluxDividerHeightMult` scales only the `hardBar` divider sprite height; divider width and position stay fixed.
+- `hardFluxDividerHeightMult` scales the `hardBar` divider's visual height/thickness by changing the sprite's short axis; divider length and position stay fixed.
 - `reticleTopScaleMult` scales only `frontKeyTurn` / `frontMouseTurn` and their glow sprites as a multiplier of `sizeMult`.
 - `reticleTopOffset` shifts only `frontKeyTurn` / `frontMouseTurn` and their glow sprites along the ship-to-cursor line. The bar and aim point stay anchored.
 - `reticleTopLateralOffset` shifts only `frontKeyTurn` / `frontMouseTurn` and their glow sprites left/right relative to the bar. Positive moves right when looking from the ship toward the cursor.
 - `reticleBodyLateralOffset` shifts the flux bar background, border, gauge fills, divider, and lower bar sprites left/right separately from the top graphic.
+- `showBarMarkerSprites` toggles only the 25%, 50%, and 75% marker sprites; the end cap/back sprite still renders.
 - `swapQuarterHalfSprites` keeps its legacy field id but now draws the half sprite at the quarter, middle, and three-quarter marker positions when enabled.
 - `showSoftFluxTopDivider` draws a second `hardBar` divider at the top of the soft flux fill; it uses the same color and height multiplier as the hard/soft boundary divider.
 - Soft/hard flux fills render below the quarter/half/back marker sprites and hard-flux divider.

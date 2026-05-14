@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.15.0-fork.1 - 2026-05-15
+
+- Added an option to hide the 25%, 50%, and 75% flux bar marker sprites while keeping the end cap visible.
+- Fixed hard/soft divider height scaling so it adjusts the divider's visual thickness instead of its length.
+
 ## 1.14.0-fork.1 - 2026-05-15
 
 - Added an optional soft-flux top divider that uses the same styling as the hard/soft boundary divider.
