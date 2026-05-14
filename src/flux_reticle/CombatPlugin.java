@@ -153,17 +153,29 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             SPRITE_SET_8X_NEAREST_EDGE_CLEANED = "8xNearestEdgeCleaned",
             SPRITE_SET_AI_GENERATED_FULL_8X = "AIGeneratedFullSet8x",
             DEFAULT_FRONT_SPRITE_VARIANT = "CurrentSpriteSet",
-            FRONT_VARIANT_WINGS_05 = "wings_05pct_further_apart",
-            FRONT_VARIANT_WINGS_10 = "wings_10pct_further_apart",
-            FRONT_VARIANT_WINGS_15 = "wings_15pct_further_apart",
-            FRONT_VARIANT_WINGS_20 = "wings_20pct_further_apart",
-            FRONT_VARIANT_WINGS_25 = "wings_25pct_further_apart",
-            FRONT_VARIANT_WINGS_30 = "wings_30pct_further_apart",
-            FRONT_VARIANT_WINGS_35 = "wings_35pct_further_apart",
-            FRONT_VARIANT_WINGS_40 = "wings_40pct_further_apart",
-            FRONT_VARIANT_WINGS_45 = "wings_45pct_further_apart",
-            FRONT_VARIANT_WINGS_50 = "wings_50pct_further_apart",
             FRONT_VARIANT_ROOT = "shat_fr/graphics/front_variants/";
+    static final String[] FRONT_VARIANT_FOLDERS = new String[] {
+            "wings_05pct_further_apart",
+            "wings_10pct_further_apart",
+            "wings_15pct_further_apart",
+            "wings_20pct_further_apart",
+            "wings_25pct_further_apart",
+            "wings_30pct_further_apart",
+            "wings_35pct_further_apart",
+            "wings_40pct_further_apart",
+            "wings_45pct_further_apart",
+            "wings_50pct_further_apart",
+            "wings_55pct_further_apart",
+            "wings_60pct_further_apart",
+            "wings_65pct_further_apart",
+            "wings_70pct_further_apart",
+            "wings_75pct_further_apart",
+            "wings_80pct_further_apart",
+            "wings_85pct_further_apart",
+            "wings_90pct_further_apart",
+            "wings_95pct_further_apart",
+            "wings_100pct_further_apart"
+    };
     static org.lwjgl.input.Cursor hiddenCursor, originalCursor;
     static boolean cursorNeedsReset = false, wasAutoTurnModePriorToActivation = false, errorDisplayed = false;
 
@@ -422,16 +434,9 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     }
 
     String getFrontVariantFolder(String configuredVariant) {
-        if (FRONT_VARIANT_WINGS_05.equals(configuredVariant)) return FRONT_VARIANT_WINGS_05;
-        if (FRONT_VARIANT_WINGS_10.equals(configuredVariant)) return FRONT_VARIANT_WINGS_10;
-        if (FRONT_VARIANT_WINGS_15.equals(configuredVariant)) return FRONT_VARIANT_WINGS_15;
-        if (FRONT_VARIANT_WINGS_20.equals(configuredVariant)) return FRONT_VARIANT_WINGS_20;
-        if (FRONT_VARIANT_WINGS_25.equals(configuredVariant)) return FRONT_VARIANT_WINGS_25;
-        if (FRONT_VARIANT_WINGS_30.equals(configuredVariant)) return FRONT_VARIANT_WINGS_30;
-        if (FRONT_VARIANT_WINGS_35.equals(configuredVariant)) return FRONT_VARIANT_WINGS_35;
-        if (FRONT_VARIANT_WINGS_40.equals(configuredVariant)) return FRONT_VARIANT_WINGS_40;
-        if (FRONT_VARIANT_WINGS_45.equals(configuredVariant)) return FRONT_VARIANT_WINGS_45;
-        if (FRONT_VARIANT_WINGS_50.equals(configuredVariant)) return FRONT_VARIANT_WINGS_50;
+        for (String variantFolder : FRONT_VARIANT_FOLDERS) {
+            if (variantFolder.equals(configuredVariant)) return variantFolder;
+        }
         return "";
     }
 

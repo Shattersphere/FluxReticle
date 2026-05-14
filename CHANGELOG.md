@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.18.0-fork.1 - 2026-05-15
+
+- Added front sprite variant choices through `wings_100pct_further_apart`.
+
 ## 1.17.1-fork.1 - 2026-05-15
 
 - Fixed the hard and soft flux top divider markers so they render at full configured opacity whenever their flux segment exists.
