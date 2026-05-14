@@ -40,6 +40,7 @@ The deploy script stages and publishes these repo paths:
 - `shat_fr.version`
 - individual root runtime files under `shat_fr\graphics`
 - bundled selectable sprite-set folders under `shat_fr\graphics`
+- bundled front-variant folders under `shat_fr\graphics\front_variants`
 
 The script removes retired upstream paths from the live target during publish:
 
@@ -81,6 +82,7 @@ Post-deploy validation checks source/live SHA-256 parity for important runtime f
 - `jars\FluxReticle.jar`
 - `mod_info.json`
 - `shat_fr.version`
+- representative front variant sprites under `shat_fr\graphics\front_variants`
 
 ### Common Mistakes
 
