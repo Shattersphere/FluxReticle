@@ -17,6 +17,7 @@ shattersphere_flux_reticle_fork,shat_fr_flashStartThreshold,Flash Start Flux,Dou
 shattersphere_flux_reticle_fork,shat_fr_flashMaxThreshold,Flash Maximum Flux,Double,1,Flux level where warning flashing reaches full intensity.,0,1,General
 shattersphere_flux_reticle_fork,shat_fr_flashStartFrequency,Flash Start Frequency,Double,1.9,Flash frequency in cycles per second when warning flashing begins.,0,20,General
 shattersphere_flux_reticle_fork,shat_fr_flashMaxFrequency,Flash Maximum Frequency,Double,1.9,Flash frequency in cycles per second at full warning intensity.,0,20,General
+shattersphere_flux_reticle_fork,shat_fr_enableFluxChangeFlash,Enable Flux Change Flash,Boolean,TRUE,Allows the brief warning-color pulse caused by sudden flux level changes. Turn this off if rapidly unloading soft flux causes unwanted flashing.,,,General
 shattersphere_flux_reticle_fork,shat_fr_gaugeBackgroundHeader,,Header,Flux Bar Background RGBA,,,,Color Override
 shattersphere_flux_reticle_fork,shat_fr_gaugeBackgroundColorRed,Background Red,Int,0,,0,255,Color Override
 shattersphere_flux_reticle_fork,shat_fr_gaugeBackgroundColorGreen,Background Green,Int,0,,0,255,Color Override

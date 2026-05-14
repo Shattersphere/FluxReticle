@@ -89,6 +89,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         flashMaxThreshold = (float) Math.max(flashStartThreshold + 0.001, Math.min(1, getDouble("flashMaxThreshold")));
         flashStartFrequency = (float) Math.max(0, getDouble("flashStartFrequency"));
         flashMaxFrequency = (float) Math.max(0, getDouble("flashMaxFrequency"));
+        enableFluxChangeFlash = getBoolean("enableFluxChangeFlash");
         toggleStrafeAndTurnToCursorKey = getInt("toggleStrafeAndTurnToCursorKey");
         warnColor = getColor("warningColor");
         gaugeBackgroundColor = getColor("gaugeBackgroundColor");
@@ -130,7 +131,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     SpriteAPI frontKeyTurn, frontMouseTurn, back, half, quarter, hardBar, glowKeyTurn, glowMouseTurn;
     CombatEngineAPI engine;
     boolean escapeMenuIsOpen = false, needToLoadSettings = true, showReticle, showReticleWhenInterfaceIsHidden,
-            keepBarVisibleAtMinimumDistance;
+            keepBarVisibleAtMinimumDistance, enableFluxChangeFlash = true;
     Vector2f mouse = new Vector2f(), reticleTop = new Vector2f(), at = new Vector2f(), normal = new Vector2f();
     Color reticleColor = Misc.getPositiveHighlightColor(),
             gaugeColor = Misc.getHighlightColor(),
@@ -424,7 +425,9 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                 Color glowClr = new Color(clr.getRed(), clr.getGreen(), clr.getBlue(), glowOpacity);
                 SpriteAPI front, glow;
 
-                damageFlash = Math.max(0, Math.min(1, damageFlash - amount * 1 + (flux - fluxLastFrame) * 5));
+                damageFlash = enableFluxChangeFlash
+                        ? Math.max(0, Math.min(1, damageFlash - amount * 1 + (flux - fluxLastFrame) * 5))
+                        : 0;
                 fluxLastFrame = flux;
                 warnness = Math.max(0, Math.min(1, warnness + damageFlash));
 

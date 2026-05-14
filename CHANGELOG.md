@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.0-fork.1 - 2026-05-15
+
+- Added an option to disable the extra warning flash pulse caused by rapid flux changes.
+
 ## 1.5.0-fork.1 - 2026-05-15
 
 - Added a LunaLib and fallback setting for moving the reticle top/front along the ship-to-cursor line.

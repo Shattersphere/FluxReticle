@@ -33,6 +33,7 @@ This repo is a working Starsector mod fork, not just source notes. Keep runtime 
 - Saved Luna settings from upstream or earlier fork fields may not migrate to the renamed `shat_fr_` fields; verify resolved settings in game when colors or sizes appear unchanged.
 - `reticleTopOffset` shifts the rendered top/front of the reticle along the ship-to-cursor line without changing the actual mouse aim point.
 - Distance settings are normalized to half the visible screen height.
+- `enableFluxChangeFlash` controls only the extra flux-change pulse; threshold-based flashing still follows the flash threshold/frequency settings.
 - `keepBarVisibleAtMinimumDistance` defaults on and prevents the flux bar from fading out at point blank range.
 - The hard/soft divider still uses the `hardBar` sprite, but its color is controlled separately.
 - Combat rendering still needs in-game confirmation after UI-facing changes; build success is not enough.

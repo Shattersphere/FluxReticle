@@ -29,6 +29,7 @@ Fork of Flux Reticle with a separate Starsector identity and LunaLib-facing cust
 - `keepBarVisibleAtMinimumDistance`: keeps the bar visible at minimum length at point blank range instead of fading out.
 - Separate RGBA settings for reticle, soft flux, hard flux, hard/soft divider, warning flash, and background.
 - Configurable high-flux flash thresholds and frequency.
+- Optional flux-change flash pulse, separate from threshold-based high-flux flashing.
 - Cursor reset handling for combat end, command UI, escape menu, and campaign return.
 
 ## Build
