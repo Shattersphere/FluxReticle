@@ -11,6 +11,7 @@ Validate the customized reticle in game and keep repo/runtime deployment evidenc
 - Latest runtime files are either deployed with parity checks or explicitly queued by `scripts\deploy_mod.ps1`.
 - Luna settings load under mod id `shattersphere_flux_reticle_fork`.
 - In combat, custom reticle, soft flux, hard flux, divider, background, size/distance, and flash settings are visibly honored.
+- The flux bar background border follows the reticle color and can be disabled with border width `0`.
 - Reticle top/front offset visibly moves only the front cursor graphic and glow without changing the bar anchor or actual mouse aim point.
 - Reticle top/front scale visibly resizes only the front cursor graphic and glow as a multiplier of the regular sprite size.
 - Sprite-set selection can switch between bundled vanilla, 4x, 8x, and AI-generated 8x sprite folders while keeping logical in-game size stable.

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.0-fork.1 - 2026-05-15
+
+- Added a LunaLib setting for drawing a reticle-colored border around the flux bar background.
+
 ## 1.8.0-fork.1 - 2026-05-15
 
 - Added a LunaLib setting for independently scaling the front reticle graphic and glow relative to the main reticle sprite size.

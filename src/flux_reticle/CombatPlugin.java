@@ -82,6 +82,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         scale = (float) getDouble("sizeMult");
         reticleTopScale = (float) Math.max(0.1, getDouble("reticleTopScaleMult"));
         barWidth = (float) Math.max(0.5, getDouble("fluxBarWidth"));
+        fluxBarBorderWidth = (float) Math.max(0, getDouble("fluxBarBorderWidth"));
         reticleTopOffset = (float) getDouble("reticleTopOffset");
         minLength = (float) Math.max(1, getDouble("minReticleLength"));
         maxLength = (float) Math.max(minLength, getDouble("maxReticleLength"));
@@ -124,6 +125,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             DEFAULT_DISTANCE_FULL = 1.0f,
             DEFAULT_DISTANCE_HIDE = 0.1f,
             DEFAULT_BAR_WIDTH = 7f,
+            DEFAULT_BAR_BORDER_WIDTH = 1f,
             DEFAULT_RETICLE_TOP_SCALE = 1f,
             DEFAULT_RETICLE_TOP_OFFSET = 0f,
             TWO_PI = (float)(Math.PI * 2);
@@ -143,6 +145,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
 
     float scale = 1f, damageFlash = 0, fluxLastFrame = 0,
             barWidth = DEFAULT_BAR_WIDTH,
+            fluxBarBorderWidth = DEFAULT_BAR_BORDER_WIDTH,
             reticleTopScale = DEFAULT_RETICLE_TOP_SCALE,
             reticleTopOffset = DEFAULT_RETICLE_TOP_OFFSET,
             minLength = DEFAULT_MIN_LENGTH,
@@ -276,6 +279,42 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         }
         glEnd();
         glPopMatrix();
+        glDisable(GL_BLEND);
+        glPopAttrib();
+
+        glColor4f(1, 1, 1, 1);
+    }
+    void drawGaugeBorder(float length, Color c, float opacity, float colorLerp) {
+        if(length <= 0 || opacity <= 0 || fluxBarBorderWidth <= 0) return;
+
+        Vector2f direction = new Vector2f(normal);
+        direction.normalise(direction);
+        Vector2f perp = new Vector2f(direction.y, -direction.x);
+        float width = barWidth * scale;
+        float borderWidth = Math.max(0.5f, fluxBarBorderWidth * scale);
+        Vector2f nearCenter = new Vector2f(mouse);
+        Vector2f farCenter = new Vector2f(mouse.x + direction.x * length, mouse.y + direction.y * length);
+        Vector2f nearEdge = new Vector2f(nearCenter.x + perp.x * width * 0.5f, nearCenter.y + perp.y * width * 0.5f);
+        Vector2f farEdge = new Vector2f(farCenter.x + perp.x * width * 0.5f, farCenter.y + perp.y * width * 0.5f);
+        c = Misc.interpolateColor(c, warnColor, colorLerp);
+
+        glPushAttrib(GL_ALL_ATTRIB_BITS);
+        glDisable(GL_TEXTURE_2D);
+        glEnable(GL_BLEND);
+        glEnable(GL_LINE_SMOOTH);
+        glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glLineWidth(borderWidth);
+        glBegin(GL_LINE_LOOP);
+        {
+            glColor4f(c.getRed()/255f, c.getGreen()/255f, c.getBlue()/255f, c.getAlpha()/255f * opacity);
+
+            glVertex2f(farEdge.x, farEdge.y);
+            glVertex2f(farEdge.x - perp.x * width, farEdge.y - perp.y * width);
+            glVertex2f(nearEdge.x - perp.x * width, nearEdge.y - perp.y * width);
+            glVertex2f(nearEdge.x, nearEdge.y);
+        }
+        glEnd();
         glDisable(GL_BLEND);
         glPopAttrib();
 
@@ -515,7 +554,10 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
 
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-                if(opacity > 0) drawGaugeSegment(length, 0, 1, gaugeBackgroundColor, opacity, 0);
+                if(opacity > 0) {
+                    drawGaugeSegment(length, 0, 1, gaugeBackgroundColor, opacity, 0);
+                    drawGaugeBorder(length, reticleColor, opacity, warnness);
+                }
 
                 front.setColor(clr);
                 front.setAngle(aimAngle);
