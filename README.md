@@ -31,11 +31,12 @@ Fork of Flux Reticle with a separate Starsector identity and LunaLib-facing cust
 - Optional 25%, 50%, and 75% bar marker sprites.
 - Option to use the half bar marker sprite at the quarter, middle, and three-quarter positions.
 - Optional soft-flux top divider using the same divider styling as the hard/soft boundary.
+- Reticle-adjacent system and shield state markers with configurable position and RGBA colours.
 - LunaLib sprite-set selector for the bundled vanilla, 4x, 8x, and AI-generated 8x reticle art sets.
 - LunaLib front sprite variant selector for bundled wing-gap frontKeyTurn/frontMouseTurn folders from `wings_05pct_further_apart` through `wings_100pct_further_apart`.
 - Configurable min/max cursor distance for bar scaling.
 - `keepBarVisibleAtMinimumDistance`: keeps the bar visible at minimum length at point blank range instead of fading out.
-- Separate RGBA settings for reticle, soft flux, hard flux, hard/soft divider, warning flash, and background.
+- Separate RGBA settings for reticle, soft flux, hard flux, hard/soft divider, warning flash, background, system indicator, and shield indicator.
 - Configurable high-flux flash thresholds and frequency.
 - Optional flux-change flash pulse, separate from threshold-based high-flux flashing.
 - Cursor reset handling for combat end, command UI, escape menu, and campaign return.

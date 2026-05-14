@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.19.0-fork.1 - 2026-05-15
+
+- Added configurable system and shield state indicators with LunaLib position offsets and separate RGBA colours.
+- Added a LunaLib toggle for hiding the shield indicator.
+
 ## 1.18.0-fork.1 - 2026-05-15
 
 - Added front sprite variant choices through `wings_100pct_further_apart`.
