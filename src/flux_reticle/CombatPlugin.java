@@ -134,7 +134,8 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             SPRITE_SET_4X_LANCZOS = "4xLanczos",
             SPRITE_SET_4X_NEAREST = "4xNearest",
             SPRITE_SET_8X_LANCZOS_EDGE_CLEANED = "8xLanczosEdgeCleaned",
-            SPRITE_SET_8X_NEAREST_EDGE_CLEANED = "8xNearestEdgeCleaned";
+            SPRITE_SET_8X_NEAREST_EDGE_CLEANED = "8xNearestEdgeCleaned",
+            SPRITE_SET_AI_GENERATED_FULL_8X = "AIGeneratedFullSet8x";
     static org.lwjgl.input.Cursor hiddenCursor, originalCursor;
     static boolean cursorNeedsReset = false, wasAutoTurnModePriorToActivation = false, errorDisplayed = false;
 
@@ -314,6 +315,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         if (SPRITE_SET_4X_LANCZOS.equals(configuredSpriteSet)) return "upscaled_4x_lanczos";
         if (SPRITE_SET_4X_NEAREST.equals(configuredSpriteSet)) return "upscaled_4x_nearest";
         if (SPRITE_SET_8X_LANCZOS_EDGE_CLEANED.equals(configuredSpriteSet)) return "upscaled_8x_lanczos_edge_cleaned";
+        if (SPRITE_SET_AI_GENERATED_FULL_8X.equals(configuredSpriteSet)) return "ai_generated_full_set_8x";
         return "upscaled_8x_nearest_edge_cleaned";
     }
 

@@ -12,7 +12,7 @@ Validate the customized reticle in game and keep repo/runtime deployment evidenc
 - Luna settings load under mod id `shattersphere_flux_reticle_fork`.
 - In combat, custom reticle, soft flux, hard flux, divider, background, size/distance, and flash settings are visibly honored.
 - Reticle top/front offset visibly moves only the front cursor graphic and glow without changing the bar anchor or actual mouse aim point.
-- Sprite-set selection can switch between bundled vanilla, 4x, and 8x sprite folders while keeping logical in-game size stable.
+- Sprite-set selection can switch between bundled vanilla, 4x, 8x, and AI-generated 8x sprite folders while keeping logical in-game size stable.
 - Disabling flux-change flashing suppresses the extra warning pulse when soft flux changes rapidly while leaving threshold flashing available.
 - Cursor hiding/reset behavior remains correct after combat UI transitions.
 - Public-facing changelog and private public-release checklist exist and stay aligned with version/release work.

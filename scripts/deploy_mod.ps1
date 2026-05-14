@@ -82,7 +82,8 @@ $PostDeployValidationCommand = {
         'shat_fr\graphics\upscaled_4x_lanczos\frontKeyTurn.png',
         'shat_fr\graphics\upscaled_4x_nearest\frontKeyTurn.png',
         'shat_fr\graphics\upscaled_8x_lanczos_edge_cleaned\frontKeyTurn.png',
-        'shat_fr\graphics\upscaled_8x_nearest_edge_cleaned\frontKeyTurn.png'
+        'shat_fr\graphics\upscaled_8x_nearest_edge_cleaned\frontKeyTurn.png',
+        'shat_fr\graphics\ai_generated_full_set_8x\frontKeyTurn.png'
     )
     foreach ($relativePath in $checks) {
         $source = Join-Path $RepoRoot $relativePath
@@ -126,7 +127,8 @@ $DeployItems = @(
     @{ Source = "shat_fr\graphics\upscaled_4x_lanczos"; Destination = "shat_fr\graphics\upscaled_4x_lanczos"; Optional = $false },
     @{ Source = "shat_fr\graphics\upscaled_4x_nearest"; Destination = "shat_fr\graphics\upscaled_4x_nearest"; Optional = $false },
     @{ Source = "shat_fr\graphics\upscaled_8x_lanczos_edge_cleaned"; Destination = "shat_fr\graphics\upscaled_8x_lanczos_edge_cleaned"; Optional = $false },
-    @{ Source = "shat_fr\graphics\upscaled_8x_nearest_edge_cleaned"; Destination = "shat_fr\graphics\upscaled_8x_nearest_edge_cleaned"; Optional = $false }
+    @{ Source = "shat_fr\graphics\upscaled_8x_nearest_edge_cleaned"; Destination = "shat_fr\graphics\upscaled_8x_nearest_edge_cleaned"; Optional = $false },
+    @{ Source = "shat_fr\graphics\ai_generated_full_set_8x"; Destination = "shat_fr\graphics\ai_generated_full_set_8x"; Optional = $false }
 )
 
 $RetiredDeployPaths = @(

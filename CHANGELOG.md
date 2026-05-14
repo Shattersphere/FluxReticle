@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.1-fork.1 - 2026-05-15
+
+- Added the AI-generated full 8x reticle art set to the LunaLib sprite-set selector.
+
 ## 1.7.0-fork.1 - 2026-05-15
 
 - Added a LunaLib sprite-set selector for bundled vanilla, 4x, and 8x reticle art.
