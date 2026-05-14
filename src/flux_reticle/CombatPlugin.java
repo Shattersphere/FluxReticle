@@ -76,6 +76,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         showReticle = getBoolean("showReticle");
         showReticleWhenInterfaceIsHidden = getBoolean("showReticleWhenInterfaceIsHidden");
         swapQuarterHalfSprites = getBoolean("swapQuarterHalfSprites");
+        showSoftFluxTopDivider = getBoolean("showSoftFluxTopDivider");
         glowOpacity = getInt("glowOpacity");
         spriteSet = getString("spriteSet");
         loadSpritesForSet(spriteSet);
@@ -173,7 +174,8 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     SpriteAPI frontKeyTurn, frontMouseTurn, back, half, quarter, hardBar, glowKeyTurn, glowMouseTurn;
     CombatEngineAPI engine;
     boolean escapeMenuIsOpen = false, needToLoadSettings = true, showReticle, showReticleWhenInterfaceIsHidden,
-            keepBarVisibleAtMinimumDistance, enableFluxChangeFlash = true, swapQuarterHalfSprites = false;
+            keepBarVisibleAtMinimumDistance, enableFluxChangeFlash = true, swapQuarterHalfSprites = false,
+            showSoftFluxTopDivider = true;
     Vector2f mouse = new Vector2f(), frontCenter = new Vector2f(), bodyCenter = new Vector2f(), at = new Vector2f(), normal = new Vector2f();
     Color reticleColor = Misc.getPositiveHighlightColor(),
             gaugeColor = Misc.getHighlightColor(),
@@ -332,6 +334,20 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         glPopAttrib();
 
         glColor4f(1, 1, 1, 1);
+    }
+
+    void drawFluxDivider(float length, float level, float fadeLevel, float opacity, float colorLerp, float angle) {
+        float alpha = dividerColor.getAlpha() * opacity * Math.min(1f, Math.max(0, fadeLevel) * 10f);
+        if(alpha <= 0) return;
+
+        Color c = new Color(dividerColor.getRed(), dividerColor.getGreen(), dividerColor.getBlue(),
+                (int) Math.max(0, Math.min(255, alpha)));
+        c = Misc.interpolateColor(c, warnColor, colorLerp);
+
+        normal.normalise().scale(length * (1f - Math.max(0, Math.min(1, level))));
+        hardBar.setColor(c);
+        hardBar.setAngle(angle);
+        hardBar.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
     }
     float getFlashAmount(float fluxLevel) {
         float flashProgress = (fluxLevel - flashStartThreshold) / (flashMaxThreshold - flashStartThreshold);
@@ -586,40 +602,35 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
 
                 if(opacity > 0) {
                     clr = new Color(clr.getRed(), clr.getGreen(), clr.getBlue(), (int) Math.min(255, clr.getAlpha() * opacity));
-                    SpriteAPI quarterSprite = swapQuarterHalfSprites ? half : quarter;
-                    SpriteAPI halfSprite = swapQuarterHalfSprites ? quarter : half;
+                    SpriteAPI quarterPositionSprite = swapQuarterHalfSprites ? half : quarter;
 
                     drawGaugeSegment(length, hard, hard + softOnly, gaugeColor, opacity, warnness, fluxFillInsetPixels);
                     drawGaugeSegment(length, 0, hard, hardFluxColor, opacity, warnness, fluxFillInsetPixels);
 
                     normal.normalise().scale(length * 0.25f);
-                    quarterSprite.setColor(clr);
-                    quarterSprite.setAngle(aimAngle);
-                    quarterSprite.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
+                    quarterPositionSprite.setColor(clr);
+                    quarterPositionSprite.setAngle(aimAngle);
+                    quarterPositionSprite.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
 
                     normal.normalise().scale(length * 0.5f);
-                    halfSprite.setColor(clr);
-                    halfSprite.setAngle(aimAngle);
-                    halfSprite.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
+                    half.setColor(clr);
+                    half.setAngle(aimAngle);
+                    half.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
 
                     normal.normalise().scale(length * 0.75f);
-                    quarterSprite.setColor(clr);
-                    quarterSprite.setAngle(aimAngle);
-                    quarterSprite.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
+                    quarterPositionSprite.setColor(clr);
+                    quarterPositionSprite.setAngle(aimAngle);
+                    quarterPositionSprite.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
 
                     normal.normalise().scale(length);
                     back.setColor(clr);
                     back.setAngle(aimAngle);
                     back.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
 
-                    clr = new Color(dividerColor.getRed(), dividerColor.getGreen(), dividerColor.getBlue(),
-                            (int) Math.max(0, Math.min(255, dividerColor.getAlpha() * opacity * Math.min(1f, hard * 10f))));
-                    clr = Misc.interpolateColor(clr, warnColor, warnness);
-
-                    normal.normalise().scale(length * (1f - hard));
-                    hardBar.setColor(clr);
-                    hardBar.setAngle(aimAngle);
-                    hardBar.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
+                    drawFluxDivider(length, hard, hard, opacity, warnness, aimAngle);
+                    if(showSoftFluxTopDivider && softOnly > 0) {
+                        drawFluxDivider(length, hard + softOnly, softOnly, opacity, warnness, aimAngle);
+                    }
                 }
 
                 glPopMatrix();

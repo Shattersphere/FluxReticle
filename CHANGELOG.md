@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.14.0-fork.1 - 2026-05-15
+
+- Added an optional soft-flux top divider that uses the same styling as the hard/soft boundary divider.
+- Fixed the marker sprite option so it uses the half sprite for the quarter, middle, and three-quarter bar markers instead of swapping the middle marker to the quarter sprite.
+
 ## 1.13.0-fork.1 - 2026-05-15
 
 - Added a LunaLib setting for scaling the hard/soft flux divider height without changing its position.

@@ -14,11 +14,12 @@ Validate the customized reticle in game and keep repo/runtime deployment evidenc
 - The flux bar background border follows the reticle color and can be disabled with border width `0`.
 - Soft/hard flux fill inset leaves the border visible without changing the background or border position.
 - Hard/soft flux divider height can be reduced without changing divider width or position.
+- Optional soft-flux top divider uses the same size and color controls as the hard/soft boundary divider.
 - Reticle top/front offset visibly moves only the front cursor graphic and glow without changing the bar anchor or actual mouse aim point.
 - Reticle top/front lateral offset visibly moves only the front cursor graphic and glow left/right relative to the bar.
 - Reticle body lateral offset visibly moves the flux bar body and lower sprites left/right separately from the top/front graphic.
 - Reticle top/front scale visibly resizes only the front cursor graphic and glow as a multiplier of the regular sprite size.
-- Quarter/half sprite swapping visibly exchanges the sprites used at the 25%/75% and 50% bar marks.
+- Half-marker mode visibly uses the half sprite at the 25%, 50%, and 75% bar marks.
 - Soft/hard flux fills render under the marker sprites and hard-flux divider, not over them.
 - Sprite-set selection can switch between bundled vanilla, 4x, 8x, and AI-generated 8x sprite folders while keeping logical in-game size stable.
 - Disabling flux-change flashing suppresses the extra warning pulse when soft flux changes rapidly while leaving threshold flashing available.

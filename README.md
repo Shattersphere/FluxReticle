@@ -28,7 +28,8 @@ Fork of Flux Reticle with a separate Starsector identity and LunaLib-facing cust
 - Configurable soft/hard flux fill inset so the border stays visible when the bar fills.
 - Configurable hard/soft flux divider height.
 - Configurable front cursor graphic scale plus separate top and flux-bar-body left/right offsets.
-- Optional quarter/half bar sprite swapping.
+- Option to use the half bar marker sprite at the quarter, middle, and three-quarter positions.
+- Optional soft-flux top divider using the same divider styling as the hard/soft boundary.
 - LunaLib sprite-set selector for the bundled vanilla, 4x, 8x, and AI-generated 8x reticle art sets.
 - Configurable min/max cursor distance for bar scaling.
 - `keepBarVisibleAtMinimumDistance`: keeps the bar visible at minimum length at point blank range instead of fading out.
