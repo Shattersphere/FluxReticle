@@ -16,6 +16,7 @@ Validate the customized reticle in game and keep repo/runtime deployment evidenc
 - Reticle top/front lateral offset visibly moves only the front cursor graphic and glow left/right relative to the bar.
 - Reticle body lateral offset visibly moves the flux bar body and lower sprites left/right separately from the top/front graphic.
 - Reticle top/front scale visibly resizes only the front cursor graphic and glow as a multiplier of the regular sprite size.
+- Quarter/half sprite swapping visibly exchanges the sprites used at the 25%/75% and 50% bar marks.
 - Sprite-set selection can switch between bundled vanilla, 4x, 8x, and AI-generated 8x sprite folders while keeping logical in-game size stable.
 - Disabling flux-change flashing suppresses the extra warning pulse when soft flux changes rapidly while leaving threshold flashing available.
 - Cursor hiding/reset behavior remains correct after combat UI transitions.

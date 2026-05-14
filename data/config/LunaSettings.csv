@@ -4,6 +4,7 @@ shattersphere_flux_reticle_fork,shat_fr_showReticleWhenInterfaceIsHidden,Show Re
 shattersphere_flux_reticle_fork,shat_fr_sizeMult,Reticle Sprite Size Multiplier,Double,1,,Scales the sprite parts of the flux reticle.,0.2,5,General
 shattersphere_flux_reticle_fork,shat_fr_reticleTopScaleMult,Reticle Top Scale Multiplier,Double,1,,Scales only the front cursor graphic and glow as a multiplier of the regular reticle sprite size multiplier.,0.1,5,General
 shattersphere_flux_reticle_fork,shat_fr_spriteSet,Reticle Sprite Set,Radio,8xNearestEdgeCleaned,"Root4xLanczos,Vanilla1x,4xLanczos,4xNearest,8xLanczosEdgeCleaned,8xNearestEdgeCleaned,AIGeneratedFullSet8x",Selects which reticle sprite folder to use. All sets render at the same logical size; larger source images provide higher pixel density.,,,General
+shattersphere_flux_reticle_fork,shat_fr_swapQuarterHalfSprites,Swap Quarter and Half Sprites,Boolean,FALSE,,Draws the half sprite at the quarter positions and the quarter sprite at the half position.,,,General
 shattersphere_flux_reticle_fork,shat_fr_toggleStrafeAndTurnToCursorKey,Strafe Toggle Keybind,Keycode,37,,"Changes the keybind for toggling ""strafe and turn to cursor"" behavior.",,,General
 shattersphere_flux_reticle_fork,shat_fr_glowOpacity,Reticle Glow Alpha,Int,64,,Controls how visible the glow of the reticle is.,0,255,General
 shattersphere_flux_reticle_fork,shat_fr_geometryHeader,,Header,Reticle Geometry,,,,,General

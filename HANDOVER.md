@@ -36,6 +36,7 @@ This repo is a working Starsector mod fork, not just source notes. Keep runtime 
 - `reticleTopOffset` shifts only `frontKeyTurn` / `frontMouseTurn` and their glow sprites along the ship-to-cursor line. The bar and aim point stay anchored.
 - `reticleTopLateralOffset` shifts only `frontKeyTurn` / `frontMouseTurn` and their glow sprites left/right relative to the bar. Positive moves right when looking from the ship toward the cursor.
 - `reticleBodyLateralOffset` shifts the flux bar background, border, gauge fills, divider, and lower bar sprites left/right separately from the top graphic.
+- `swapQuarterHalfSprites` draws the half sprite at the quarter positions and the quarter sprite at the half position.
 - Reticle sprite assets are rendered at legacy logical dimensions, so 4x PNG replacements improve pixel density without making the reticle larger.
 - `spriteSet` is a Luna/INI selector for bundled sprite folders, including the AI-generated full 8x set. Default is `8xNearestEdgeCleaned`.
 - Distance settings are normalized to half the visible screen height.

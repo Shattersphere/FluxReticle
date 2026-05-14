@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.11.0-fork.1 - 2026-05-15
+
+- Added a LunaLib setting for swapping the quarter and half reticle bar sprites.
+
 ## 1.10.0-fork.1 - 2026-05-15
 
 - Added a LunaLib setting for shifting the front reticle graphic and glow left or right relative to the flux bar.

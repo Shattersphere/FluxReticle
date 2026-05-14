@@ -75,6 +75,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     boolean readSettings() throws Exception {
         showReticle = getBoolean("showReticle");
         showReticleWhenInterfaceIsHidden = getBoolean("showReticleWhenInterfaceIsHidden");
+        swapQuarterHalfSprites = getBoolean("swapQuarterHalfSprites");
         glowOpacity = getInt("glowOpacity");
         spriteSet = getString("spriteSet");
         loadSpritesForSet(spriteSet);
@@ -166,7 +167,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     SpriteAPI frontKeyTurn, frontMouseTurn, back, half, quarter, hardBar, glowKeyTurn, glowMouseTurn;
     CombatEngineAPI engine;
     boolean escapeMenuIsOpen = false, needToLoadSettings = true, showReticle, showReticleWhenInterfaceIsHidden,
-            keepBarVisibleAtMinimumDistance, enableFluxChangeFlash = true;
+            keepBarVisibleAtMinimumDistance, enableFluxChangeFlash = true, swapQuarterHalfSprites = false;
     Vector2f mouse = new Vector2f(), frontCenter = new Vector2f(), bodyCenter = new Vector2f(), at = new Vector2f(), normal = new Vector2f();
     Color reticleColor = Misc.getPositiveHighlightColor(),
             gaugeColor = Misc.getHighlightColor(),
@@ -579,21 +580,23 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
 
                 if(opacity > 0) {
                     clr = new Color(clr.getRed(), clr.getGreen(), clr.getBlue(), (int) Math.min(255, clr.getAlpha() * opacity));
+                    SpriteAPI quarterSprite = swapQuarterHalfSprites ? half : quarter;
+                    SpriteAPI halfSprite = swapQuarterHalfSprites ? quarter : half;
 
                     normal.normalise().scale(length * 0.25f);
-                    quarter.setColor(clr);
-                    quarter.setAngle(aimAngle);
-                    quarter.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
+                    quarterSprite.setColor(clr);
+                    quarterSprite.setAngle(aimAngle);
+                    quarterSprite.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
 
                     normal.normalise().scale(length * 0.5f);
-                    half.setColor(clr);
-                    half.setAngle(aimAngle);
-                    half.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
+                    halfSprite.setColor(clr);
+                    halfSprite.setAngle(aimAngle);
+                    halfSprite.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
 
                     normal.normalise().scale(length * 0.75f);
-                    quarter.setColor(clr);
-                    quarter.setAngle(aimAngle);
-                    quarter.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
+                    quarterSprite.setColor(clr);
+                    quarterSprite.setAngle(aimAngle);
+                    quarterSprite.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
 
                     normal.normalise().scale(length);
                     back.setColor(clr);
