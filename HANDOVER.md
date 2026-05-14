@@ -38,7 +38,7 @@ This repo is a working Starsector mod fork, not just source notes. Keep runtime 
 - `reticleTopOffset` shifts only `frontKeyTurn` / `frontMouseTurn` and their glow sprites along the ship-to-cursor line. The bar and aim point stay anchored.
 - `reticleTopLateralOffset` shifts only `frontKeyTurn` / `frontMouseTurn` and their glow sprites left/right relative to the bar. Positive moves right when looking from the ship toward the cursor.
 - `reticleBodyLateralOffset` shifts the flux bar background, border, gauge fills, divider, and lower bar sprites left/right separately from the top graphic.
-- `frontSpriteVariant` overrides only `frontKeyTurn` and `frontMouseTurn` from `shat_fr/graphics/front_variants/upscaled_8x_lanczos_edge_cleaned/<folder>`; `CurrentSpriteSet` uses the normal selected sprite set.
+- `frontSpriteVariant` overrides only `frontKeyTurn` and `frontMouseTurn` from `shat_fr/graphics/front_variants/<folder>`; `CurrentSpriteSet` uses the normal selected sprite set.
 - `showBarMarkerSprites` toggles only the 25%, 50%, and 75% marker sprites; the end cap/back sprite still renders.
 - `swapQuarterHalfSprites` keeps its legacy field id but now draws the half sprite at the quarter, middle, and three-quarter marker positions when enabled.
 - Luna setting descriptions must avoid literal percent signs because LunaLib passes tooltip text through a formatting path that can crash on strings such as `25% 50% 75%`.

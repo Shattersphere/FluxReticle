@@ -84,8 +84,8 @@ $PostDeployValidationCommand = {
         'shat_fr\graphics\upscaled_8x_lanczos_edge_cleaned\frontKeyTurn.png',
         'shat_fr\graphics\upscaled_8x_nearest_edge_cleaned\frontKeyTurn.png',
         'shat_fr\graphics\ai_generated_full_set_8x\frontKeyTurn.png',
-        'shat_fr\graphics\front_variants\upscaled_8x_lanczos_edge_cleaned\wings_05pct_further_apart\frontKeyTurn.png',
-        'shat_fr\graphics\front_variants\upscaled_8x_lanczos_edge_cleaned\wings_25pct_further_apart\frontMouseTurn.png'
+        'shat_fr\graphics\front_variants\wings_05pct_further_apart\frontKeyTurn.png',
+        'shat_fr\graphics\front_variants\wings_50pct_further_apart\frontMouseTurn.png'
     )
     foreach ($relativePath in $checks) {
         $source = Join-Path $RepoRoot $relativePath
