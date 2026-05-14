@@ -18,7 +18,7 @@ The fork adds Luna/INI customization for reticle geometry, flux bar background b
 ## Known-Good Baseline
 
 - Latest runtime code baseline: sprite-set selector including the AI-generated full 8x set, front wing-gap sprite variants through `wings_100pct_further_apart`, optional 25/50/75 marker sprites, optional half-sprite markers at all bar marker positions, flux fills under marker sprites, flux bar background border/fill inset/divider height controls, full-opacity hard/soft flux top dividers, optional soft-flux top divider, system and shield state indicators, front cursor graphic scale, separate top/body lateral offsets, fixed logical sprite sizing for high-res assets, and flux-change flash toggle.
-- Latest deploy state observed in this pass: `waiting` for target `C:\Games\Starsector\mods\Flux Reticle Fork` after clean-worktree deploy run `646c91bf-4a0d-431f-9f78-86fb67e71348` from `D:\Sean Mods\.deploy-worktrees\FluxReticle-74ccf80`; worker pid `26220` is queued because Starsector has the live jar locked.
+- Latest deploy state observed in this pass: `waiting` for target `C:\Games\Starsector\mods\Flux Reticle Fork` after clean-worktree deploy run `76124727-efe8-45cf-a19a-5cfb92eae9e8` from `D:\Sean Mods\.deploy-worktrees\FluxReticle-5e36eba`; worker pid `24888` is queued because Starsector has the live jar locked.
 - Last known-good build command: `powershell -ExecutionPolicy Bypass -File scripts\build_mod.ps1 -StarsectorDirectory 'C:\Games\Starsector'`.
 - Runtime behavior remains not in-game verified after recent rendering/settings changes.
 
