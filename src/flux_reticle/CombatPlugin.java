@@ -583,6 +583,9 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                     SpriteAPI quarterSprite = swapQuarterHalfSprites ? half : quarter;
                     SpriteAPI halfSprite = swapQuarterHalfSprites ? quarter : half;
 
+                    drawGaugeSegment(length, hard, hard + softOnly, gaugeColor, opacity, warnness);
+                    drawGaugeSegment(length, 0, hard, hardFluxColor, opacity, warnness);
+
                     normal.normalise().scale(length * 0.25f);
                     quarterSprite.setColor(clr);
                     quarterSprite.setAngle(aimAngle);
@@ -611,9 +614,6 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                     hardBar.setColor(clr);
                     hardBar.setAngle(aimAngle);
                     hardBar.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
-
-                    drawGaugeSegment(length, hard, hard + softOnly, gaugeColor, opacity, warnness);
-                    drawGaugeSegment(length, 0, hard, hardFluxColor, opacity, warnness);
                 }
 
                 glPopMatrix();
