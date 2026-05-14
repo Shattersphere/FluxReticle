@@ -78,7 +78,8 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         showBarMarkerSprites = getBoolean("showBarMarkerSprites");
         swapQuarterHalfSprites = getBoolean("swapQuarterHalfSprites");
         showSoftFluxTopDivider = getBoolean("showSoftFluxTopDivider");
-        showShieldIndicator = getBoolean("showShieldIndicator");
+        enableSystemIndicator = getBoolean("enableSystemIndicator");
+        enableShieldIndicator = getBoolean("enableShieldIndicator");
         glowOpacity = getInt("glowOpacity");
         spriteSet = getString("spriteSet");
         frontSpriteVariant = getString("frontSpriteVariant");
@@ -217,7 +218,8 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     CombatEngineAPI engine;
     boolean escapeMenuIsOpen = false, needToLoadSettings = true, showReticle, showReticleWhenInterfaceIsHidden,
             keepBarVisibleAtMinimumDistance, enableFluxChangeFlash = true, swapQuarterHalfSprites = false,
-            showBarMarkerSprites = true, showSoftFluxTopDivider = true, showShieldIndicator = true;
+            showBarMarkerSprites = true, showSoftFluxTopDivider = true,
+            enableSystemIndicator = false, enableShieldIndicator = false;
     Vector2f mouse = new Vector2f(), frontCenter = new Vector2f(), bodyCenter = new Vector2f(), at = new Vector2f(), normal = new Vector2f();
     Color reticleColor = Misc.getPositiveHighlightColor(),
             gaugeColor = Misc.getHighlightColor(),
@@ -701,13 +703,15 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                 front.renderAtCenter(frontCenter.x, frontCenter.y);
 
                 ShipAPI playerShip = engine.getPlayerShip();
-                drawReticleIndicator(
-                        mouse.x + systemIndicatorOffsetX,
-                        mouse.y + systemIndicatorOffsetY,
-                        systemIndicatorColor,
-                        opacity,
-                        getSystemIndicatorAlpha(playerShip.getSystem()));
-                if(showShieldIndicator) {
+                if(enableSystemIndicator) {
+                    drawReticleIndicator(
+                            mouse.x + systemIndicatorOffsetX,
+                            mouse.y + systemIndicatorOffsetY,
+                            systemIndicatorColor,
+                            opacity,
+                            getSystemIndicatorAlpha(playerShip.getSystem()));
+                }
+                if(enableShieldIndicator) {
                     drawReticleIndicator(
                             mouse.x + shieldIndicatorOffsetX,
                             mouse.y + shieldIndicatorOffsetY,

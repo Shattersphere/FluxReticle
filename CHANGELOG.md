@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.19.1-fork.1 - 2026-05-15
+
+- Fixed the new system and shield indicators so they are opt-in instead of appearing by default.
+
 ## 1.19.0-fork.1 - 2026-05-15
 
 - Added configurable system and shield state indicators with LunaLib position offsets and separate RGBA colours.
