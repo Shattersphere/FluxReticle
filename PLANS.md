@@ -11,6 +11,7 @@ Validate the customized reticle in game and keep repo/runtime deployment evidenc
 - Latest runtime files are either deployed with parity checks or explicitly queued by `scripts\deploy_mod.ps1`.
 - Luna settings load under mod id `shattersphere_flux_reticle_fork`.
 - In combat, custom reticle, soft flux, hard flux, divider, background, size/distance, and flash settings are visibly honored.
+- Reticle top/front offset visibly moves the rendered reticle without changing the actual mouse aim point.
 - Cursor hiding/reset behavior remains correct after combat UI transitions.
 - Public-facing changelog and private public-release checklist exist and stay aligned with version/release work.
 - Public export excludes private docs, local paths, deploy state, and agent-only files.
@@ -22,6 +23,7 @@ Validate the customized reticle in game and keep repo/runtime deployment evidenc
   - cursor resets after escape menu, command UI, combat end, and campaign return
   - soft flux, hard flux, divider, and background colors render distinctly
   - LunaLib settings load without parser errors
+  - reticle top/front offset moves the rendered reticle along the ship-to-cursor line
   - size/distance settings behave sensibly at different zoom levels
   - `keepBarVisibleAtMinimumDistance` keeps the bar visible at point blank range
   - flash thresholds and frequencies respond visibly

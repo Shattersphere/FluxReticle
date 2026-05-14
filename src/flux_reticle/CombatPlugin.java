@@ -79,6 +79,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
 
         scale = (float) getDouble("sizeMult");
         barWidth = (float) Math.max(0.5, getDouble("fluxBarWidth"));
+        reticleTopOffset = (float) getDouble("reticleTopOffset");
         minLength = (float) Math.max(1, getDouble("minReticleLength"));
         maxLength = (float) Math.max(minLength, getDouble("maxReticleLength"));
         minDistance = (float) Math.max(0, getDouble("minReticleDistance"));
@@ -107,6 +108,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             DEFAULT_DISTANCE_FULL = 1.0f,
             DEFAULT_DISTANCE_HIDE = 0.1f,
             DEFAULT_BAR_WIDTH = 7f,
+            DEFAULT_RETICLE_TOP_OFFSET = 0f,
             TWO_PI = (float)(Math.PI * 2);
     static final int
             ESCAPE_KEY_VALUE = 1;
@@ -115,6 +117,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
 
     float scale = 1f, damageFlash = 0, fluxLastFrame = 0,
             barWidth = DEFAULT_BAR_WIDTH,
+            reticleTopOffset = DEFAULT_RETICLE_TOP_OFFSET,
             minLength = DEFAULT_MIN_LENGTH,
             maxLength = DEFAULT_MAX_LENGTH,
             minDistance = DEFAULT_DISTANCE_HIDE,
@@ -128,7 +131,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     CombatEngineAPI engine;
     boolean escapeMenuIsOpen = false, needToLoadSettings = true, showReticle, showReticleWhenInterfaceIsHidden,
             keepBarVisibleAtMinimumDistance;
-    Vector2f mouse = new Vector2f(), at = new Vector2f(), normal = new Vector2f();
+    Vector2f mouse = new Vector2f(), reticleTop = new Vector2f(), at = new Vector2f(), normal = new Vector2f();
     Color reticleColor = Misc.getPositiveHighlightColor(),
             gaugeColor = Misc.getHighlightColor(),
             hardFluxColor = Misc.getNegativeHighlightColor(),
@@ -216,8 +219,8 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         float width = barWidth * scale;
         float startDistance = length * (1f - maxLevel);
         float endDistance = length * (1f - minLevel);
-        Vector2f nearCenter = new Vector2f(mouse.x + direction.x * startDistance, mouse.y + direction.y * startDistance);
-        Vector2f farCenter = new Vector2f(mouse.x + direction.x * endDistance, mouse.y + direction.y * endDistance);
+        Vector2f nearCenter = new Vector2f(reticleTop.x + direction.x * startDistance, reticleTop.y + direction.y * startDistance);
+        Vector2f farCenter = new Vector2f(reticleTop.x + direction.x * endDistance, reticleTop.y + direction.y * endDistance);
         Vector2f nearEdge = new Vector2f(nearCenter.x + perp.x * width * 0.5f, nearCenter.y + perp.y * width * 0.5f);
         Vector2f farEdge = new Vector2f(farCenter.x + perp.x * width * 0.5f, farCenter.y + perp.y * width * 0.5f);
         c = Misc.interpolateColor(c, warnColor, colorLerp);
@@ -411,6 +414,11 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                     double radians = Math.toRadians(aimAngle + 180f);
                     normal.set((float) Math.cos(radians), (float) Math.sin(radians));
                 }
+                Vector2f topOffsetDirection = new Vector2f(normal);
+                topOffsetDirection.normalise();
+                reticleTop.set(
+                        mouse.x - topOffsetDirection.x * reticleTopOffset * scale,
+                        mouse.y - topOffsetDirection.y * reticleTopOffset * scale);
                 float warnness = getFlashAmount(flux);
                 Color clr = new Color(reticleColor.getRGB());
                 Color glowClr = new Color(clr.getRed(), clr.getGreen(), clr.getBlue(), glowOpacity);
@@ -446,7 +454,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
 
                 glow.setColor(glowClr);
                 glow.setAngle(aimAngle);
-                glow.renderAtCenter(mouse.x, mouse.y);
+                glow.renderAtCenter(reticleTop.x, reticleTop.y);
 
                 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -454,7 +462,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
 
                 front.setColor(clr);
                 front.setAngle(aimAngle);
-                front.renderAtCenter(mouse.x, mouse.y);
+                front.renderAtCenter(reticleTop.x, reticleTop.y);
 
                 Mouse.setNativeCursor(hiddenCursor);
 
@@ -464,22 +472,22 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                     normal.normalise().scale(length * 0.25f);
                     quarter.setColor(clr);
                     quarter.setAngle(aimAngle);
-                    quarter.renderAtCenter(normal.x + mouse.x, normal.y + mouse.y);
+                    quarter.renderAtCenter(normal.x + reticleTop.x, normal.y + reticleTop.y);
 
                     normal.normalise().scale(length * 0.5f);
                     half.setColor(clr);
                     half.setAngle(aimAngle);
-                    half.renderAtCenter(normal.x + mouse.x, normal.y + mouse.y);
+                    half.renderAtCenter(normal.x + reticleTop.x, normal.y + reticleTop.y);
 
                     normal.normalise().scale(length * 0.75f);
                     quarter.setColor(clr);
                     quarter.setAngle(aimAngle);
-                    quarter.renderAtCenter(normal.x + mouse.x, normal.y + mouse.y);
+                    quarter.renderAtCenter(normal.x + reticleTop.x, normal.y + reticleTop.y);
 
                     normal.normalise().scale(length);
                     back.setColor(clr);
                     back.setAngle(aimAngle);
-                    back.renderAtCenter(normal.x + mouse.x, normal.y + mouse.y);
+                    back.renderAtCenter(normal.x + reticleTop.x, normal.y + reticleTop.y);
 
                     clr = new Color(dividerColor.getRed(), dividerColor.getGreen(), dividerColor.getBlue(),
                             (int) Math.max(0, Math.min(255, dividerColor.getAlpha() * opacity * Math.min(1f, hard * 10f))));
@@ -488,7 +496,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                     normal.normalise().scale(length * (1f - hard));
                     hardBar.setColor(clr);
                     hardBar.setAngle(aimAngle);
-                    hardBar.renderAtCenter(normal.x + mouse.x, normal.y + mouse.y);
+                    hardBar.renderAtCenter(normal.x + reticleTop.x, normal.y + reticleTop.y);
 
                     drawGaugeSegment(length, hard, hard + softOnly, gaugeColor, opacity, warnness);
                     drawGaugeSegment(length, 0, hard, hardFluxColor, opacity, warnness);

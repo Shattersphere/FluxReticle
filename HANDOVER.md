@@ -17,7 +17,7 @@ This repo is a working Starsector mod fork, not just source notes. Keep runtime 
 
 ## Ownership Map
 
-- `src/flux_reticle/CombatPlugin.java`: reticle rendering, cursor hiding/reset, input handling, Luna/INI setting reads, soft/hard/divider drawing, and minimum-distance visibility behavior.
+- `src/flux_reticle/CombatPlugin.java`: reticle rendering, cursor hiding/reset, input handling, Luna/INI setting reads, top/front reticle offset, soft/hard/divider drawing, and minimum-distance visibility behavior.
 - `FLUX_RETICLE_OPTIONS.ini`: non-Luna fallback settings. Add new runtime settings here whenever Luna gets a matching field.
 - `data/config/LunaSettings.csv`: LunaLib settings. Field IDs must use `shat_fr_`.
 - `scripts/build_mod.ps1`: compiles Java against Starsector and LunaLib.
@@ -31,6 +31,7 @@ This repo is a working Starsector mod fork, not just source notes. Keep runtime 
 
 - The fork uses separate integer RGBA Luna settings; the old upstream color override gate is intentionally gone.
 - Saved Luna settings from upstream or earlier fork fields may not migrate to the renamed `shat_fr_` fields; verify resolved settings in game when colors or sizes appear unchanged.
+- `reticleTopOffset` shifts the rendered top/front of the reticle along the ship-to-cursor line without changing the actual mouse aim point.
 - Distance settings are normalized to half the visible screen height.
 - `keepBarVisibleAtMinimumDistance` defaults on and prevents the flux bar from fading out at point blank range.
 - The hard/soft divider still uses the `hardBar` sprite, but its color is controlled separately.

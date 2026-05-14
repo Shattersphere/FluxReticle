@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.0-fork.1 - 2026-05-15
+
+- Added a LunaLib and fallback setting for moving the reticle top/front along the ship-to-cursor line.
+
 ## 1.4.0-fork.1 - 2026-05-12
 
 - Renamed the mod as `Flux Reticle Fork` with a separate Starsector mod id.

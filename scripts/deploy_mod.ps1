@@ -414,7 +414,12 @@ function Start-QueuedDeployWorker {
         $arguments += "-SkipValidation"
     }
 
-    $worker = Start-MinimizedNoActivateProcess -FilePath $powerShellExe -ArgumentList $arguments
+    try {
+        $worker = Start-MinimizedNoActivateProcess -FilePath $powerShellExe -ArgumentList $arguments
+    } catch {
+        Write-Warning "$($_.Exception.Message) Falling back to Start-Process -WindowStyle Hidden."
+        $worker = Start-Process -FilePath $powerShellExe -ArgumentList $arguments -WindowStyle Hidden -PassThru
+    }
     $state = Read-JsonFile -Path $StateFile
     if ($null -ne $state -and $state.RunId -eq $RunId) {
         $state.Pid = $worker.Id

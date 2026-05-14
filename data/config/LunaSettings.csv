@@ -6,6 +6,7 @@ shattersphere_flux_reticle_fork,shat_fr_toggleStrafeAndTurnToCursorKey,Strafe To
 shattersphere_flux_reticle_fork,shat_fr_glowOpacity,Reticle Glow Alpha,Int,64,Controls how visible the glow of the reticle is.,0,255,General
 shattersphere_flux_reticle_fork,shat_fr_geometryHeader,,Header,Reticle Geometry,,,,General
 shattersphere_flux_reticle_fork,shat_fr_fluxBarWidth,Flux Bar Width,Double,7,Controls the width of the flux bar drawn behind the reticle.,0.5,40,General
+shattersphere_flux_reticle_fork,shat_fr_reticleTopOffset,Reticle Top Offset,Double,0,Moves the top/front of the reticle along the ship-to-cursor line. Positive values move it away from the ship; negative values move it toward the ship.,-300,300,General
 shattersphere_flux_reticle_fork,shat_fr_minReticleLength,Minimum Bar Length,Double,20,Controls the minimum drawn length of the flux bar.,1,300,General
 shattersphere_flux_reticle_fork,shat_fr_maxReticleLength,Maximum Bar Length,Double,80,Controls the maximum drawn length of the flux bar.,1,500,General
 shattersphere_flux_reticle_fork,shat_fr_minReticleDistance,Minimum Size Distance,Double,0.1,Ship-to-cursor distance where the bar is at minimum length. Distance is normalized to half the visible screen height.,0,5,General
