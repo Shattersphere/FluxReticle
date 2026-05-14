@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.13.0-fork.1 - 2026-05-15
+
+- Added a LunaLib setting for scaling the hard/soft flux divider height without changing its position.
+
 ## 1.12.0-fork.1 - 2026-05-15
 
 - Added a LunaLib setting for insetting soft and hard flux fills so the flux bar border stays visible.

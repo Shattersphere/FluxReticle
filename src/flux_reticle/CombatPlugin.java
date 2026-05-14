@@ -85,6 +85,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         barWidth = (float) Math.max(0.5, getDouble("fluxBarWidth"));
         fluxBarBorderWidth = (float) Math.max(0, getDouble("fluxBarBorderWidth"));
         fluxFillInsetPixels = (float) Math.max(0, getDouble("fluxFillInsetPixels"));
+        hardFluxDividerHeightMult = (float) Math.max(0.1, getDouble("hardFluxDividerHeightMult"));
         reticleTopOffset = (float) getDouble("reticleTopOffset");
         reticleTopLateralOffset = (float) getDouble("reticleTopLateralOffset");
         reticleBodyLateralOffset = (float) getDouble("reticleBodyLateralOffset");
@@ -131,6 +132,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             DEFAULT_BAR_WIDTH = 7f,
             DEFAULT_BAR_BORDER_WIDTH = 1f,
             DEFAULT_FLUX_FILL_INSET_PIXELS = 1f,
+            DEFAULT_HARD_FLUX_DIVIDER_HEIGHT_MULT = 1f,
             DEFAULT_RETICLE_TOP_SCALE = 1f,
             DEFAULT_RETICLE_TOP_OFFSET = 0f,
             DEFAULT_RETICLE_TOP_LATERAL_OFFSET = 0f,
@@ -154,6 +156,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             barWidth = DEFAULT_BAR_WIDTH,
             fluxBarBorderWidth = DEFAULT_BAR_BORDER_WIDTH,
             fluxFillInsetPixels = DEFAULT_FLUX_FILL_INSET_PIXELS,
+            hardFluxDividerHeightMult = DEFAULT_HARD_FLUX_DIVIDER_HEIGHT_MULT,
             reticleTopScale = DEFAULT_RETICLE_TOP_SCALE,
             reticleTopOffset = DEFAULT_RETICLE_TOP_OFFSET,
             reticleTopLateralOffset = DEFAULT_RETICLE_TOP_LATERAL_OFFSET,
@@ -465,7 +468,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                 back.setSize(BACK_WIDTH * scale, BACK_HEIGHT * scale);
                 half.setSize(HALF_WIDTH * scale, HALF_HEIGHT * scale);
                 quarter.setSize(QUARTER_WIDTH * scale, QUARTER_HEIGHT * scale);
-                hardBar.setSize(HARD_BAR_WIDTH * scale, HARD_BAR_HEIGHT * scale);
+                hardBar.setSize(HARD_BAR_WIDTH * scale, HARD_BAR_HEIGHT * scale * hardFluxDividerHeightMult);
 
                 needToLoadSettings = false;
             }

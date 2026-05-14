@@ -13,12 +13,12 @@ Flux Reticle Fork is a buildable and deployable Starsector mod fork with a separ
 - Deploy name: `flux-reticle-fork-deploy`
 - Eventual public organization: `https://github.com/Shattersphere-Mods`
 
-The fork adds Luna/INI customization for reticle geometry, flux bar background border and fill inset, sprite-set selection including bundled AI-generated 8x art, quarter/half sprite swapping, front cursor graphic scale, separate top/body lateral offsets, point-blank bar visibility, RGBA colors, high-flux flashing, and the separate flux-change flash pulse. The old upstream UI-color override gate is removed, so configured RGBA values apply directly.
+The fork adds Luna/INI customization for reticle geometry, flux bar background border and fill inset, divider height, sprite-set selection including bundled AI-generated 8x art, quarter/half sprite swapping, front cursor graphic scale, separate top/body lateral offsets, point-blank bar visibility, RGBA colors, high-flux flashing, and the separate flux-change flash pulse. The old upstream UI-color override gate is removed, so configured RGBA values apply directly.
 
 ## Known-Good Baseline
 
-- Latest runtime code baseline: sprite-set selector including the AI-generated full 8x set, quarter/half sprite swapping, flux fills under marker sprites, flux bar background border and fill inset, front cursor graphic scale, separate top/body lateral offsets, fixed logical sprite sizing for high-res assets, and flux-change flash toggle.
-- Latest deploy state observed in this pass: `complete` for target `C:\Games\Starsector\mods\Flux Reticle Fork` after deploy run `2e5169b8-ec02-46fa-b0bc-280dda0f693e`.
+- Latest runtime code baseline: sprite-set selector including the AI-generated full 8x set, quarter/half sprite swapping, flux fills under marker sprites, flux bar background border/fill inset/divider height controls, front cursor graphic scale, separate top/body lateral offsets, fixed logical sprite sizing for high-res assets, and flux-change flash toggle.
+- Latest deploy state observed in this pass: `waiting` for target `C:\Games\Starsector\mods\Flux Reticle Fork` after queued deploy run `77ca0ae0-96e7-4115-ab59-c0b496486ca2`.
 - Last known-good build command: `powershell -ExecutionPolicy Bypass -File scripts\build_mod.ps1 -StarsectorDirectory 'C:\Games\Starsector'`.
 - Runtime behavior remains not in-game verified after recent rendering/settings changes.
 
