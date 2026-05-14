@@ -80,6 +80,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         loadSpritesForSet(spriteSet);
 
         scale = (float) getDouble("sizeMult");
+        reticleTopScale = (float) Math.max(0.1, getDouble("reticleTopScaleMult"));
         barWidth = (float) Math.max(0.5, getDouble("fluxBarWidth"));
         reticleTopOffset = (float) getDouble("reticleTopOffset");
         minLength = (float) Math.max(1, getDouble("minReticleLength"));
@@ -123,6 +124,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             DEFAULT_DISTANCE_FULL = 1.0f,
             DEFAULT_DISTANCE_HIDE = 0.1f,
             DEFAULT_BAR_WIDTH = 7f,
+            DEFAULT_RETICLE_TOP_SCALE = 1f,
             DEFAULT_RETICLE_TOP_OFFSET = 0f,
             TWO_PI = (float)(Math.PI * 2);
     static final int
@@ -141,6 +143,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
 
     float scale = 1f, damageFlash = 0, fluxLastFrame = 0,
             barWidth = DEFAULT_BAR_WIDTH,
+            reticleTopScale = DEFAULT_RETICLE_TOP_SCALE,
             reticleTopOffset = DEFAULT_RETICLE_TOP_OFFSET,
             minLength = DEFAULT_MIN_LENGTH,
             maxLength = DEFAULT_MAX_LENGTH,
@@ -405,10 +408,11 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             if(needToLoadSettings) {
                 readSettings();
 
-                frontKeyTurn.setSize(FRONT_WIDTH * scale, FRONT_HEIGHT * scale);
-                frontMouseTurn.setSize(FRONT_WIDTH * scale, FRONT_HEIGHT * scale);
-                glowKeyTurn.setSize(GLOW_WIDTH * scale, GLOW_HEIGHT * scale);
-                glowMouseTurn.setSize(GLOW_WIDTH * scale, GLOW_HEIGHT * scale);
+                float topScale = scale * reticleTopScale;
+                frontKeyTurn.setSize(FRONT_WIDTH * topScale, FRONT_HEIGHT * topScale);
+                frontMouseTurn.setSize(FRONT_WIDTH * topScale, FRONT_HEIGHT * topScale);
+                glowKeyTurn.setSize(GLOW_WIDTH * topScale, GLOW_HEIGHT * topScale);
+                glowMouseTurn.setSize(GLOW_WIDTH * topScale, GLOW_HEIGHT * topScale);
                 back.setSize(BACK_WIDTH * scale, BACK_HEIGHT * scale);
                 half.setSize(HALF_WIDTH * scale, HALF_HEIGHT * scale);
                 quarter.setSize(QUARTER_WIDTH * scale, QUARTER_HEIGHT * scale);

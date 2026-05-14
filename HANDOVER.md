@@ -31,6 +31,7 @@ This repo is a working Starsector mod fork, not just source notes. Keep runtime 
 
 - The fork uses separate integer RGBA Luna settings; the old upstream color override gate is intentionally gone.
 - Saved Luna settings from upstream or earlier fork fields may not migrate to the renamed `shat_fr_` fields; verify resolved settings in game when colors or sizes appear unchanged.
+- `reticleTopScaleMult` scales only `frontKeyTurn` / `frontMouseTurn` and their glow sprites as a multiplier of `sizeMult`.
 - `reticleTopOffset` shifts only `frontKeyTurn` / `frontMouseTurn` and their glow sprites along the ship-to-cursor line. The bar and aim point stay anchored.
 - Reticle sprite assets are rendered at legacy logical dimensions, so 4x PNG replacements improve pixel density without making the reticle larger.
 - `spriteSet` is a Luna/INI selector for bundled sprite folders, including the AI-generated full 8x set. Default is `8xNearestEdgeCleaned`.

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.0-fork.1 - 2026-05-15
+
+- Added a LunaLib setting for independently scaling the front reticle graphic and glow relative to the main reticle sprite size.
+
 ## 1.7.1-fork.1 - 2026-05-15
 
 - Added the AI-generated full 8x reticle art set to the LunaLib sprite-set selector.
