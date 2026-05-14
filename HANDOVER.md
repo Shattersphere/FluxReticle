@@ -42,7 +42,8 @@ This repo is a working Starsector mod fork, not just source notes. Keep runtime 
 - `showBarMarkerSprites` toggles only the 25%, 50%, and 75% marker sprites; the end cap/back sprite still renders.
 - `swapQuarterHalfSprites` keeps its legacy field id but now draws the half sprite at the quarter, middle, and three-quarter marker positions when enabled.
 - Luna setting descriptions must avoid literal percent signs because LunaLib passes tooltip text through a formatting path that can crash on strings such as `25% 50% 75%`.
-- `showSoftFluxTopDivider` draws a second `hardBar` divider at the top of the soft flux fill; it uses the same color and height multiplier as the hard/soft boundary divider.
+- `showSoftFluxTopDivider` draws a second `hardBar` divider at the top of the soft flux fill; it uses the same color, alpha, and height multiplier as the hard/soft boundary divider.
+- Hard and soft flux top dividers render at full configured divider opacity whenever their flux segment exists; divider alpha is not scaled by the current flux amount.
 - Soft/hard flux fills render below the quarter/half/back marker sprites and hard-flux divider.
 - Reticle sprite assets are rendered at legacy logical dimensions, so 4x PNG replacements improve pixel density without making the reticle larger.
 - `spriteSet` is a Luna/INI selector for bundled sprite folders, including the AI-generated full 8x set. Default is `8xNearestEdgeCleaned`.

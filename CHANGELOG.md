@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.17.1-fork.1 - 2026-05-15
+
+- Fixed the hard and soft flux top divider markers so they render at full configured opacity whenever their flux segment exists.
+
 ## 1.17.0-fork.1 - 2026-05-15
 
 - Updated the front sprite variant selector for the flat `front_variants` folder layout and added wing-gap variants through `wings_50pct_further_apart`.

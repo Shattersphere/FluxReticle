@@ -351,8 +351,8 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         glColor4f(1, 1, 1, 1);
     }
 
-    void drawFluxDivider(float length, float level, float fadeLevel, float opacity, float colorLerp, float angle) {
-        float alpha = dividerColor.getAlpha() * opacity * Math.min(1f, Math.max(0, fadeLevel) * 10f);
+    void drawFluxDivider(float length, float level, float opacity, float colorLerp, float angle) {
+        float alpha = dividerColor.getAlpha() * opacity;
         if(alpha <= 0) return;
 
         Color c = new Color(dividerColor.getRed(), dividerColor.getGreen(), dividerColor.getBlue(),
@@ -669,9 +669,11 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                     back.setAngle(aimAngle);
                     back.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
 
-                    drawFluxDivider(length, hard, hard, opacity, warnness, aimAngle);
+                    if(hard > 0) {
+                        drawFluxDivider(length, hard, opacity, warnness, aimAngle);
+                    }
                     if(showSoftFluxTopDivider && softOnly > 0) {
-                        drawFluxDivider(length, hard + softOnly, softOnly, opacity, warnness, aimAngle);
+                        drawFluxDivider(length, hard + softOnly, opacity, warnness, aimAngle);
                     }
                 }
 
