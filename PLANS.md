@@ -13,6 +13,8 @@ Validate the customized reticle in game and keep repo/runtime deployment evidenc
 - In combat, custom reticle, soft flux, hard flux, divider, background, size/distance, and flash settings are visibly honored.
 - The flux bar background border follows the reticle color and can be disabled with border width `0`.
 - Reticle top/front offset visibly moves only the front cursor graphic and glow without changing the bar anchor or actual mouse aim point.
+- Reticle top/front lateral offset visibly moves only the front cursor graphic and glow left/right relative to the bar.
+- Reticle body lateral offset visibly moves the flux bar body and lower sprites left/right separately from the top/front graphic.
 - Reticle top/front scale visibly resizes only the front cursor graphic and glow as a multiplier of the regular sprite size.
 - Sprite-set selection can switch between bundled vanilla, 4x, 8x, and AI-generated 8x sprite folders while keeping logical in-game size stable.
 - Disabling flux-change flashing suppresses the extra warning pulse when soft flux changes rapidly while leaving threshold flashing available.

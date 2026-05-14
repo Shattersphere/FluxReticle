@@ -84,6 +84,8 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         barWidth = (float) Math.max(0.5, getDouble("fluxBarWidth"));
         fluxBarBorderWidth = (float) Math.max(0, getDouble("fluxBarBorderWidth"));
         reticleTopOffset = (float) getDouble("reticleTopOffset");
+        reticleTopLateralOffset = (float) getDouble("reticleTopLateralOffset");
+        reticleBodyLateralOffset = (float) getDouble("reticleBodyLateralOffset");
         minLength = (float) Math.max(1, getDouble("minReticleLength"));
         maxLength = (float) Math.max(minLength, getDouble("maxReticleLength"));
         minDistance = (float) Math.max(0, getDouble("minReticleDistance"));
@@ -128,6 +130,8 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             DEFAULT_BAR_BORDER_WIDTH = 1f,
             DEFAULT_RETICLE_TOP_SCALE = 1f,
             DEFAULT_RETICLE_TOP_OFFSET = 0f,
+            DEFAULT_RETICLE_TOP_LATERAL_OFFSET = 0f,
+            DEFAULT_RETICLE_BODY_LATERAL_OFFSET = 0f,
             TWO_PI = (float)(Math.PI * 2);
     static final int
             ESCAPE_KEY_VALUE = 1;
@@ -148,6 +152,8 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             fluxBarBorderWidth = DEFAULT_BAR_BORDER_WIDTH,
             reticleTopScale = DEFAULT_RETICLE_TOP_SCALE,
             reticleTopOffset = DEFAULT_RETICLE_TOP_OFFSET,
+            reticleTopLateralOffset = DEFAULT_RETICLE_TOP_LATERAL_OFFSET,
+            reticleBodyLateralOffset = DEFAULT_RETICLE_BODY_LATERAL_OFFSET,
             minLength = DEFAULT_MIN_LENGTH,
             maxLength = DEFAULT_MAX_LENGTH,
             minDistance = DEFAULT_DISTANCE_HIDE,
@@ -161,7 +167,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     CombatEngineAPI engine;
     boolean escapeMenuIsOpen = false, needToLoadSettings = true, showReticle, showReticleWhenInterfaceIsHidden,
             keepBarVisibleAtMinimumDistance, enableFluxChangeFlash = true;
-    Vector2f mouse = new Vector2f(), frontCenter = new Vector2f(), at = new Vector2f(), normal = new Vector2f();
+    Vector2f mouse = new Vector2f(), frontCenter = new Vector2f(), bodyCenter = new Vector2f(), at = new Vector2f(), normal = new Vector2f();
     Color reticleColor = Misc.getPositiveHighlightColor(),
             gaugeColor = Misc.getHighlightColor(),
             hardFluxColor = Misc.getNegativeHighlightColor(),
@@ -250,8 +256,8 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         float width = barWidth * scale;
         float startDistance = length * (1f - maxLevel);
         float endDistance = length * (1f - minLevel);
-        Vector2f nearCenter = new Vector2f(mouse.x + direction.x * startDistance, mouse.y + direction.y * startDistance);
-        Vector2f farCenter = new Vector2f(mouse.x + direction.x * endDistance, mouse.y + direction.y * endDistance);
+        Vector2f nearCenter = new Vector2f(bodyCenter.x + direction.x * startDistance, bodyCenter.y + direction.y * startDistance);
+        Vector2f farCenter = new Vector2f(bodyCenter.x + direction.x * endDistance, bodyCenter.y + direction.y * endDistance);
         Vector2f nearEdge = new Vector2f(nearCenter.x + perp.x * width * 0.5f, nearCenter.y + perp.y * width * 0.5f);
         Vector2f farEdge = new Vector2f(farCenter.x + perp.x * width * 0.5f, farCenter.y + perp.y * width * 0.5f);
         c = Misc.interpolateColor(c, warnColor, colorLerp);
@@ -292,8 +298,8 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         Vector2f perp = new Vector2f(direction.y, -direction.x);
         float width = barWidth * scale;
         float borderWidth = Math.max(0.5f, fluxBarBorderWidth * scale);
-        Vector2f nearCenter = new Vector2f(mouse);
-        Vector2f farCenter = new Vector2f(mouse.x + direction.x * length, mouse.y + direction.y * length);
+        Vector2f nearCenter = new Vector2f(bodyCenter);
+        Vector2f farCenter = new Vector2f(bodyCenter.x + direction.x * length, bodyCenter.y + direction.y * length);
         Vector2f nearEdge = new Vector2f(nearCenter.x + perp.x * width * 0.5f, nearCenter.y + perp.y * width * 0.5f);
         Vector2f farEdge = new Vector2f(farCenter.x + perp.x * width * 0.5f, farCenter.y + perp.y * width * 0.5f);
         c = Misc.interpolateColor(c, warnColor, colorLerp);
@@ -510,9 +516,15 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                 }
                 Vector2f frontOffsetDirection = new Vector2f(normal);
                 frontOffsetDirection.normalise();
+                Vector2f frontRightDirection = new Vector2f(-frontOffsetDirection.y, frontOffsetDirection.x);
+                bodyCenter.set(
+                        mouse.x + frontRightDirection.x * reticleBodyLateralOffset * scale,
+                        mouse.y + frontRightDirection.y * reticleBodyLateralOffset * scale);
                 frontCenter.set(
-                        mouse.x - frontOffsetDirection.x * reticleTopOffset * scale,
-                        mouse.y - frontOffsetDirection.y * reticleTopOffset * scale);
+                        mouse.x - frontOffsetDirection.x * reticleTopOffset * scale
+                                + frontRightDirection.x * reticleTopLateralOffset * scale,
+                        mouse.y - frontOffsetDirection.y * reticleTopOffset * scale
+                                + frontRightDirection.y * reticleTopLateralOffset * scale);
                 float warnness = getFlashAmount(flux);
                 Color clr = new Color(reticleColor.getRGB());
                 Color glowClr = new Color(clr.getRed(), clr.getGreen(), clr.getBlue(), glowOpacity);
@@ -571,22 +583,22 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                     normal.normalise().scale(length * 0.25f);
                     quarter.setColor(clr);
                     quarter.setAngle(aimAngle);
-                    quarter.renderAtCenter(normal.x + mouse.x, normal.y + mouse.y);
+                    quarter.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
 
                     normal.normalise().scale(length * 0.5f);
                     half.setColor(clr);
                     half.setAngle(aimAngle);
-                    half.renderAtCenter(normal.x + mouse.x, normal.y + mouse.y);
+                    half.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
 
                     normal.normalise().scale(length * 0.75f);
                     quarter.setColor(clr);
                     quarter.setAngle(aimAngle);
-                    quarter.renderAtCenter(normal.x + mouse.x, normal.y + mouse.y);
+                    quarter.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
 
                     normal.normalise().scale(length);
                     back.setColor(clr);
                     back.setAngle(aimAngle);
-                    back.renderAtCenter(normal.x + mouse.x, normal.y + mouse.y);
+                    back.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
 
                     clr = new Color(dividerColor.getRed(), dividerColor.getGreen(), dividerColor.getBlue(),
                             (int) Math.max(0, Math.min(255, dividerColor.getAlpha() * opacity * Math.min(1f, hard * 10f))));
@@ -595,7 +607,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                     normal.normalise().scale(length * (1f - hard));
                     hardBar.setColor(clr);
                     hardBar.setAngle(aimAngle);
-                    hardBar.renderAtCenter(normal.x + mouse.x, normal.y + mouse.y);
+                    hardBar.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
 
                     drawGaugeSegment(length, hard, hard + softOnly, gaugeColor, opacity, warnness);
                     drawGaugeSegment(length, 0, hard, hardFluxColor, opacity, warnness);

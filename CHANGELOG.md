@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.10.0-fork.1 - 2026-05-15
+
+- Added a LunaLib setting for shifting the front reticle graphic and glow left or right relative to the flux bar.
+- Added a separate LunaLib setting for shifting the flux bar body left or right.
+
 ## 1.9.0-fork.1 - 2026-05-15
 
 - Added a LunaLib setting for drawing a reticle-colored border around the flux bar background.
