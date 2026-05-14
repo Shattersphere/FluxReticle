@@ -17,7 +17,7 @@ This repo is a working Starsector mod fork, not just source notes. Keep runtime 
 
 ## Ownership Map
 
-- `src/flux_reticle/CombatPlugin.java`: reticle rendering, cursor hiding/reset, input handling, Luna/INI setting reads, sprite-set selection, front cursor graphic offset, soft/hard/divider drawing, and minimum-distance visibility behavior.
+- `src/flux_reticle/CombatPlugin.java`: reticle rendering, cursor hiding/reset, input handling, Luna/INI setting reads, sprite-set selection, front cursor graphic offset, ship-system marker drawing, soft/hard/divider drawing, and minimum-distance visibility behavior.
 - `FLUX_RETICLE_OPTIONS.ini`: non-Luna fallback settings. Add new runtime settings here whenever Luna gets a matching field.
 - `data/config/LunaSettings.csv`: LunaLib settings. Field IDs must use `shat_fr_`.
 - `scripts/build_mod.ps1`: compiles Java against Starsector and LunaLib.
@@ -38,6 +38,9 @@ This repo is a working Starsector mod fork, not just source notes. Keep runtime 
 - `reticleTopOffset` shifts only `frontKeyTurn` / `frontMouseTurn` and their glow sprites along the ship-to-cursor line. The bar and aim point stay anchored.
 - `reticleTopLateralOffset` shifts only `frontKeyTurn` / `frontMouseTurn` and their glow sprites left/right relative to the bar. Positive moves right when looking from the ship toward the cursor.
 - `reticleBodyLateralOffset` shifts the flux bar background, border, gauge fills, divider, and lower bar sprites left/right separately from the top graphic.
+- `showSystemMarker` draws only the normal ship-system marker ring from System Marker-style logic. It intentionally does not re-add shield or special-system markers.
+- `systemMarkerOffsetX` and `systemMarkerOffsetY` are fixed screen-relative offsets from `frontCenter`, so the marker stays in the same visual position relative to the flux cursor head instead of rotating around it as the cursor direction changes.
+- `systemMarkerFadeWithReticle` multiplies marker opacity by the reticle fade amount. Disable it when the marker should remain at configured alpha while the bar fades.
 - `frontSpriteVariant` overrides only `frontKeyTurn` and `frontMouseTurn` from `shat_fr/graphics/front_variants/<folder>`; `CurrentSpriteSet` uses the normal selected sprite set.
 - `showBarMarkerSprites` toggles only the 25%, 50%, and 75% marker sprites; the end cap/back sprite still renders.
 - `swapQuarterHalfSprites` keeps its legacy field id but now draws the half sprite at the quarter, middle, and three-quarter marker positions when enabled.

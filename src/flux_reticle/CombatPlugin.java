@@ -92,6 +92,14 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         reticleTopOffset = (float) getDouble("reticleTopOffset");
         reticleTopLateralOffset = (float) getDouble("reticleTopLateralOffset");
         reticleBodyLateralOffset = (float) getDouble("reticleBodyLateralOffset");
+        showSystemMarker = getBoolean("showSystemMarker");
+        systemMarkerFadeWithReticle = getBoolean("systemMarkerFadeWithReticle");
+        systemMarkerOffsetX = (float) getDouble("systemMarkerOffsetX");
+        systemMarkerOffsetY = (float) getDouble("systemMarkerOffsetY");
+        systemMarkerRingRadius = (float) Math.max(0, getDouble("systemMarkerRingRadius"));
+        systemMarkerRingThickness = (float) Math.max(0.1, getDouble("systemMarkerRingThickness"));
+        systemMarkerMainAlpha = (float) Math.max(0, Math.min(1, getDouble("systemMarkerMainAlpha")));
+        systemMarkerBackgroundAlpha = (float) Math.max(0, Math.min(1, getDouble("systemMarkerBackgroundAlpha")));
         minLength = (float) Math.max(1, getDouble("minReticleLength"));
         maxLength = (float) Math.max(minLength, getDouble("maxReticleLength"));
         minDistance = (float) Math.max(0, getDouble("minReticleDistance"));
@@ -109,6 +117,9 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         gaugeColor = getColor("softFluxGaugeColor");
         hardFluxColor = getColor("hardFluxGaugeColor");
         dividerColor = getColor("hardFluxDividerColor");
+        systemMarkerNormalColor = getColor("systemMarkerNormalColor");
+        systemMarkerActiveColor = getColor("systemMarkerActiveColor");
+        systemMarkerOutOfAmmoColor = getColor("systemMarkerOutOfAmmoColor");
 
         return true;
     }
@@ -140,6 +151,12 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             DEFAULT_RETICLE_TOP_OFFSET = 0f,
             DEFAULT_RETICLE_TOP_LATERAL_OFFSET = 0f,
             DEFAULT_RETICLE_BODY_LATERAL_OFFSET = 0f,
+            DEFAULT_SYSTEM_MARKER_OFFSET_X = 32f,
+            DEFAULT_SYSTEM_MARKER_OFFSET_Y = 0f,
+            DEFAULT_SYSTEM_MARKER_RING_RADIUS = 8f,
+            DEFAULT_SYSTEM_MARKER_RING_THICKNESS = 2f,
+            DEFAULT_SYSTEM_MARKER_MAIN_ALPHA = 0.8f,
+            DEFAULT_SYSTEM_MARKER_BACKGROUND_ALPHA = 0.1f,
             TWO_PI = (float)(Math.PI * 2);
     static final int
             ESCAPE_KEY_VALUE = 1;
@@ -188,6 +205,12 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             reticleTopOffset = DEFAULT_RETICLE_TOP_OFFSET,
             reticleTopLateralOffset = DEFAULT_RETICLE_TOP_LATERAL_OFFSET,
             reticleBodyLateralOffset = DEFAULT_RETICLE_BODY_LATERAL_OFFSET,
+            systemMarkerOffsetX = DEFAULT_SYSTEM_MARKER_OFFSET_X,
+            systemMarkerOffsetY = DEFAULT_SYSTEM_MARKER_OFFSET_Y,
+            systemMarkerRingRadius = DEFAULT_SYSTEM_MARKER_RING_RADIUS,
+            systemMarkerRingThickness = DEFAULT_SYSTEM_MARKER_RING_THICKNESS,
+            systemMarkerMainAlpha = DEFAULT_SYSTEM_MARKER_MAIN_ALPHA,
+            systemMarkerBackgroundAlpha = DEFAULT_SYSTEM_MARKER_BACKGROUND_ALPHA,
             minLength = DEFAULT_MIN_LENGTH,
             maxLength = DEFAULT_MAX_LENGTH,
             minDistance = DEFAULT_DISTANCE_HIDE,
@@ -201,12 +224,16 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     CombatEngineAPI engine;
     boolean escapeMenuIsOpen = false, needToLoadSettings = true, showReticle, showReticleWhenInterfaceIsHidden,
             keepBarVisibleAtMinimumDistance, enableFluxChangeFlash = true, swapQuarterHalfSprites = false,
-            showBarMarkerSprites = true, showSoftFluxTopDivider = true;
+            showBarMarkerSprites = true, showSoftFluxTopDivider = true, showSystemMarker = true,
+            systemMarkerFadeWithReticle = true;
     Vector2f mouse = new Vector2f(), frontCenter = new Vector2f(), bodyCenter = new Vector2f(), at = new Vector2f(), normal = new Vector2f();
     Color reticleColor = Misc.getPositiveHighlightColor(),
             gaugeColor = Misc.getHighlightColor(),
             hardFluxColor = Misc.getNegativeHighlightColor(),
             dividerColor = Misc.getNegativeHighlightColor(),
+            systemMarkerNormalColor = new Color(50, 255, 255, 255),
+            systemMarkerActiveColor = Misc.getHighlightColor(),
+            systemMarkerOutOfAmmoColor = Misc.getNegativeHighlightColor(),
             warnColor = Color.WHITE,
             gaugeBackgroundColor = Color.BLACK;
     ViewportAPI viewport;
@@ -375,6 +402,79 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         hardBar.setColor(c);
         hardBar.setAngle(angle);
         hardBar.renderAtCenter(normal.x + bodyCenter.x, normal.y + bodyCenter.y);
+    }
+    void drawSystemMarker(float reticleOpacity, float colorLerp) {
+        if(!showSystemMarker || engine == null || engine.getPlayerShip() == null) return;
+
+        ShipSystemAPI system = engine.getPlayerShip().getSystem();
+        if(system == null || systemMarkerRingRadius <= 0) return;
+
+        float markerOpacity = systemMarkerFadeWithReticle ? reticleOpacity : 1f;
+        if(markerOpacity <= 0) return;
+
+        Vector2f loc = new Vector2f(
+                frontCenter.x + systemMarkerOffsetX * scale,
+                frontCenter.y + systemMarkerOffsetY * scale);
+        Color color = Misc.interpolateColor(
+                getSystemMarkerColor(system),
+                warnColor,
+                colorLerp);
+        float radius = systemMarkerRingRadius * scale;
+        float thickness = systemMarkerRingThickness * scale;
+
+        drawSystemMarkerArc(color, 360f, 90f, loc, radius, thickness,
+                systemMarkerBackgroundAlpha * markerOpacity);
+        drawSystemMarkerArc(color, getSystemMarkerArc(system), 90f, loc, radius, thickness,
+                systemMarkerMainAlpha * markerOpacity);
+    }
+    Color getSystemMarkerColor(ShipSystemAPI system) {
+        if(system == null) return systemMarkerNormalColor;
+        if(system.getMaxAmmo() > 10000 && system.isActive()) return systemMarkerActiveColor;
+        if(system.getMaxAmmo() > 10000 && system.isCoolingDown() && system.getCooldown() > 0f) {
+            return systemMarkerOutOfAmmoColor;
+        }
+        if(system.getMaxAmmo() <= 10000 && system.isActive()) return systemMarkerActiveColor;
+        if(system.getMaxAmmo() <= 10000 && system.isOutOfAmmo()) return systemMarkerOutOfAmmoColor;
+        if(system.getMaxAmmo() <= 10000 && system.isCoolingDown()) return systemMarkerActiveColor;
+
+        return systemMarkerNormalColor;
+    }
+    float getSystemMarkerArc(ShipSystemAPI system) {
+        if(system == null) return 360f;
+        if(system.getMaxAmmo() > 10000 && system.isCoolingDown() && system.getCooldown() > 0f) {
+            return (system.getCooldown() - system.getCooldownRemaining()) / system.getCooldown() * 360f;
+        }
+        if(system.getMaxAmmo() <= 10000 && system.getAmmo() < system.getMaxAmmo()) {
+            return system.getAmmoReloadProgress() * 360f;
+        }
+
+        return 360f;
+    }
+    void drawSystemMarkerArc(Color color, float arc, float startAngle, Vector2f loc, float radius, float thickness, float opacity) {
+        if(opacity <= 0 || arc <= 0 || radius <= 0 || thickness <= 0) return;
+
+        glPushAttrib(GL_ALL_ATTRIB_BITS);
+        glDisable(GL_TEXTURE_2D);
+        glEnable(GL_BLEND);
+        glEnable(GL_LINE_SMOOTH);
+        glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glLineWidth(thickness);
+        glBegin(GL_LINE_STRIP);
+        {
+            float alpha = Math.max(0, Math.min(255, color.getAlpha() * opacity)) / 255f;
+            glColor4f(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, alpha);
+            int segments = Math.max(1, Math.round(Math.min(360f, arc)));
+            for(int i = 0; i <= segments; i++) {
+                float angle = (float)Math.toRadians(startAngle + i);
+                glVertex2f(loc.x + (float)Math.cos(angle) * radius, loc.y + (float)Math.sin(angle) * radius);
+            }
+        }
+        glEnd();
+        glDisable(GL_BLEND);
+        glPopAttrib();
+
+        glColor4f(1, 1, 1, 1);
     }
     float getFlashAmount(float fluxLevel) {
         float flashProgress = (fluxLevel - flashStartThreshold) / (flashMaxThreshold - flashStartThreshold);
@@ -642,6 +742,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                 front.setColor(clr);
                 front.setAngle(aimAngle);
                 front.renderAtCenter(frontCenter.x, frontCenter.y);
+                drawSystemMarker(opacity, warnness);
 
                 Mouse.setNativeCursor(hiddenCursor);
 

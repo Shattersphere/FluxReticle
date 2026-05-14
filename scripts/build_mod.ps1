@@ -6,8 +6,8 @@ $ErrorActionPreference = 'Stop'
 
 $repoRoot = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 $buildDir = Join-Path $repoRoot 'build'
-$classesDir = Join-Path $buildDir 'classes'
-$tmpJar = Join-Path $buildDir 'FluxReticle.jar.tmp'
+$classesDir = Join-Path $buildDir ("classes-$PID")
+$tmpJar = Join-Path $buildDir ("FluxReticle-$PID.jar.tmp")
 $repoJar = Join-Path $repoRoot 'jars\FluxReticle.jar'
 
 function Read-LocalProperty([string]$name) {
@@ -166,5 +166,6 @@ finally {
     $zip.Dispose()
 }
 
-Move-Item -LiteralPath $tmpJar -Destination $repoJar -Force
+Copy-Item -LiteralPath $tmpJar -Destination $repoJar -Force
+Remove-Item -LiteralPath $tmpJar -Force -ErrorAction SilentlyContinue
 Write-Host "Built and validated $repoJar"

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.20.0-fork.1 - 2026-05-15
+
+- Added a ship-system cooldown marker anchored to the flux cursor head with LunaLib controls for position, fade, ring shape, alpha, and state colors.
+
 ## 1.19.2-fork.1 - 2026-05-15
 
 - Removed the system and shield indicator overlay code and settings.

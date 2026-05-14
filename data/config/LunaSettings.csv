@@ -6,7 +6,7 @@ shattersphere_flux_reticle_fork,shat_fr_reticleTopScaleMult,Reticle Top Scale Mu
 shattersphere_flux_reticle_fork,shat_fr_spriteSet,Reticle Sprite Set,Radio,8xNearestEdgeCleaned,"Root4xLanczos,Vanilla1x,4xLanczos,4xNearest,8xLanczosEdgeCleaned,8xNearestEdgeCleaned,AIGeneratedFullSet8x",Selects which reticle sprite folder to use. All sets render at the same logical size; larger source images provide higher pixel density.,,,General
 shattersphere_flux_reticle_fork,shat_fr_frontSpriteVariant,Front Sprite Variant,Radio,CurrentSpriteSet,"CurrentSpriteSet,wings_05pct_further_apart,wings_10pct_further_apart,wings_15pct_further_apart,wings_20pct_further_apart,wings_25pct_further_apart,wings_30pct_further_apart,wings_35pct_further_apart,wings_40pct_further_apart,wings_45pct_further_apart,wings_50pct_further_apart,wings_55pct_further_apart,wings_60pct_further_apart,wings_65pct_further_apart,wings_70pct_further_apart,wings_75pct_further_apart,wings_80pct_further_apart,wings_85pct_further_apart,wings_90pct_further_apart,wings_95pct_further_apart,wings_100pct_further_apart",Selects an optional frontKeyTurn and frontMouseTurn wing-gap variant by folder name. CurrentSpriteSet uses the selected reticle sprite set.,,,General
 shattersphere_flux_reticle_fork,shat_fr_showBarMarkerSprites,Show Bar Marker Sprites,Boolean,TRUE,,Draws the internal quarter middle and three-quarter divider marker sprites on the flux bar. The end cap sprite remains visible.,,,General
-shattersphere_flux_reticle_fork,shat_fr_swapQuarterHalfSprites,Use Half Sprite For All Bar Markers,Boolean,FALSE,,Draws the half sprite at the one-quarter / middle / three-quarter marker positions. When disabled the quarter and three-quarter positions use the quarter sprite and the middle position uses the half sprite.,,,General
+shattersphere_flux_reticle_fork,shat_fr_swapQuarterHalfSprites,Use Half Sprite For All Bar Markers,Boolean,FALSE,,Draws the half sprite at the one-quarter middle and three-quarter marker positions. When disabled the quarter and three-quarter positions use the quarter sprite and the middle position uses the half sprite.,,,General
 shattersphere_flux_reticle_fork,shat_fr_showSoftFluxTopDivider,Show Soft Flux Top Divider,Boolean,TRUE,,Draws a second divider at the top of the soft flux fill using the same sprite color and size as the hard flux divider.,,,General
 shattersphere_flux_reticle_fork,shat_fr_toggleStrafeAndTurnToCursorKey,Strafe Toggle Keybind,Keycode,37,,"Changes the keybind for toggling ""strafe and turn to cursor"" behavior.",,,General
 shattersphere_flux_reticle_fork,shat_fr_glowOpacity,Reticle Glow Alpha,Int,64,,Controls how visible the glow of the reticle is.,0,255,General
@@ -18,6 +18,15 @@ shattersphere_flux_reticle_fork,shat_fr_hardFluxDividerHeightMult,Hard/Soft Divi
 shattersphere_flux_reticle_fork,shat_fr_reticleTopOffset,Reticle Top Offset,Double,0,,Moves only the front cursor graphic and glow along the ship-to-cursor line while the bar stays anchored. Positive values move it away from the ship; negative values move it toward the ship.,-300,300,General
 shattersphere_flux_reticle_fork,shat_fr_reticleTopLateralOffset,Reticle Top Left/Right Offset,Double,0,,Moves only the front cursor graphic and glow left or right relative to the bar. Positive values move right when looking from the ship toward the cursor; negative values move left.,-300,300,General
 shattersphere_flux_reticle_fork,shat_fr_reticleBodyLateralOffset,Reticle Body Left/Right Offset,Double,0,,"Moves the flux bar background, border, gauge fills, divider, and lower bar sprites left or right. Positive values move right when looking from the ship toward the cursor; negative values move left.",-300,300,General
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerHeader,,Header,Ship System Marker,,,,,General
+shattersphere_flux_reticle_fork,shat_fr_showSystemMarker,Show Ship System Marker,Boolean,TRUE,,Draws a ship-system cooldown and ammo ring at a fixed offset from the flux cursor head.,,,General
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerFadeWithReticle,Fade Ship System Marker With Reticle,Boolean,TRUE,,Multiplies the ship-system marker opacity by the flux reticle fade amount.,,,General
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerOffsetX,System Marker X Offset,Double,32,,Moves the ship-system marker left or right in screen space relative to the flux cursor head. Positive values move right.,-300,300,General
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerOffsetY,System Marker Y Offset,Double,0,,Moves the ship-system marker up or down in screen space relative to the flux cursor head. Positive values move up.,-300,300,General
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerRingRadius,System Marker Ring Radius,Double,8,,Controls the radius of the ship-system marker ring.,0,80,General
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerRingThickness,System Marker Ring Thickness,Double,2,,Controls the line thickness of the ship-system marker ring.,0.1,20,General
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerMainAlpha,System Marker Main Alpha,Double,0.8,,Controls the opacity of the dynamic ship-system marker arc.,0,1,General
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerBackgroundAlpha,System Marker Background Alpha,Double,0.1,,Controls the opacity of the full background ring behind the dynamic ship-system marker arc.,0,1,General
 shattersphere_flux_reticle_fork,shat_fr_minReticleLength,Minimum Bar Length,Double,20,,Controls the minimum drawn length of the flux bar.,1,300,General
 shattersphere_flux_reticle_fork,shat_fr_maxReticleLength,Maximum Bar Length,Double,80,,Controls the maximum drawn length of the flux bar.,1,500,General
 shattersphere_flux_reticle_fork,shat_fr_minReticleDistance,Minimum Size Distance,Double,0.1,,Ship-to-cursor distance where the bar is at minimum length. Distance is normalized to half the visible screen height.,0,5,General
@@ -59,3 +68,18 @@ shattersphere_flux_reticle_fork,shat_fr_hardFluxDividerColorRed,Divider Red,Int,
 shattersphere_flux_reticle_fork,shat_fr_hardFluxDividerColorGreen,Divider Green,Int,251,,,0,255,Color Override
 shattersphere_flux_reticle_fork,shat_fr_hardFluxDividerColorBlue,Divider Blue,Int,255,,,0,255,Color Override
 shattersphere_flux_reticle_fork,shat_fr_hardFluxDividerColorAlpha,Divider Alpha,Int,255,,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerNormalHeader,,Header,Ship System Marker Normal RGBA,,,,,Color Override
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerNormalColorRed,System Marker Normal Red,Int,50,,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerNormalColorGreen,System Marker Normal Green,Int,255,,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerNormalColorBlue,System Marker Normal Blue,Int,255,,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerNormalColorAlpha,System Marker Normal Alpha,Int,255,,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerActiveHeader,,Header,Ship System Marker Active RGBA,,,,,Color Override
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerActiveColorRed,System Marker Active Red,Int,255,,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerActiveColorGreen,System Marker Active Green,Int,210,,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerActiveColorBlue,System Marker Active Blue,Int,0,,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerActiveColorAlpha,System Marker Active Alpha,Int,255,,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerOutOfAmmoHeader,,Header,Ship System Marker Out Of Ammo RGBA,,,,,Color Override
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerOutOfAmmoColorRed,System Marker Out Of Ammo Red,Int,255,,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerOutOfAmmoColorGreen,System Marker Out Of Ammo Green,Int,100,,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerOutOfAmmoColorBlue,System Marker Out Of Ammo Blue,Int,0,,,0,255,Color Override
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerOutOfAmmoColorAlpha,System Marker Out Of Ammo Alpha,Int,255,,,0,255,Color Override
