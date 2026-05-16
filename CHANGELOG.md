@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.21.0-fork.1 - 2026-05-17
+
+- Added ship-system charge-count text inside the ship-system marker for systems that use charges.
+- Reorganized LunaLib settings into focused tabs for general controls, reticle art, flux bar, system marker, flashing, and colours.
+- Changed the system marker Y offset so negative values move the marker down the flux bar toward the ship.
+
 ## 1.20.1-fork.1 - 2026-05-17
 
 - Fixed the ship-system marker offset so it stays in the same reticle-local position relative to the top of the flux bar as the cursor rotates.

@@ -94,10 +94,12 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         reticleBodyLateralOffset = (float) getDouble("reticleBodyLateralOffset");
         showSystemMarker = getBoolean("showSystemMarker");
         systemMarkerFadeWithReticle = getBoolean("systemMarkerFadeWithReticle");
+        showSystemMarkerCharges = getBoolean("showSystemMarkerCharges");
         systemMarkerOffsetX = (float) getDouble("systemMarkerOffsetX");
         systemMarkerOffsetY = (float) getDouble("systemMarkerOffsetY");
         systemMarkerRingRadius = (float) Math.max(0, getDouble("systemMarkerRingRadius"));
         systemMarkerRingThickness = (float) Math.max(0.1, getDouble("systemMarkerRingThickness"));
+        systemMarkerChargeTextScale = (float) Math.max(0.1, getDouble("systemMarkerChargeTextScale"));
         systemMarkerMainAlpha = (float) Math.max(0, Math.min(1, getDouble("systemMarkerMainAlpha")));
         systemMarkerBackgroundAlpha = (float) Math.max(0, Math.min(1, getDouble("systemMarkerBackgroundAlpha")));
         minLength = (float) Math.max(1, getDouble("minReticleLength"));
@@ -155,11 +157,31 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             DEFAULT_SYSTEM_MARKER_OFFSET_Y = 0f,
             DEFAULT_SYSTEM_MARKER_RING_RADIUS = 8f,
             DEFAULT_SYSTEM_MARKER_RING_THICKNESS = 2f,
+            DEFAULT_SYSTEM_MARKER_CHARGE_TEXT_SCALE = 1f,
             DEFAULT_SYSTEM_MARKER_MAIN_ALPHA = 0.8f,
             DEFAULT_SYSTEM_MARKER_BACKGROUND_ALPHA = 0.1f,
             TWO_PI = (float)(Math.PI * 2);
     static final int
-            ESCAPE_KEY_VALUE = 1;
+            ESCAPE_KEY_VALUE = 1,
+            SEG_TOP = 1,
+            SEG_UPPER_RIGHT = 2,
+            SEG_LOWER_RIGHT = 4,
+            SEG_BOTTOM = 8,
+            SEG_LOWER_LEFT = 16,
+            SEG_UPPER_LEFT = 32,
+            SEG_MIDDLE = 64;
+    static final int[] DIGIT_SEGMENTS = new int[] {
+            SEG_TOP | SEG_UPPER_RIGHT | SEG_LOWER_RIGHT | SEG_BOTTOM | SEG_LOWER_LEFT | SEG_UPPER_LEFT,
+            SEG_UPPER_RIGHT | SEG_LOWER_RIGHT,
+            SEG_TOP | SEG_UPPER_RIGHT | SEG_MIDDLE | SEG_LOWER_LEFT | SEG_BOTTOM,
+            SEG_TOP | SEG_UPPER_RIGHT | SEG_MIDDLE | SEG_LOWER_RIGHT | SEG_BOTTOM,
+            SEG_UPPER_LEFT | SEG_MIDDLE | SEG_UPPER_RIGHT | SEG_LOWER_RIGHT,
+            SEG_TOP | SEG_UPPER_LEFT | SEG_MIDDLE | SEG_LOWER_RIGHT | SEG_BOTTOM,
+            SEG_TOP | SEG_UPPER_LEFT | SEG_MIDDLE | SEG_LOWER_LEFT | SEG_LOWER_RIGHT | SEG_BOTTOM,
+            SEG_TOP | SEG_UPPER_RIGHT | SEG_LOWER_RIGHT,
+            SEG_TOP | SEG_UPPER_RIGHT | SEG_LOWER_RIGHT | SEG_BOTTOM | SEG_LOWER_LEFT | SEG_UPPER_LEFT | SEG_MIDDLE,
+            SEG_TOP | SEG_UPPER_RIGHT | SEG_LOWER_RIGHT | SEG_BOTTOM | SEG_UPPER_LEFT | SEG_MIDDLE
+    };
     static final String
             DEFAULT_SPRITE_SET = "8xNearestEdgeCleaned",
             SPRITE_SET_ROOT = "Root4xLanczos",
@@ -209,6 +231,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             systemMarkerOffsetY = DEFAULT_SYSTEM_MARKER_OFFSET_Y,
             systemMarkerRingRadius = DEFAULT_SYSTEM_MARKER_RING_RADIUS,
             systemMarkerRingThickness = DEFAULT_SYSTEM_MARKER_RING_THICKNESS,
+            systemMarkerChargeTextScale = DEFAULT_SYSTEM_MARKER_CHARGE_TEXT_SCALE,
             systemMarkerMainAlpha = DEFAULT_SYSTEM_MARKER_MAIN_ALPHA,
             systemMarkerBackgroundAlpha = DEFAULT_SYSTEM_MARKER_BACKGROUND_ALPHA,
             minLength = DEFAULT_MIN_LENGTH,
@@ -225,7 +248,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     boolean escapeMenuIsOpen = false, needToLoadSettings = true, showReticle, showReticleWhenInterfaceIsHidden,
             keepBarVisibleAtMinimumDistance, enableFluxChangeFlash = true, swapQuarterHalfSprites = false,
             showBarMarkerSprites = true, showSoftFluxTopDivider = true, showSystemMarker = true,
-            systemMarkerFadeWithReticle = true;
+            systemMarkerFadeWithReticle = true, showSystemMarkerCharges = true;
     Vector2f mouse = new Vector2f(), frontCenter = new Vector2f(), bodyCenter = new Vector2f(), at = new Vector2f(), normal = new Vector2f();
     Color reticleColor = Misc.getPositiveHighlightColor(),
             gaugeColor = Misc.getHighlightColor(),
@@ -416,8 +439,8 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         alongBar.normalise();
         Vector2f barRight = new Vector2f(-alongBar.y, alongBar.x);
         Vector2f loc = new Vector2f(
-                bodyCenter.x + barRight.x * systemMarkerOffsetX * scale + alongBar.x * systemMarkerOffsetY * scale,
-                bodyCenter.y + barRight.y * systemMarkerOffsetX * scale + alongBar.y * systemMarkerOffsetY * scale);
+                bodyCenter.x + barRight.x * systemMarkerOffsetX * scale - alongBar.x * systemMarkerOffsetY * scale,
+                bodyCenter.y + barRight.y * systemMarkerOffsetX * scale - alongBar.y * systemMarkerOffsetY * scale);
         Color color = Misc.interpolateColor(
                 getSystemMarkerColor(system),
                 warnColor,
@@ -429,6 +452,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
                 systemMarkerBackgroundAlpha * markerOpacity);
         drawSystemMarkerArc(color, getSystemMarkerArc(system), 90f, loc, radius, thickness,
                 systemMarkerMainAlpha * markerOpacity);
+        drawSystemMarkerChargeText(system, color, loc, radius, thickness, markerOpacity);
     }
     Color getSystemMarkerColor(ShipSystemAPI system) {
         if(system == null) return systemMarkerNormalColor;
@@ -478,6 +502,55 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         glPopAttrib();
 
         glColor4f(1, 1, 1, 1);
+    }
+    void drawSystemMarkerChargeText(ShipSystemAPI system, Color color, Vector2f loc, float radius, float thickness, float markerOpacity) {
+        if(!showSystemMarkerCharges || system == null || system.getMaxAmmo() > 10000 || markerOpacity <= 0) return;
+
+        String text = String.valueOf(Math.max(0, system.getAmmo()));
+        float digitHeight = Math.max(5f, radius * 1.15f * systemMarkerChargeTextScale);
+        float digitWidth = digitHeight * 0.55f;
+        float gap = digitHeight * 0.12f;
+        float totalWidth = digitWidth * text.length() + gap * Math.max(0, text.length() - 1);
+        float left = loc.x - totalWidth * 0.5f;
+        float bottom = loc.y - digitHeight * 0.5f;
+        float alpha = Math.max(0, Math.min(255, color.getAlpha() * systemMarkerMainAlpha * markerOpacity)) / 255f;
+
+        glPushAttrib(GL_ALL_ATTRIB_BITS);
+        glDisable(GL_TEXTURE_2D);
+        glEnable(GL_BLEND);
+        glEnable(GL_LINE_SMOOTH);
+        glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glLineWidth(Math.max(1f, thickness * 0.7f));
+        glColor4f(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, alpha);
+        glBegin(GL_LINES);
+        for(int i = 0; i < text.length(); i++) {
+            char ch = text.charAt(i);
+            if(ch < '0' || ch > '9') continue;
+            drawDigitSegments(left + i * (digitWidth + gap), bottom, digitWidth, digitHeight, DIGIT_SEGMENTS[ch - '0']);
+        }
+        glEnd();
+        glDisable(GL_BLEND);
+        glPopAttrib();
+
+        glColor4f(1, 1, 1, 1);
+    }
+    void drawDigitSegments(float x, float y, float width, float height, int mask) {
+        float midY = y + height * 0.5f;
+        float right = x + width;
+        float top = y + height;
+
+        if((mask & SEG_TOP) != 0) drawLine(x, top, right, top);
+        if((mask & SEG_UPPER_RIGHT) != 0) drawLine(right, midY, right, top);
+        if((mask & SEG_LOWER_RIGHT) != 0) drawLine(right, y, right, midY);
+        if((mask & SEG_BOTTOM) != 0) drawLine(x, y, right, y);
+        if((mask & SEG_LOWER_LEFT) != 0) drawLine(x, y, x, midY);
+        if((mask & SEG_UPPER_LEFT) != 0) drawLine(x, midY, x, top);
+        if((mask & SEG_MIDDLE) != 0) drawLine(x, midY, right, midY);
+    }
+    void drawLine(float x1, float y1, float x2, float y2) {
+        glVertex2f(x1, y1);
+        glVertex2f(x2, y2);
     }
     float getFlashAmount(float fluxLevel) {
         float flashProgress = (fluxLevel - flashStartThreshold) / (flashMaxThreshold - flashStartThreshold);
