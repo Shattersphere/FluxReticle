@@ -185,14 +185,10 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             SEG_TOP | SEG_UPPER_RIGHT | SEG_LOWER_RIGHT | SEG_BOTTOM | SEG_UPPER_LEFT | SEG_MIDDLE
     };
     static final String
-            DEFAULT_SPRITE_SET = "8xNearestEdgeCleaned",
+            DEFAULT_SPRITE_SET = "8xLanczosEdgeCleaned",
             SPRITE_SET_ROOT = "Root4xLanczos",
             SPRITE_SET_VANILLA = "Vanilla1x",
-            SPRITE_SET_4X_LANCZOS = "4xLanczos",
-            SPRITE_SET_4X_NEAREST = "4xNearest",
             SPRITE_SET_8X_LANCZOS_EDGE_CLEANED = "8xLanczosEdgeCleaned",
-            SPRITE_SET_8X_NEAREST_EDGE_CLEANED = "8xNearestEdgeCleaned",
-            SPRITE_SET_AI_GENERATED_FULL_8X = "AIGeneratedFullSet8x",
             DEFAULT_FRONT_SPRITE_VARIANT = "CurrentSpriteSet",
             FRONT_VARIANT_ROOT = "shat_fr/graphics/front_variants/";
     static final String[] FRONT_VARIANT_FOLDERS = new String[] {
@@ -597,11 +593,8 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
     String getSpriteSetFolder(String configuredSpriteSet) {
         if (SPRITE_SET_ROOT.equals(configuredSpriteSet)) return "";
         if (SPRITE_SET_VANILLA.equals(configuredSpriteSet)) return "backup";
-        if (SPRITE_SET_4X_LANCZOS.equals(configuredSpriteSet)) return "upscaled_4x_lanczos";
-        if (SPRITE_SET_4X_NEAREST.equals(configuredSpriteSet)) return "upscaled_4x_nearest";
         if (SPRITE_SET_8X_LANCZOS_EDGE_CLEANED.equals(configuredSpriteSet)) return "upscaled_8x_lanczos_edge_cleaned";
-        if (SPRITE_SET_AI_GENERATED_FULL_8X.equals(configuredSpriteSet)) return "ai_generated_full_set_8x";
-        return "upscaled_8x_nearest_edge_cleaned";
+        return "upscaled_8x_lanczos_edge_cleaned";
     }
 
     SpriteAPI loadSpriteFromSet(String configuredSpriteSet, String fileName) throws IOException {

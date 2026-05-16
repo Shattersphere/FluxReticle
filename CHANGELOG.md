@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.23.0-fork.1 - 2026-05-17
+
+- Updated the active reticle sprite set list to match the remaining bundled art folders.
+- Defaulted the reticle sprite set to the 8x Lanczos edge-cleaned art.
+- Updated local deploy cleanup for the removed sprite-set folders.
+
 ## 1.22.1-fork.1 - 2026-05-17
 
 - Centered the single-charge `1` digit inside the ship-system marker ring.

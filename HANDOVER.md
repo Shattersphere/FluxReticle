@@ -51,7 +51,7 @@ This repo is a working Starsector mod fork, not just source notes. Keep runtime 
 - Hard and soft flux top dividers render at full configured divider opacity whenever their flux segment exists; divider alpha is not scaled by the current flux amount.
 - Soft/hard flux fills render below the quarter/half/back marker sprites and hard-flux divider.
 - Reticle sprite assets are rendered at legacy logical dimensions, so 4x PNG replacements improve pixel density without making the reticle larger.
-- `spriteSet` is a Luna/INI selector for bundled sprite folders, including the AI-generated full 8x set. Default is `8xNearestEdgeCleaned`.
+- `spriteSet` is a Luna/INI selector for bundled sprite folders. Current selectable sets are root, vanilla backup, and `8xLanczosEdgeCleaned`; default is `8xLanczosEdgeCleaned`.
 - Distance settings are normalized to half the visible screen height.
 - `enableFluxChangeFlash` controls only the extra flux-change pulse; threshold-based flashing still follows the flash threshold/frequency settings.
 - `keepBarVisibleAtMinimumDistance` defaults on and prevents the flux bar from fading out at point blank range.
