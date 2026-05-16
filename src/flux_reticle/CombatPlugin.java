@@ -530,7 +530,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         for(int i = 0; i < text.length(); i++) {
             char ch = text.charAt(i);
             if(ch < '0' || ch > '9') continue;
-            drawDigitSegments(left + i * (digitWidth + gap), bottom, digitWidth, digitHeight, DIGIT_SEGMENTS[ch - '0']);
+            drawDigitSegments(left + i * (digitWidth + gap), bottom, digitWidth, digitHeight, ch - '0');
         }
         glEnd();
         glDisable(GL_BLEND);
@@ -538,10 +538,18 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
 
         glColor4f(1, 1, 1, 1);
     }
-    void drawDigitSegments(float x, float y, float width, float height, int mask) {
+    void drawDigitSegments(float x, float y, float width, float height, int digit) {
         float midY = y + height * 0.5f;
         float right = x + width;
         float top = y + height;
+        if(digit == 1) {
+            float center = x + width * 0.5f;
+            drawLine(center, y, center, top);
+
+            return;
+        }
+
+        int mask = DIGIT_SEGMENTS[digit];
 
         if((mask & SEG_TOP) != 0) drawLine(x, top, right, top);
         if((mask & SEG_UPPER_RIGHT) != 0) drawLine(right, midY, right, top);

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.22.1-fork.1 - 2026-05-17
+
+- Centered the single-charge `1` digit inside the ship-system marker ring.
+
 ## 1.22.0-fork.1 - 2026-05-17
 
 - Added a LunaLib and fallback setting for charge-count text thickness.
