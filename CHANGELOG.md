@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.20.1-fork.1 - 2026-05-17
+
+- Fixed the ship-system marker offset so it stays in the same reticle-local position relative to the top of the flux bar as the cursor rotates.
+
 ## 1.20.0-fork.1 - 2026-05-15
 
 - Added a ship-system cooldown marker anchored to the flux cursor head with LunaLib controls for position, fade, ring shape, alpha, and state colors.

@@ -39,7 +39,7 @@ This repo is a working Starsector mod fork, not just source notes. Keep runtime 
 - `reticleTopLateralOffset` shifts only `frontKeyTurn` / `frontMouseTurn` and their glow sprites left/right relative to the bar. Positive moves right when looking from the ship toward the cursor.
 - `reticleBodyLateralOffset` shifts the flux bar background, border, gauge fills, divider, and lower bar sprites left/right separately from the top graphic.
 - `showSystemMarker` draws only the normal ship-system marker ring from System Marker-style logic. It intentionally does not re-add shield or special-system markers.
-- `systemMarkerOffsetX` and `systemMarkerOffsetY` are fixed screen-relative offsets from `frontCenter`, so the marker stays in the same visual position relative to the flux cursor head instead of rotating around it as the cursor direction changes.
+- `systemMarkerOffsetX` and `systemMarkerOffsetY` are reticle-local offsets from `bodyCenter`, the top of the flux bar. X moves left/right relative to the bar and Y moves along the bar toward/away from the ship, so the marker stays in the same visual position relative to the bar as the cursor direction changes.
 - `systemMarkerFadeWithReticle` multiplies marker opacity by the reticle fade amount. Disable it when the marker should remain at configured alpha while the bar fades.
 - `frontSpriteVariant` overrides only `frontKeyTurn` and `frontMouseTurn` from `shat_fr/graphics/front_variants/<folder>`; `CurrentSpriteSet` uses the normal selected sprite set.
 - `showBarMarkerSprites` toggles only the 25%, 50%, and 75% marker sprites; the end cap/back sprite still renders.

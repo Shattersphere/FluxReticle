@@ -412,9 +412,12 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         float markerOpacity = systemMarkerFadeWithReticle ? reticleOpacity : 1f;
         if(markerOpacity <= 0) return;
 
+        Vector2f alongBar = new Vector2f(normal);
+        alongBar.normalise();
+        Vector2f barRight = new Vector2f(-alongBar.y, alongBar.x);
         Vector2f loc = new Vector2f(
-                frontCenter.x + systemMarkerOffsetX * scale,
-                frontCenter.y + systemMarkerOffsetY * scale);
+                bodyCenter.x + barRight.x * systemMarkerOffsetX * scale + alongBar.x * systemMarkerOffsetY * scale,
+                bodyCenter.y + barRight.y * systemMarkerOffsetX * scale + alongBar.y * systemMarkerOffsetY * scale);
         Color color = Misc.interpolateColor(
                 getSystemMarkerColor(system),
                 warnColor,
