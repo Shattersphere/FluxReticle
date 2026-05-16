@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.22.0-fork.1 - 2026-05-17
+
+- Added a LunaLib and fallback setting for charge-count text thickness.
+
 ## 1.21.0-fork.1 - 2026-05-17
 
 - Added ship-system charge-count text inside the ship-system marker for systems that use charges.

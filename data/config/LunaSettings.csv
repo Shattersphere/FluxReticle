@@ -36,6 +36,7 @@ shattersphere_flux_reticle_fork,shat_fr_systemMarkerOffsetY,System Marker Y Offs
 shattersphere_flux_reticle_fork,shat_fr_systemMarkerRingRadius,System Marker Ring Radius,Double,8,,Controls the radius of the ship-system marker ring.,0,80,System Marker
 shattersphere_flux_reticle_fork,shat_fr_systemMarkerRingThickness,System Marker Ring Thickness,Double,2,,Controls the line thickness of the ship-system marker ring.,0.1,20,System Marker
 shattersphere_flux_reticle_fork,shat_fr_systemMarkerChargeTextScale,System Marker Charge Text Scale,Double,1,,Scales the charge-count text drawn inside the ship-system marker.,0.1,5,System Marker
+shattersphere_flux_reticle_fork,shat_fr_systemMarkerChargeTextThickness,System Marker Charge Text Thickness,Double,1.4,,Controls the stroke thickness of the charge-count digits inside the ship-system marker. This uses line rendering rather than a Starsector font asset.,0.1,20,System Marker
 shattersphere_flux_reticle_fork,shat_fr_systemMarkerMainAlpha,System Marker Main Alpha,Double,0.8,,Controls the opacity of the dynamic ship-system marker arc and charge text.,0,1,System Marker
 shattersphere_flux_reticle_fork,shat_fr_systemMarkerBackgroundAlpha,System Marker Background Alpha,Double,0.1,,Controls the opacity of the full background ring behind the dynamic ship-system marker arc.,0,1,System Marker
 shattersphere_flux_reticle_fork,shat_fr_flashHeader,,Header,High Flux Flashing,,,,,Flashing

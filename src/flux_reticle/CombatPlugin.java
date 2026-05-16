@@ -100,6 +100,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         systemMarkerRingRadius = (float) Math.max(0, getDouble("systemMarkerRingRadius"));
         systemMarkerRingThickness = (float) Math.max(0.1, getDouble("systemMarkerRingThickness"));
         systemMarkerChargeTextScale = (float) Math.max(0.1, getDouble("systemMarkerChargeTextScale"));
+        systemMarkerChargeTextThickness = (float) Math.max(0.1, getDouble("systemMarkerChargeTextThickness"));
         systemMarkerMainAlpha = (float) Math.max(0, Math.min(1, getDouble("systemMarkerMainAlpha")));
         systemMarkerBackgroundAlpha = (float) Math.max(0, Math.min(1, getDouble("systemMarkerBackgroundAlpha")));
         minLength = (float) Math.max(1, getDouble("minReticleLength"));
@@ -158,6 +159,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             DEFAULT_SYSTEM_MARKER_RING_RADIUS = 8f,
             DEFAULT_SYSTEM_MARKER_RING_THICKNESS = 2f,
             DEFAULT_SYSTEM_MARKER_CHARGE_TEXT_SCALE = 1f,
+            DEFAULT_SYSTEM_MARKER_CHARGE_TEXT_THICKNESS = 1.4f,
             DEFAULT_SYSTEM_MARKER_MAIN_ALPHA = 0.8f,
             DEFAULT_SYSTEM_MARKER_BACKGROUND_ALPHA = 0.1f,
             TWO_PI = (float)(Math.PI * 2);
@@ -232,6 +234,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
             systemMarkerRingRadius = DEFAULT_SYSTEM_MARKER_RING_RADIUS,
             systemMarkerRingThickness = DEFAULT_SYSTEM_MARKER_RING_THICKNESS,
             systemMarkerChargeTextScale = DEFAULT_SYSTEM_MARKER_CHARGE_TEXT_SCALE,
+            systemMarkerChargeTextThickness = DEFAULT_SYSTEM_MARKER_CHARGE_TEXT_THICKNESS,
             systemMarkerMainAlpha = DEFAULT_SYSTEM_MARKER_MAIN_ALPHA,
             systemMarkerBackgroundAlpha = DEFAULT_SYSTEM_MARKER_BACKGROUND_ALPHA,
             minLength = DEFAULT_MIN_LENGTH,
@@ -521,7 +524,7 @@ public class CombatPlugin implements EveryFrameCombatPlugin {
         glEnable(GL_LINE_SMOOTH);
         glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glLineWidth(Math.max(1f, thickness * 0.7f));
+        glLineWidth(systemMarkerChargeTextThickness * scale);
         glColor4f(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, alpha);
         glBegin(GL_LINES);
         for(int i = 0; i < text.length(); i++) {

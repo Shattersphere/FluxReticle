@@ -41,7 +41,7 @@ This repo is a working Starsector mod fork, not just source notes. Keep runtime 
 - `showSystemMarker` draws only the normal ship-system marker ring from System Marker-style logic. It intentionally does not re-add shield or special-system markers.
 - `systemMarkerOffsetX` and `systemMarkerOffsetY` are reticle-local offsets from `bodyCenter`, the top of the flux bar. X moves left/right relative to the bar. Negative Y moves down the bar toward the ship, and positive Y moves up past the top of the bar.
 - `systemMarkerFadeWithReticle` multiplies marker opacity by the reticle fade amount. Disable it when the marker should remain at configured alpha while the bar fades.
-- `showSystemMarkerCharges` draws a small centered digit readout for charge-based ship systems. It uses the current marker state color and `systemMarkerChargeTextScale`; it does not add a LazyLib dependency.
+- `showSystemMarkerCharges` draws a small centered digit readout for charge-based ship systems. It uses the current marker state color, `systemMarkerChargeTextScale`, and `systemMarkerChargeTextThickness`; it does not add a LazyLib dependency or touch Starsector font assets.
 - Luna settings are intentionally grouped into focused tabs (`General`, `Reticle Art`, `Flux Bar`, `System Marker`, `Flashing`, and `Colours`) while keeping stable `shat_fr_` field IDs for saved values.
 - `frontSpriteVariant` overrides only `frontKeyTurn` and `frontMouseTurn` from `shat_fr/graphics/front_variants/<folder>`; `CurrentSpriteSet` uses the normal selected sprite set.
 - `showBarMarkerSprites` toggles only the 25%, 50%, and 75% marker sprites; the end cap/back sprite still renders.

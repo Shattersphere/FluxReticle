@@ -28,7 +28,7 @@ Fork of Flux Reticle with a separate Starsector identity and LunaLib-facing cust
 - Configurable soft/hard flux fill inset so the border stays visible when the bar fills.
 - Configurable hard/soft flux divider visual height/thickness.
 - Configurable front cursor graphic scale plus separate top and flux-bar-body left/right offsets.
-- Ship-system cooldown marker anchored at a fixed reticle-local offset from the top of the flux bar, with configurable fade, position, ring shape, charge-count text, alpha, and RGBA state colors.
+- Ship-system cooldown marker anchored at a fixed reticle-local offset from the top of the flux bar, with configurable fade, position, ring shape, charge-count text size/thickness, alpha, and RGBA state colors.
 - Optional 25%, 50%, and 75% bar marker sprites.
 - Option to use the half bar marker sprite at the quarter, middle, and three-quarter positions.
 - Optional soft-flux top divider using the same divider styling as the hard/soft boundary.
